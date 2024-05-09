@@ -4,4 +4,4 @@ Graph Neural Networks (GNN) are a powerful architecture for the learning of grap
 The differentiation between GCN and neural network architectures is their ability to learn from the local neighbourhood as opposed to handcrafted network features. The performance of GCN and other GNN architectures has been demonstrated on a variety of benchmark tasks, hence extending their application to a biomedical setting is an exciting avenue. 
 
 ## Message Passing in GNN's
-![alt text](images/GNN_Message%20Passing.png)
+![test for update](GNNMessagePassing.png)
