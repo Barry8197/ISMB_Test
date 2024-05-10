@@ -440,7 +440,8 @@ document.write(`
 <p>First we will load the data from Generation Scotland and create labels for individuals who have smoked before using the ‘pack_years’ feature</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./../data/ISMB_GS_Data.pkl&#39;</span> <span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span> <span class="p">:</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the data using pickle</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./../data/ISMB_GS_Data.pkl&#39;</span> <span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span> <span class="p">:</span> 
     <span class="n">loaded_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -449,20 +450,21 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">w1</span> <span class="o">=</span> <span class="n">loaded_data</span><span class="p">[</span><span class="s1">&#39;DNAm_w1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span> <span class="c1"># we are only working with Wave 1 patients for this task</span>
-<span class="n">phenotypes</span> <span class="o">=</span> <span class="n">loaded_data</span><span class="p">[</span><span class="s1">&#39;Phenotypes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Sample_SentrixID&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">w1</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+<span class="n">phenotypes</span> <span class="o">=</span> <span class="n">loaded_data</span><span class="p">[</span><span class="s1">&#39;Phenotypes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Sample_SentrixID&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">w1</span><span class="o">.</span><span class="n">index</span><span class="p">]</span> <span class="c1"># get the phenotypes for the wave 1 patients</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">smoking_cat</span><span class="p">(</span><span class="n">pack_years</span><span class="p">)</span> <span class="p">:</span> 
-    <span class="k">if</span> <span class="n">pack_years</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;Never&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a new column in the phenotypes dataframe that categorizes patients as either smokers or non-smokers</span>
+<span class="k">def</span> <span class="nf">smoking_cat</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="p">:</span> 
+    <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;pack_years&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;Non-Smoker&#39;</span>
     <span class="k">else</span> <span class="p">:</span>
         <span class="k">return</span> <span class="s1">&#39;Smoker&#39;</span>
 
-<span class="n">phenotypes</span><span class="p">[</span><span class="s1">&#39;Smoking&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">phenotypes</span><span class="p">[</span><span class="s1">&#39;pack_years&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">smoking_cat</span><span class="p">)</span>
+<span class="n">phenotypes</span><span class="p">[</span><span class="s1">&#39;Smoking&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">phenotypes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">smoking_cat</span> <span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># apply the function to the dataframe</span>
 </pre></div>
 </div>
 </div>
@@ -470,26 +472,27 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># For efficiency of graph training and learning we will downsample the dataset size to 1000 patients</span>
-<span class="n">never_smoked</span> <span class="o">=</span> <span class="n">phenotypes</span><span class="p">[</span><span class="n">phenotypes</span><span class="p">[</span><span class="s1">&#39;Smoking&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Never&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
-<span class="n">smoked</span> <span class="o">=</span> <span class="n">phenotypes</span><span class="p">[</span><span class="n">phenotypes</span><span class="p">[</span><span class="s1">&#39;Smoking&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Smoker&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">never_smoked</span> <span class="o">=</span> <span class="n">phenotypes</span><span class="p">[</span><span class="n">phenotypes</span><span class="p">[</span><span class="s1">&#39;Smoking&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Non-Smoker&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span> <span class="c1"># sample 500 non-smokers</span>
+<span class="n">smoked</span> <span class="o">=</span> <span class="n">phenotypes</span><span class="p">[</span><span class="n">phenotypes</span><span class="p">[</span><span class="s1">&#39;Smoking&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Smoker&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span> <span class="c1"># sample 500 smokers</span>
 
-<span class="n">phenotypes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">never_smoked</span> <span class="p">,</span> <span class="n">smoked</span><span class="p">])</span>
-<span class="n">w1</span> <span class="o">=</span> <span class="n">w1</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">phenotypes</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+<span class="n">phenotypes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">never_smoked</span> <span class="p">,</span> <span class="n">smoked</span><span class="p">])</span> <span class="c1"># combine the two dataframes</span>
+<span class="n">w1</span> <span class="o">=</span> <span class="n">w1</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">phenotypes</span><span class="o">.</span><span class="n">index</span><span class="p">]</span> <span class="c1"># filter the methylation data to only include the patients in the downsampled phenotypes dataframe</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">phenotypes</span><span class="p">[</span><span class="s1">&#39;Smoking&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">phenotypes</span><span class="p">[</span><span class="s1">&#39;Smoking&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">()</span> <span class="c1"># plot the distribution of smokers and non-smokers</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribution of Smokers and Non-Smokers&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: &gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Distribution of Smokers and Non-Smokers&#39;)
 </pre></div>
 </div>
-<img alt="../_images/48da6f7404337ff098dd81f907d5b2af9c294a4ba2119fdd6040b632baa34449.png" src="../_images/48da6f7404337ff098dd81f907d5b2af9c294a4ba2119fdd6040b632baa34449.png" />
+<img alt="../_images/b81ac3de0c44e3a20a59ab7cb691fcea78078850d3af34e00aac6e2adb7ead31.png" src="../_images/b81ac3de0c44e3a20a59ab7cb691fcea78078850d3af34e00aac6e2adb7ead31.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -504,7 +507,9 @@ document.write(`
 <h2><font color='darkblue'> EWAS Network Generation </font><a class="headerlink" href="#ewas-network-generation" title="Link to this heading">#</a></h2>
 <section id="get-a-list-of-smoking-related-cpg-sites-from-the-ewas-catalog">
 <h3><font color='darkblue'>Get a list of Smoking related CpG sites from the <a class="reference external" href="https://www.ewascatalog.org/">EWAS Catalog</a></font><a class="headerlink" href="#get-a-list-of-smoking-related-cpg-sites-from-the-ewas-catalog" title="Link to this heading">#</a></h3>
-<p>In this case we are looking at the smoking phenotype in a cohort from Generation Scotland. We search for Smoking related CpG sites and download the related tab seperated file. We extract the CpG’s and related genes which we will use to build our network.</p>
+<p>In this case we are looking at the smoking phenotype in a cohort from Generation Scotland.</p>
+<p>We have previously downloaded as tsv file for Smoking related CpG sites, but you can generate your own using the above link also.</p>
+<p>Here we will extract the CpG’s and related genes which we will use to build our network.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;./../data/smoking.tsv&#39;</span> <span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span> <span class="c1">#Tab seperated document from EWAS</span>
@@ -686,23 +691,24 @@ document.write(`
 <p>5 rows × 31 columns</p>
 </div></div></div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_filt</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;cpg&#39;</span> <span class="p">,</span> <span class="s1">&#39;gene&#39;</span><span class="p">]]</span> <span class="c1">#Subset to CpG and Genes</span>
-<span class="n">df_filt</span> <span class="o">=</span> <span class="n">df_filt</span><span class="p">[</span><span class="n">df_filt</span><span class="p">[</span><span class="s1">&#39;gene&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;-&#39;</span><span class="p">]</span> <span class="c1">#Remove CpG without annotated genes</span>
-
-<span class="n">df_filt</span> <span class="o">=</span> <span class="n">df_filt</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;cpg&#39;</span> <span class="p">,</span> <span class="s1">&#39;gene&#39;</span><span class="p">])</span>
-<span class="n">df_filt</span> <span class="o">=</span> <span class="n">df_filt</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;cpg&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
 </section>
 <section id="patient-similarity-network-generation">
 <h3><font color='darkblue'>Patient Similarity Network Generation</font><a class="headerlink" href="#patient-similarity-network-generation" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we want to get the most commonly annotated CpG cites</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">#################################################</span>
+<span class="sd">                YOUR CODE HERE</span>
+<span class="sd">#################################################</span>
+
+<span class="sd">We want to include the most informative CpG sites, so we will only include CpG sites that have been annotated multiple times with smoking</span>
+
+<span class="sd">1. Count the number of times a CpG site is present in the smoking.tcv dataset</span>
+<span class="sd">2. If a CpG is present in the dataset more than 10 times add it to the list common_annotated_cpgs</span>
+<span class="sd">3. Filter the methylation data to only include the CpG sites in common_annotated_cpgs</span>
+<span class="sd">4. Call the new dataframe w1_filt</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
 <span class="n">common_annotated_cpgs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;cpg&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;cpg&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">)</span> 
 
 <span class="n">cpgs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">common_annotated_cpgs</span><span class="p">)</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">w1</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
@@ -714,24 +720,41 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">node_colour</span> <span class="o">=</span> <span class="n">phenotypes</span><span class="p">[</span><span class="s1">&#39;Smoking&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">set_categories</span><span class="p">(</span><span class="n">wesanderson</span><span class="o">.</span><span class="n">FantasticFox2_5</span><span class="o">.</span><span class="n">hex_colors</span> <span class="p">,</span> <span class="n">rename</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">#################################################</span>
+<span class="sd">                YOUR CODE HERE</span>
+<span class="sd">#################################################</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">phenotypes</span><span class="p">[</span><span class="s1">&#39;Smoking&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> : 0 </span><span class="se">\n</span><span class="si">{</span><span class="n">phenotypes</span><span class="p">[</span><span class="s1">&#39;Smoking&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> : 1&quot;</span><span class="p">)</span>
+<span class="sd">We want to create our patient similarity matrix using the filtered methylation data</span>
+<span class="sd">We will use biweight midcorrelation to calculate the similarity between patients </span>
+<span class="sd">The function for this is given as abs_bicorr</span>
 
-<span class="n">G</span> <span class="o">=</span> <span class="n">plot_knn_network</span><span class="p">(</span><span class="n">abs_bicorr</span><span class="p">(</span><span class="n">w1_filt</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="p">,</span> <span class="mi">25</span> <span class="p">,</span> <span class="n">phenotypes</span><span class="p">[</span><span class="s1">&#39;Smoking&#39;</span><span class="p">]</span> <span class="p">,</span> <span class="n">node_colours</span><span class="o">=</span><span class="n">node_colour</span><span class="p">)</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="n">patient_similarity_matrix</span> <span class="o">=</span> <span class="n">abs_bicorr</span><span class="p">(</span><span class="n">w1_filt</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">node_colour</span> <span class="o">=</span> <span class="n">phenotypes</span><span class="p">[</span><span class="s1">&#39;Smoking&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">set_categories</span><span class="p">(</span><span class="n">wesanderson</span><span class="o">.</span><span class="n">FantasticFox2_5</span><span class="o">.</span><span class="n">hex_colors</span> <span class="p">,</span> <span class="n">rename</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># set the colours for the nodes</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">phenotypes</span><span class="p">[</span><span class="s1">&#39;Smoking&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> : 0 </span><span class="se">\n</span><span class="si">{</span><span class="n">phenotypes</span><span class="p">[</span><span class="s1">&#39;Smoking&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> : 1&quot;</span><span class="p">)</span> <span class="c1"># print the mapping of the colours to the categories</span>
+
+<span class="n">G</span> <span class="o">=</span> <span class="n">plot_knn_network</span><span class="p">(</span><span class="n">patient_similarity_matrix</span> <span class="p">,</span> <span class="mi">25</span> <span class="p">,</span> <span class="n">phenotypes</span><span class="p">[</span><span class="s1">&#39;Smoking&#39;</span><span class="p">]</span> <span class="p">,</span> <span class="n">node_colours</span><span class="o">=</span><span class="n">node_colour</span><span class="p">)</span> <span class="c1"># plot the network</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;EWAS Smoking Patient Similarity Network&#39;</span><span class="p">)</span>
-<span class="n">legend_handles</span> <span class="o">=</span> <span class="n">gen_graph_legend</span><span class="p">(</span><span class="n">node_colour</span> <span class="p">,</span> <span class="n">G</span> <span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">)</span>
+<span class="n">legend_handles</span> <span class="o">=</span> <span class="n">gen_graph_legend</span><span class="p">(</span><span class="n">node_colour</span> <span class="p">,</span> <span class="n">G</span> <span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">)</span> <span class="c1"># generate the legend</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span> <span class="o">=</span> <span class="n">legend_handles</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Never : 0 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Non-Smoker : 0 
 Smoker : 1
 </pre></div>
 </div>
-<img alt="../_images/8d039c2d88e3df3c5f313117eb8f3516a26b0fabc2b6f4e71e2c9cc78017f545.png" src="../_images/8d039c2d88e3df3c5f313117eb8f3516a26b0fabc2b6f4e71e2c9cc78017f545.png" />
+<img alt="../_images/300a0263913f2fd2a95d3d4e863ba57c2b00b598a513fd3559c7bc4933f51c5d.png" src="../_images/300a0263913f2fd2a95d3d4e863ba57c2b00b598a513fd3559c7bc4933f51c5d.png" />
 </div>
 </div>
 </section>
@@ -740,7 +763,8 @@ Smoker : 1
 <h2><font color='darkblue'>Save Network and Data for GNN Learning </font><a class="headerlink" href="#save-network-and-data-for-gnn-learning" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Feat&#39;</span> <span class="p">:</span> <span class="n">w1</span> <span class="p">,</span> <span class="s1">&#39;phenotypes&#39;</span> <span class="p">:</span> <span class="n">phenotypes</span> <span class="p">,</span> <span class="s1">&#39;PSN_raw&#39;</span> <span class="p">:</span> <span class="p">[]</span> <span class="p">,</span> <span class="s1">&#39;PSN_EWAS&#39;</span> <span class="p">:</span> <span class="n">G</span><span class="p">}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Put the data in a single dictionary</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Feat&#39;</span> <span class="p">:</span> <span class="n">w1</span> <span class="p">,</span> <span class="s1">&#39;phenotypes&#39;</span> <span class="p">:</span> <span class="n">phenotypes</span> <span class="p">,</span> <span class="s1">&#39;PSN_raw&#39;</span> <span class="p">:</span> <span class="p">[]</span> <span class="p">,</span> <span class="s1">&#39;PSN_EWAS&#39;</span> <span class="p">:</span> <span class="n">G</span><span class="p">}</span>
 
 <span class="c1"># File path to save the pickle file</span>
 <span class="n">file_path</span> <span class="o">=</span> <span class="s1">&#39;./../data/GCN_Data.pkl&#39;</span>

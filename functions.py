@@ -19,6 +19,25 @@ import torch.nn as nn
 import torch.nn.functional as F
 from dgl.nn import GraphConv
 
+def pearson_corr(data) : 
+
+    data = data._get_numeric_data()
+    cols = data.columns
+    idx = cols.copy()
+    mat = data.to_numpy(dtype=float, na_value=np.nan, copy=False)
+    mat = mat.T
+
+    K = len(cols)
+    correl = np.empty((K, K), dtype=np.float32)
+    mask = np.isfinite(mat)
+
+    cov = np.cov(mat)
+
+    for i in range(K) : 
+        correl[i , : ] = cov[i , :] / np.sqrt(cov[i,i] * np.diag(cov))
+        
+    return pd.DataFrame(data = correl , index=idx , columns=cols , dtype=np.float32)
+
 def abs_bicorr(data) : 
 
     data = data._get_numeric_data()
@@ -128,15 +147,14 @@ def train(g, h, train_split , val_split , device ,  model , labels , epochs , lr
             epoch_progress.update(5)
 
     fig1 , ax1 = plt.subplots(figsize=(6,4))
-    ax1.plot(train_loss[-1250:]  , label = 'Train Loss')
-    ax1.plot(range(5 , len(train_loss[-1250:])+1 , 5) , val_loss[-250:]  , label = 'Validation Loss')
+    ax1.plot(train_loss , label = 'Train Loss')
+    ax1.plot(range(5 , len(train_loss)+1 , 5) , val_loss  , label = 'Validation Loss')
     ax1.set_title('Training and Validation Loss')
-    ax1.set_ylim(0,1)
     ax1.legend()
     
     fig2 , ax2 = plt.subplots(figsize=(6,4))
-    ax2.plot(train_acc[-250:]  , label = 'Train Accuracy')
-    ax2.plot(val_acc[-250:]  , label = 'Validation Accuracy')
+    ax2.plot(train_acc  , label = 'Train Accuracy')
+    ax2.plot(val_acc  , label = 'Validation Accuracy')
     ax2.set_title('Training and Validation Accuracy')
     ax2.set_ylim(0,1)
     ax2.legend()
@@ -181,13 +199,6 @@ class GCN(nn.Module):
         self.batch_norms = nn.ModuleList()
         self.num_layers = len(hidden_feats) + 1
         
-        '''
-        #################################################
-                       YOUR CODE HERE
-        #################################################
-        
-        '''
-        
         for layers in range(self.num_layers) :
             if layers < self.num_layers -1 :
                 if layers == 0 : 
@@ -204,27 +215,10 @@ class GCN(nn.Module):
                     GraphConv(hidden_feats[layers-1] , num_classes)
                 )
                 
-        self.drop = nn.Dropout(0.1)
+        self.drop = nn.Dropout(0.05)
 
     def forward(self, g, h):
         # list of hidden representation at each layer (including the input layer)
-        
-        '''
-        #################################################
-                       YOUR CODE HERE
-        #################################################
-        
-        We will now perform propagation and aggregation in the same function.
-        We need to gather the node features of all neighbouring nodes -> propagation
-        We will aggregate these messages by performing median aggregation -> aggregation
-        
-        Note. This function gathers the messages for a single node and will be useed
-        to iterate over in the message_passing_iteration
-        
-        In this function you will need to : 
-            1. Create a nested list of the node features of neighbouring nodes
-            2. Aggregate these messages for each node using np.median() or likewise
-        '''
         
         for layers in range(self.num_layers) : 
             if layers == self.num_layers - 1 : 
