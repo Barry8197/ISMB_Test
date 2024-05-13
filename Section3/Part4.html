@@ -443,6 +443,20 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">6</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="ne">----&gt; </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">palettable</span> <span class="kn">import</span> <span class="n">wesanderson</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">import</span> <span class="nn">snf</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;palettable&#39;
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 <section id="import-and-process-generation-scotland-data">
@@ -506,12 +520,12 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/3f4c97ff5f1ead142174c7917f54849d0542549b38a9c9634509fc9f5d70fdf3.png" src="../_images/3f4c97ff5f1ead142174c7917f54849d0542549b38a9c9634509fc9f5d70fdf3.png" />
+<img alt="../_images/85532e86ebfea22991ba035d3d98c23d0e5ae322344d4a24ca252be5637e3a81.png" src="../_images/85532e86ebfea22991ba035d3d98c23d0e5ae322344d4a24ca252be5637e3a81.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Non-Smoker : 0 
 Smoker : 1
 </pre></div>
 </div>
-<img alt="../_images/c2dee97a1c2a56cdad9aa99e97ba7e4375529a0b3a3f15433e7b490bf9e540eb.png" src="../_images/c2dee97a1c2a56cdad9aa99e97ba7e4375529a0b3a3f15433e7b490bf9e540eb.png" />
+<img alt="../_images/d578d97aa5921de8898848aa9fab61cbc76d407068cadb68cfa172411d97cfef.png" src="../_images/d578d97aa5921de8898848aa9fab61cbc76d407068cadb68cfa172411d97cfef.png" />
 </div>
 </div>
 </section>
@@ -573,80 +587,14 @@ Smoker : 1
   )
   (drop): Dropout(p=0.05, inplace=False)
 )
-Graph(num_nodes=1000, num_edges=34941,
-      ndata_schemes={&#39;idx&#39;: Scheme(shape=(), dtype=torch.int64), &#39;label&#39;: Scheme(shape=(), dtype=torch.int8), &#39;feat&#39;: Scheme(shape=(23676,), dtype=torch.float32)}
+Graph(num_nodes=1000, num_edges=34513,
+      ndata_schemes={&#39;idx&#39;: Scheme(shape=(), dtype=torch.int32), &#39;label&#39;: Scheme(shape=(), dtype=torch.int8), &#39;feat&#39;: Scheme(shape=(23676,), dtype=torch.float32)}
       edata_schemes={})
 </pre></div>
 </div>
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "7813cd599f3d49c187f37c4f4ff61138"}</script><div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">line</span> <span class="mi">30</span>
-<span class="g g-Whitespace">     </span><span class="mi">27</span> <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">28</span> <span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">30</span> <span class="n">loss_plot</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">g</span><span class="o">.</span><span class="n">ndata</span><span class="p">[</span><span class="s1">&#39;feat&#39;</span><span class="p">]</span> <span class="p">,</span> <span class="n">train_index</span> <span class="p">,</span> <span class="n">val_index</span> <span class="p">,</span> <span class="n">device</span> <span class="p">,</span>  <span class="n">model</span> <span class="p">,</span> <span class="n">labels</span> <span class="p">,</span> <span class="mi">1200</span> <span class="p">,</span> <span class="mf">1e-3</span><span class="p">)</span> <span class="c1"># Train model</span>
-<span class="g g-Whitespace">     </span><span class="mi">31</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">33</span> <span class="n">test_output_metrics</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">test_index</span> <span class="p">,</span> <span class="n">device</span> <span class="p">,</span> <span class="n">g</span> <span class="p">,</span> <span class="n">g</span><span class="o">.</span><span class="n">ndata</span><span class="p">[</span><span class="s1">&#39;feat&#39;</span><span class="p">]</span> <span class="p">,</span> <span class="n">model</span> <span class="p">,</span> <span class="n">labels</span> <span class="p">)</span> <span class="c1"># Evaluate model on test set</span>
-
-<span class="nn">File ~/Library/CloudStorage/OneDrive-UniversityofEdinburgh/PhD_Research/Year2/Python/ismb_jupyterbook/ISMB_Test/Section3/./../functions.py:136,</span> in <span class="ni">train</span><span class="nt">(g, h, train_split, val_split, device, model, labels, epochs, lr)</span>
-<span class="g g-Whitespace">    </span><span class="mi">133</span> <span class="n">_</span><span class="p">,</span> <span class="n">true</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">train_split</span><span class="p">]</span> <span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">134</span> <span class="n">train_acc</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">predicted</span> <span class="o">==</span> <span class="n">true</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
-<span class="ne">--&gt; </span><span class="mi">136</span> <span class="n">valid_loss</span> <span class="p">,</span> <span class="n">valid_acc</span> <span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">val_split</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">g</span> <span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">model</span> <span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">137</span> <span class="n">val_loss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">valid_loss</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
-<span class="g g-Whitespace">    </span><span class="mi">138</span> <span class="n">val_acc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">valid_acc</span><span class="p">)</span>
-
-<span class="nn">File ~/Library/CloudStorage/OneDrive-UniversityofEdinburgh/PhD_Research/Year2/Python/ismb_jupyterbook/ISMB_Test/Section3/./../functions.py:173,</span> in <span class="ni">evaluate</span><span class="nt">(split, device, g, h, model, labels)</span>
-<span class="g g-Whitespace">    </span><span class="mi">170</span> <span class="n">acc</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="g g-Whitespace">    </span><span class="mi">172</span> <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span> <span class="p">:</span> 
-<span class="ne">--&gt; </span><span class="mi">173</span>     <span class="n">logits</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">175</span>     <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fcn</span><span class="p">(</span><span class="n">logits</span><span class="p">[</span><span class="n">split</span><span class="p">],</span> <span class="n">labels</span><span class="p">[</span><span class="n">split</span><span class="p">]</span><span class="o">.</span><span class="n">float</span><span class="p">())</span>
-<span class="g g-Whitespace">    </span><span class="mi">177</span>     <span class="n">_</span><span class="p">,</span> <span class="n">predicted</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">logits</span><span class="p">[</span><span class="n">split</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
-
-<span class="nn">File ~/anaconda3/lib/python3.11/site-packages/torch/nn/modules/module.py:1518,</span> in <span class="ni">Module._wrapped_call_impl</span><span class="nt">(self, *args, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1516</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compiled_call_impl</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>  <span class="c1"># type: ignore[misc]</span>
-<span class="g g-Whitespace">   </span><span class="mi">1517</span> <span class="k">else</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">1518</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_impl</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-<span class="nn">File ~/anaconda3/lib/python3.11/site-packages/torch/nn/modules/module.py:1527,</span> in <span class="ni">Module._call_impl</span><span class="nt">(self, *args, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1522</span> <span class="c1"># If we don&#39;t have any hooks, we want to skip the rest of the logic in</span>
-<span class="g g-Whitespace">   </span><span class="mi">1523</span> <span class="c1"># this function, and just call forward.</span>
-<span class="g g-Whitespace">   </span><span class="mi">1524</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_backward_hooks</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backward_pre_hooks</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_forward_hooks</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_forward_pre_hooks</span>
-<span class="g g-Whitespace">   </span><span class="mi">1525</span>         <span class="ow">or</span> <span class="n">_global_backward_pre_hooks</span> <span class="ow">or</span> <span class="n">_global_backward_hooks</span>
-<span class="g g-Whitespace">   </span><span class="mi">1526</span>         <span class="ow">or</span> <span class="n">_global_forward_hooks</span> <span class="ow">or</span> <span class="n">_global_forward_pre_hooks</span><span class="p">):</span>
-<span class="ne">-&gt; </span><span class="mi">1527</span>     <span class="k">return</span> <span class="n">forward_call</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1529</span> <span class="k">try</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1530</span>     <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
-
-<span class="nn">File ~/Library/CloudStorage/OneDrive-UniversityofEdinburgh/PhD_Research/Year2/Python/ismb_jupyterbook/ISMB_Test/Section3/./../functions.py:227,</span> in <span class="ni">GCN.forward</span><span class="nt">(self, g, h)</span>
-<span class="g g-Whitespace">    </span><span class="mi">225</span>         <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gcnlayers</span><span class="p">[</span><span class="n">layers</span><span class="p">](</span><span class="n">g</span> <span class="p">,</span> <span class="n">h</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">226</span>     <span class="k">else</span> <span class="p">:</span> 
-<span class="ne">--&gt; </span><span class="mi">227</span>         <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gcnlayers</span><span class="p">[</span><span class="n">layers</span><span class="p">](</span><span class="n">g</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">228</span>         <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">h</span><span class="p">))</span>
-<span class="g g-Whitespace">    </span><span class="mi">230</span> <span class="n">score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
-
-<span class="nn">File ~/anaconda3/lib/python3.11/site-packages/torch/nn/modules/module.py:1518,</span> in <span class="ni">Module._wrapped_call_impl</span><span class="nt">(self, *args, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1516</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compiled_call_impl</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>  <span class="c1"># type: ignore[misc]</span>
-<span class="g g-Whitespace">   </span><span class="mi">1517</span> <span class="k">else</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">1518</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_impl</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-<span class="nn">File ~/anaconda3/lib/python3.11/site-packages/torch/nn/modules/module.py:1527,</span> in <span class="ni">Module._call_impl</span><span class="nt">(self, *args, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1522</span> <span class="c1"># If we don&#39;t have any hooks, we want to skip the rest of the logic in</span>
-<span class="g g-Whitespace">   </span><span class="mi">1523</span> <span class="c1"># this function, and just call forward.</span>
-<span class="g g-Whitespace">   </span><span class="mi">1524</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_backward_hooks</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backward_pre_hooks</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_forward_hooks</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_forward_pre_hooks</span>
-<span class="g g-Whitespace">   </span><span class="mi">1525</span>         <span class="ow">or</span> <span class="n">_global_backward_pre_hooks</span> <span class="ow">or</span> <span class="n">_global_backward_hooks</span>
-<span class="g g-Whitespace">   </span><span class="mi">1526</span>         <span class="ow">or</span> <span class="n">_global_forward_hooks</span> <span class="ow">or</span> <span class="n">_global_forward_pre_hooks</span><span class="p">):</span>
-<span class="ne">-&gt; </span><span class="mi">1527</span>     <span class="k">return</span> <span class="n">forward_call</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1529</span> <span class="k">try</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1530</span>     <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
-
-<span class="nn">File ~/anaconda3/lib/python3.11/site-packages/dgl/nn/pytorch/conv/graphconv.py:450,</span> in <span class="ni">GraphConv.forward</span><span class="nt">(self, graph, feat, weight, edge_weight)</span>
-<span class="g g-Whitespace">    </span><span class="mi">447</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_in_feats</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_out_feats</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">448</span>     <span class="c1"># mult W first to reduce the feature size for aggregation.</span>
-<span class="g g-Whitespace">    </span><span class="mi">449</span>     <span class="k">if</span> <span class="n">weight</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">450</span>         <span class="n">feat_src</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">feat_src</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">451</span>     <span class="n">graph</span><span class="o">.</span><span class="n">srcdata</span><span class="p">[</span><span class="s2">&quot;h&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">feat_src</span>
-<span class="g g-Whitespace">    </span><span class="mi">452</span>     <span class="n">graph</span><span class="o">.</span><span class="n">update_all</span><span class="p">(</span><span class="n">aggregate_fn</span><span class="p">,</span> <span class="n">fn</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="s2">&quot;h&quot;</span><span class="p">))</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "8f29142caaed490daa683342e5307962", "version_major": 2, "version_minor": 0}</script><img alt="../_images/b1d25a783c09605e27d07f80aa943d029c1df3c5028755bb96c823ea6b2ee847.png" src="../_images/b1d25a783c09605e27d07f80aa943d029c1df3c5028755bb96c823ea6b2ee847.png" />
+<img alt="../_images/766cc0bf1ba2f9efb54b531d1da78f07242a9b35fbc9cba4dd14cf9393612108.png" src="../_images/766cc0bf1ba2f9efb54b531d1da78f07242a9b35fbc9cba4dd14cf9393612108.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GNN Model | Test Accuracy = 0.8675 | F1 = 0.8440 |
 </pre></div>
 </div>
 </div>

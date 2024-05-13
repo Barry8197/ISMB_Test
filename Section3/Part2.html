@@ -429,10 +429,16 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DGL backend not selected or invalid.  Assuming PyTorch for now.
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Setting the default backend to &quot;pytorch&quot;. You can change it in the ~/.dgl/config.json file or export the DGLBACKEND environment variable.  Valid options are: pytorch, mxnet, tensorflow (all lowercase)
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">5</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="ne">----&gt; </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">palettable</span> <span class="kn">import</span> <span class="n">wesanderson</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">import</span> <span class="nn">sys</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span> <span class="p">,</span> <span class="s1">&#39;./../&#39;</span><span class="p">)</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;palettable&#39;
 </pre></div>
 </div>
 </div>
@@ -495,7 +501,7 @@ document.write(`
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Distribution of Smokers and Non-Smokers&#39;)
 </pre></div>
 </div>
-<img alt="../_images/0ed6c00e92db0dadc18dd2f22f5f511c20193796c389eddf66bed8cf1a39336a.png" src="../_images/0ed6c00e92db0dadc18dd2f22f5f511c20193796c389eddf66bed8cf1a39336a.png" />
+<img alt="../_images/b81ac3de0c44e3a20a59ab7cb691fcea78078850d3af34e00aac6e2adb7ead31.png" src="../_images/b81ac3de0c44e3a20a59ab7cb691fcea78078850d3af34e00aac6e2adb7ead31.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -757,7 +763,7 @@ document.write(`
 Smoker : 1
 </pre></div>
 </div>
-<img alt="../_images/f4eb8fe900e9f80b0296d183ceac8cda30043f1dd9c9cd319b783cc8ba94670f.png" src="../_images/f4eb8fe900e9f80b0296d183ceac8cda30043f1dd9c9cd319b783cc8ba94670f.png" />
+<img alt="../_images/025e1465b4aff1a27d9ea81305fb477b2241353697618d9b771add46437a1a07.png" src="../_images/025e1465b4aff1a27d9ea81305fb477b2241353697618d9b771add46437a1a07.png" />
 </div>
 </div>
 </section>
