@@ -190,7 +190,7 @@
 <li class="toctree-l2"><a class="reference internal" href="Section2/Part2.html">Part 2</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#"><font color="darkblue"> Introduction to Graph Neural Networks </font></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#"><font color="darkblue"><u> Introduction to Graph Neural Networks </u></font></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="Section3/Part1.html"><font color="darkblue"> Part 1 : Message Passing </font></a></li>
 <li class="toctree-l2"><a class="reference internal" href="Section3/Part2.html"><font color="darkblue"> Part 2 : Problem Formulation / Patient Similarity Network Generation </font></a></li>
 <li class="toctree-l2"><a class="reference internal" href="Section3/Part3.html"><font color="darkblue"> Part 3 : Smoking Network Classification using Graph Convolutional Networks</font></a></li>
@@ -382,7 +382,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1><font color='darkblue'> Introduction to Graph Neural Networks </font></h1>
+    <h1><font color='darkblue'><u> Introduction to Graph Neural Networks </font></u></h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -400,7 +400,7 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-convolutional-network-gcn"><font color="darkblue"> Graph Convolutional Network (GCN) </font></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#node-classification"><font color="darkblue"> Node Classification </font></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-graph-library"><font color="darkblue"> Deep Graph Library </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-graph-library-dgl"><font color="darkblue"> Deep Graph Library (DGL) </font></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generation-scotland-dataset"><font color="darkblue"> Generation Scotland Dataset </font></a></li>
 </ul>
             </nav>
@@ -414,9 +414,9 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-graph-neural-networks">
-<h1><font color='darkblue'> Introduction to Graph Neural Networks </font><a class="headerlink" href="#introduction-to-graph-neural-networks" title="Link to this heading">#</a></h1>
+<h1><font color='darkblue'><u> Introduction to Graph Neural Networks </font></u><a class="headerlink" href="#introduction-to-graph-neural-networks" title="Link to this heading">#</a></h1>
 <p>Graph Neural Networks (GNN) are a powerful architecture for the learning of graph structure and information in a supervised setting. In this workshop we will implement a Graph Convolutional Network (GCN) model from the <a class="reference external" href="https://www.dgl.ai/">Deep Graph Library</a> in Python.</p>
-<p>The goal of GNN’s is to learn an embedding space for nodes which captures both node feature representation and graph structure. Intuitively, if two nodes are connected and belong to the same class they should be close together in the embedding space. Conversely, if two nodes are connected but do not belong to the same class we want them to be separated in the embedding space. Thus, we cannot rely on graph structure alone and necessitates the requirement to include node feature representation also. The method in which capture this similarity is through the message passing algorithm discussed below.</p>
+<p>The goal of GNN’s is to learn an embedding space for nodes which captures both node feature representation and graph structure. Intuitively, if two nodes are connected and belong to the same class they should be close together in the embedding space. Conversely, if two nodes are connected but do not belong to the same class we want them to be separated in the embedding space. Thus, we cannot rely on graph structure alone and necessitates the requirement to include node feature representation also. The method in which we capture this similarity is through the message passing algorithm discussed below.</p>
 <a class="reference internal image-reference" href="_images/GNN_Learning.png"><img alt="fishy" class="align-center" src="_images/GNN_Learning.png" style="width: 600px;" /></a>
 <p>The differentiation between GCN and neural network architectures is their ability to learn from the local neighbourhood as opposed to handcrafted network features. The performance of GCN and other GNN architectures has been demonstrated on a variety of benchmark tasks, hence extending their application to a biomedical setting is an exciting avenue.</p>
 <section id="message-passing-in-gnn-s">
@@ -448,11 +448,14 @@ document.write(`
 <section id="node-classification">
 <h2><font color='darkblue'> Node Classification </font><a class="headerlink" href="#node-classification" title="Link to this heading">#</a></h2>
 </section>
-<section id="deep-graph-library">
-<h2><font color='darkblue'> Deep Graph Library </font><a class="headerlink" href="#deep-graph-library" title="Link to this heading">#</a></h2>
+<section id="deep-graph-library-dgl">
+<h2><font color='darkblue'> Deep Graph Library (DGL) </font><a class="headerlink" href="#deep-graph-library-dgl" title="Link to this heading">#</a></h2>
+<p>DGL is a framework agnostic library of GNN architectures. In this tutorial we will work with a PyTorch implementation but Tensorflow and Apache MXNet are also supported. Our use of DGL will be limited to the implementation of GCN, in particular the GraphConv function. We encourage you to interact further with the DGL library and explore some of their <a class="reference external" href="https://docs.dgl.ai/tutorials/blitz/index.html">tutorials</a> and other <a class="reference external" href="https://docs.dgl.ai/api/python/nn-pytorch.html">model architecutres</a></p>
 </section>
 <section id="generation-scotland-dataset">
 <h2><font color='darkblue'> Generation Scotland Dataset </font><a class="headerlink" href="#generation-scotland-dataset" title="Link to this heading">#</a></h2>
+<p>Generation Scotland is a research study looking at the health and well-being of volunteers and their families. Volunteers answer questionnaires and provide samples for genetic testing. These are combined with NHS health records and innovative laboratory science to create a rich evidence base for understanding health.</p>
+<p>Generation Scotland has been recruiting volunteers since 2006, with over 24000 participants from around 7000 families joined. The goal of Generation Scotland is to improve the health and well-being of current and future generations through partnership between researchers and volunteers. So far, research papers into COVID-19, cancer, diabetes, depression, dementia and more have been published. See the Generation Scotland <a class="reference external" href="https://www.ed.ac.uk/generation-scotland">website</a> for more information.</p>
 </section>
 <div class="toctree-wrapper compound">
 </div>
@@ -530,7 +533,7 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-convolutional-network-gcn"><font color="darkblue"> Graph Convolutional Network (GCN) </font></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#node-classification"><font color="darkblue"> Node Classification </font></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-graph-library"><font color="darkblue"> Deep Graph Library </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-graph-library-dgl"><font color="darkblue"> Deep Graph Library (DGL) </font></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generation-scotland-dataset"><font color="darkblue"> Generation Scotland Dataset </font></a></li>
 </ul>
   </nav></div>
