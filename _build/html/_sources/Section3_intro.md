@@ -1,7 +1,7 @@
-# <font color='darkblue'> Introduction to Graph Neural Networks </font>
+# <font color='darkblue'><u> Introduction to Graph Neural Networks </font></u>
 Graph Neural Networks (GNN) are a powerful architecture for the learning of graph structure and information in a supervised setting. In this workshop we will implement a Graph Convolutional Network (GCN) model from the [Deep Graph Library](https://www.dgl.ai/) in Python. 
 
-The goal of GNN's is to learn an embedding space for nodes which captures both node feature representation and graph structure. Intuitively, if two nodes are connected and belong to the same class they should be close together in the embedding space. Conversely, if two nodes are connected but do not belong to the same class we want them to be separated in the embedding space. Thus, we cannot rely on graph structure alone and necessitates the requirement to include node feature representation also. The method in which capture this similarity is through the message passing algorithm discussed below. 
+The goal of GNN's is to learn an embedding space for nodes which captures both node feature representation and graph structure. Intuitively, if two nodes are connected and belong to the same class they should be close together in the embedding space. Conversely, if two nodes are connected but do not belong to the same class we want them to be separated in the embedding space. Thus, we cannot rely on graph structure alone and necessitates the requirement to include node feature representation also. The method in which we capture this similarity is through the message passing algorithm discussed below. 
 
 ```{image} ./GNN_Learning.png
 :alt: fishy
@@ -56,6 +56,11 @@ In this workshop we will work exclusively with the GCN model shown below. The GC
 
 ## <font color='darkblue'> Node Classification </font>
 
-## <font color='darkblue'> Deep Graph Library </font>
+## <font color='darkblue'> Deep Graph Library (DGL) </font>
+DGL is a framework agnostic library of GNN architectures. In this tutorial we will work with a PyTorch implementation but Tensorflow and Apache MXNet are also supported. Our use of DGL will be limited to the implementation of GCN, in particular the GraphConv function. We encourage you to interact further with the DGL library and explore some of their [tutorials](https://docs.dgl.ai/tutorials/blitz/index.html) and other [model architecutres](https://docs.dgl.ai/api/python/nn-pytorch.html)
 
 ## <font color='darkblue'> Generation Scotland Dataset </font>
+Generation Scotland is a research study looking at the health and well-being of volunteers and their families. Volunteers answer questionnaires and provide samples for genetic testing. These are combined with NHS health records and innovative laboratory science to create a rich evidence base for understanding health. 
+
+Generation Scotland has been recruiting volunteers since 2006, with over 24000 participants from around 7000 families joined. The goal of Generation Scotland is to improve the health and well-being of current and future generations through partnership between researchers and volunteers. So far, research papers into COVID-19, cancer, diabetes, depression, dementia and more have been published. See the Generation Scotland [website](https://www.ed.ac.uk/generation-scotland) for more information. 
+
