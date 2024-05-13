@@ -54,13 +54,30 @@ In this workshop we will work exclusively with the GCN model shown below. The GC
 :align: center
 ```
 
-## <font color='darkblue'> Node Classification </font>
+## <font color='darkblue'> GNN Task : Node Classification </font>
+Node classification in GNNs is a task where the goal is to predict the label or class of individual nodes in a graph based on their features and the structure of the graph. We have introduced the concept of using message passing to generate node embeddings. These embeddings can be used for edge predictions (prediciting missing edges), graph classification (predicting label based on graph structure) or as is our case node classification. In node classification a classifier (often a simple linear layer) is trained to predict the node's class based on its embedding. This approach allows for the prediction of node classes even in the presence of complex and non-Euclidean graph structures.
+
+```{image} ./prediction_tasks.png
+:alt: fishy
+:width: 1200px
+:align: center
+```
 
 ## <font color='darkblue'> Deep Graph Library (DGL) </font>
 DGL is a framework agnostic library of GNN architectures. In this tutorial we will work with a PyTorch implementation but Tensorflow and Apache MXNet are also supported. Our use of DGL will be limited to the implementation of GCN, in particular the GraphConv function. We encourage you to interact further with the DGL library and explore some of their [tutorials](https://docs.dgl.ai/tutorials/blitz/index.html) and other [model architecutres](https://docs.dgl.ai/api/python/nn-pytorch.html)
+
+## <font color='darkblue'> Similarity Network Fusion (SNF) </font>
+As introduced earlier, SNF is an algorithm for the fusion of networks. It is applied to fuse the graphs into a single network representing the full spectrum of the underlying data. It allows complimentary information to be shared between modalities, and is effective in identifying novel relationships between patients. It also integrates missing patient samples inherently by complimenting a missing edge in one modality with the same relationship from others. 
+
+```{image} ./SNF.png
+:alt: fishy
+:width: 1200px
+:align: center
+```
 
 ## <font color='darkblue'> Generation Scotland Dataset </font>
 Generation Scotland is a research study looking at the health and well-being of volunteers and their families. Volunteers answer questionnaires and provide samples for genetic testing. These are combined with NHS health records and innovative laboratory science to create a rich evidence base for understanding health. 
 
 Generation Scotland has been recruiting volunteers since 2006, with over 24000 participants from around 7000 families joined. The goal of Generation Scotland is to improve the health and well-being of current and future generations through partnership between researchers and volunteers. So far, research papers into COVID-19, cancer, diabetes, depression, dementia and more have been published. See the Generation Scotland [website](https://www.ed.ac.uk/generation-scotland) for more information. 
 
+In this section we will use a subset of the dataset consisting of 2733 participants. We will use DNA Methylation from these participants to predict if they are "Smokers" or "non-Smokers". The data used is anonymous with normally distributed jitter added to the phenotypes to further preserve anonymity while maintaining the overall data distribution. 
