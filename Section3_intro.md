@@ -1,6 +1,4 @@
 # <font color='darkblue'><u> Introduction to Graph Neural Networks </font></u>
-This is an examplar change
-
 Graph Neural Networks (GNN) are a powerful architecture for the learning of graph structure and information in a supervised setting. In this workshop we will implement a Graph Convolutional Network (GCN) model from the [Deep Graph Library](https://www.dgl.ai/) in Python. 
 
 The goal of GNN's is to learn an embedding space for nodes which captures both node feature representation and graph structure. Intuitively, if two nodes are connected and belong to the same class they should be close together in the embedding space. Conversely, if two nodes are connected but do not belong to the same class we want them to be separated in the embedding space. Thus, we cannot rely on graph structure alone and necessitates the requirement to include node feature representation also. The method in which we capture this similarity is through the message passing algorithm discussed below. 
