@@ -16,7 +16,7 @@ Message passing is the method of information exchange among nodes. It is perform
 
 ```{image} ./GNNMessagePassing.png
 :alt: fishy
-:width: 600px
+:width: 1200px
 :align: center
 ```
 
@@ -24,12 +24,12 @@ The message passing algorithm consists of three core steps : Propagation, Aggreg
 
 ```{image} ./MessagePassingalgo.png
 :alt: fishy
-:width: 600px
+:width: 1000px
 :align: center
 ```
 
 ### <font color='darkblue'> Propagation </font>
-The first step of message passing simply involves gathering all embeddings $h(k)_v$ for every node u. During this step it is common to apply an augmentation. In a GCN this augmentation is a Multi Layer Perceptron of arbritrary dimension. In this manner each node receives a single augmented message from its neighbours.
+The first step of message passing simply involves gathering all embeddings $h(k)_v$ for every node u. During this step it is common to apply an augmentation. In a GCN this augmentation is a Multi Layer Perceptron of arbitrary dimension. In this manner each node receives a single augmented message from its neighbours.
 
 It is important to note that this step makes GNN's invariant to the order of the nodes. i.e. it does not matter if the message ordering to A is D, B, C or B, C, D. As we perform an augmentation on a set of node embeddings, the GNN is unaffected by permutations to the ordering. 
 
@@ -37,21 +37,20 @@ It is important to note that this step makes GNN's invariant to the order of the
 The method of node aggregation is a significant differentiator between different GNN architecture. For example, GCN's employ mean pooling whereas, GraphSage employs max-pooling. The aggregation step summarises the information received from the other nodes. 
 
 ### <font color='darkblue'> Update </font>
-Finally, the node updates it's embedding position based on the new information it has gathered from it's neighbouring nodes. 
+Finally, the node updates its embedding position based on the new information it has gathered from its neighbouring nodes. 
 
 ## <font color='darkblue'> Graph Convolutional Network (GCN) </font>
-In this workshop we will work exclusively with the GCN model shown below. The GCN consists uses Multi Layer Perceptron linear layers for message augmentation, element-wise mean pooling and intermediate ReLU non-linearity. 
-
+In this workshop we will work exclusively with the GCN model shown below. The GCN uses Multi Layer Perceptron linear layers for message augmentation and propagation, element-wise mean pooling and intermediate ReLU non-linearity for aggregation. GCN's require the full network to be present during training and use a semi supervised approach for learning from network and data structures. 
 
 ```{image} ./GCN.png
 :alt: fishy
-:width: 600px
+:width: 1000px
 :align: center
 ```
 
 ```{image} ./GCN2.png
 :alt: fishy
-:width: 600px
+:width: 1200px
 :align: center
 ```
 

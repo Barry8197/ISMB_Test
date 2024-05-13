@@ -422,12 +422,12 @@ document.write(`
 <section id="message-passing-in-gnn-s">
 <h2><font color='darkblue'> Message Passing in GNN’s </font><a class="headerlink" href="#message-passing-in-gnn-s" title="Link to this heading">#</a></h2>
 <p>Message passing is the method of information exchange among nodes. It is performed so that similar nodes are mapped to similar embedding spaces during the learning phase of the GNN. i.e. if A, D and B are cancer patients, we want D and B to exchange this information with A, but we want C to exchange the information that it is not a cancer patient. In doing so, A will see that it is connected to 2 cancer patients and 1 non cancer patient thus, learning that it is more likely also a cancer patient.</p>
-<a class="reference internal image-reference" href="_images/GNNMessagePassing.png"><img alt="fishy" class="align-center" src="_images/GNNMessagePassing.png" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/GNNMessagePassing.png"><img alt="fishy" class="align-center" src="_images/GNNMessagePassing.png" style="width: 1200px;" /></a>
 <p>The message passing algorithm consists of three core steps : Propagation, Aggregation and Update. For a single node “u”, the hidden embedding <span class="math notranslate nohighlight">\(h(k)_u\)</span> can be formulated as per the general equation, where <span class="math notranslate nohighlight">\(N(u)\)</span> is the neighbourhood of u.</p>
-<a class="reference internal image-reference" href="_images/MessagePassingalgo.png"><img alt="fishy" class="align-center" src="_images/MessagePassingalgo.png" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/MessagePassingalgo.png"><img alt="fishy" class="align-center" src="_images/MessagePassingalgo.png" style="width: 1000px;" /></a>
 <section id="propagation">
 <h3><font color='darkblue'> Propagation </font><a class="headerlink" href="#propagation" title="Link to this heading">#</a></h3>
-<p>The first step of message passing simply involves gathering all embeddings <span class="math notranslate nohighlight">\(h(k)_v\)</span> for every node u. During this step it is common to apply an augmentation. In a GCN this augmentation is a Multi Layer Perceptron of arbritrary dimension. In this manner each node receives a single augmented message from its neighbours.</p>
+<p>The first step of message passing simply involves gathering all embeddings <span class="math notranslate nohighlight">\(h(k)_v\)</span> for every node u. During this step it is common to apply an augmentation. In a GCN this augmentation is a Multi Layer Perceptron of arbitrary dimension. In this manner each node receives a single augmented message from its neighbours.</p>
 <p>It is important to note that this step makes GNN’s invariant to the order of the nodes. i.e. it does not matter if the message ordering to A is D, B, C or B, C, D. As we perform an augmentation on a set of node embeddings, the GNN is unaffected by permutations to the ordering.</p>
 </section>
 <section id="aggregation">
@@ -436,14 +436,14 @@ document.write(`
 </section>
 <section id="update">
 <h3><font color='darkblue'> Update </font><a class="headerlink" href="#update" title="Link to this heading">#</a></h3>
-<p>Finally, the node updates it’s embedding position based on the new information it has gathered from it’s neighbouring nodes.</p>
+<p>Finally, the node updates its embedding position based on the new information it has gathered from its neighbouring nodes.</p>
 </section>
 </section>
 <section id="graph-convolutional-network-gcn">
 <h2><font color='darkblue'> Graph Convolutional Network (GCN) </font><a class="headerlink" href="#graph-convolutional-network-gcn" title="Link to this heading">#</a></h2>
-<p>In this workshop we will work exclusively with the GCN model shown below. The GCN consists uses Multi Layer Perceptron linear layers for message augmentation, element-wise mean pooling and intermediate ReLU non-linearity.</p>
-<a class="reference internal image-reference" href="_images/GCN.png"><img alt="fishy" class="align-center" src="_images/GCN.png" style="width: 600px;" /></a>
-<a class="reference internal image-reference" href="_images/GCN2.png"><img alt="fishy" class="align-center" src="_images/GCN2.png" style="width: 600px;" /></a>
+<p>In this workshop we will work exclusively with the GCN model shown below. The GCN uses Multi Layer Perceptron linear layers for message augmentation and propagation, element-wise mean pooling and intermediate ReLU non-linearity for aggregation. GCN’s require the full network to be present during training and use a semi supervised approach for learning from network and data structures.</p>
+<a class="reference internal image-reference" href="_images/GCN.png"><img alt="fishy" class="align-center" src="_images/GCN.png" style="width: 1000px;" /></a>
+<a class="reference internal image-reference" href="_images/GCN2.png"><img alt="fishy" class="align-center" src="_images/GCN2.png" style="width: 1200px;" /></a>
 </section>
 <section id="node-classification">
 <h2><font color='darkblue'> Node Classification </font><a class="headerlink" href="#node-classification" title="Link to this heading">#</a></h2>
