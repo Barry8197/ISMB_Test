@@ -399,8 +399,9 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-convolutional-network-gcn"><font color="darkblue"> Graph Convolutional Network (GCN) </font></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#node-classification"><font color="darkblue"> Node Classification </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gnn-task-node-classification"><font color="darkblue"> GNN Task : Node Classification </font></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-graph-library-dgl"><font color="darkblue"> Deep Graph Library (DGL) </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#similarity-network-fusion-snf"><font color="darkblue"> Similarity Network Fusion (SNF) </font></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generation-scotland-dataset"><font color="darkblue"> Generation Scotland Dataset </font></a></li>
 </ul>
             </nav>
@@ -445,17 +446,25 @@ document.write(`
 <a class="reference internal image-reference" href="_images/GCN.png"><img alt="fishy" class="align-center" src="_images/GCN.png" style="width: 1000px;" /></a>
 <a class="reference internal image-reference" href="_images/GCN2.png"><img alt="fishy" class="align-center" src="_images/GCN2.png" style="width: 1200px;" /></a>
 </section>
-<section id="node-classification">
-<h2><font color='darkblue'> Node Classification </font><a class="headerlink" href="#node-classification" title="Link to this heading">#</a></h2>
+<section id="gnn-task-node-classification">
+<h2><font color='darkblue'> GNN Task : Node Classification </font><a class="headerlink" href="#gnn-task-node-classification" title="Link to this heading">#</a></h2>
+<p>Node classification in GNNs is a task where the goal is to predict the label or class of individual nodes in a graph based on their features and the structure of the graph. We have introduced the concept of using message passing to generate node embeddings. These embeddings can be used for edge predictions (prediciting missing edges), graph classification (predicting label based on graph structure) or as is our case node classification. In node classification a classifier (often a simple linear layer) is trained to predict the node’s class based on its embedding. This approach allows for the prediction of node classes even in the presence of complex and non-Euclidean graph structures.</p>
+<a class="reference internal image-reference" href="_images/prediction_tasks.png"><img alt="fishy" class="align-center" src="_images/prediction_tasks.png" style="width: 1200px;" /></a>
 </section>
 <section id="deep-graph-library-dgl">
 <h2><font color='darkblue'> Deep Graph Library (DGL) </font><a class="headerlink" href="#deep-graph-library-dgl" title="Link to this heading">#</a></h2>
 <p>DGL is a framework agnostic library of GNN architectures. In this tutorial we will work with a PyTorch implementation but Tensorflow and Apache MXNet are also supported. Our use of DGL will be limited to the implementation of GCN, in particular the GraphConv function. We encourage you to interact further with the DGL library and explore some of their <a class="reference external" href="https://docs.dgl.ai/tutorials/blitz/index.html">tutorials</a> and other <a class="reference external" href="https://docs.dgl.ai/api/python/nn-pytorch.html">model architecutres</a></p>
 </section>
+<section id="similarity-network-fusion-snf">
+<h2><font color='darkblue'> Similarity Network Fusion (SNF) </font><a class="headerlink" href="#similarity-network-fusion-snf" title="Link to this heading">#</a></h2>
+<p>As introduced earlier, SNF is an algorithm for the fusion of networks. It is applied to fuse the graphs into a single network representing the full spectrum of the underlying data. It allows complimentary information to be shared between modalities, and is effective in identifying novel relationships between patients. It also integrates missing patient samples inherently by complimenting a missing edge in one modality with the same relationship from others.</p>
+<a class="reference internal image-reference" href="_images/SNF.png"><img alt="fishy" class="align-center" src="_images/SNF.png" style="width: 1200px;" /></a>
+</section>
 <section id="generation-scotland-dataset">
 <h2><font color='darkblue'> Generation Scotland Dataset </font><a class="headerlink" href="#generation-scotland-dataset" title="Link to this heading">#</a></h2>
 <p>Generation Scotland is a research study looking at the health and well-being of volunteers and their families. Volunteers answer questionnaires and provide samples for genetic testing. These are combined with NHS health records and innovative laboratory science to create a rich evidence base for understanding health.</p>
 <p>Generation Scotland has been recruiting volunteers since 2006, with over 24000 participants from around 7000 families joined. The goal of Generation Scotland is to improve the health and well-being of current and future generations through partnership between researchers and volunteers. So far, research papers into COVID-19, cancer, diabetes, depression, dementia and more have been published. See the Generation Scotland <a class="reference external" href="https://www.ed.ac.uk/generation-scotland">website</a> for more information.</p>
+<p>In this section we will use a subset of the dataset consisting of 2733 participants. We will use DNA Methylation from these participants to predict if they are “Smokers” or “non-Smokers”. The data used is anonymous with normally distributed jitter added to the phenotypes to further preserve anonymity while maintaining the overall data distribution.</p>
 </section>
 <div class="toctree-wrapper compound">
 </div>
@@ -532,8 +541,9 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-convolutional-network-gcn"><font color="darkblue"> Graph Convolutional Network (GCN) </font></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#node-classification"><font color="darkblue"> Node Classification </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gnn-task-node-classification"><font color="darkblue"> GNN Task : Node Classification </font></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-graph-library-dgl"><font color="darkblue"> Deep Graph Library (DGL) </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#similarity-network-fusion-snf"><font color="darkblue"> Similarity Network Fusion (SNF) </font></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generation-scotland-dataset"><font color="darkblue"> Generation Scotland Dataset </font></a></li>
 </ul>
   </nav></div>
