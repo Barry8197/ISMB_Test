@@ -28,7 +28,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
@@ -416,6 +416,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-graph-neural-networks">
 <h1><font color='darkblue'><u> Introduction to Graph Neural Networks </font></u><a class="headerlink" href="#introduction-to-graph-neural-networks" title="Link to this heading">#</a></h1>
+<p>This is an examplar change</p>
 <p>Graph Neural Networks (GNN) are a powerful architecture for the learning of graph structure and information in a supervised setting. In this workshop we will implement a Graph Convolutional Network (GCN) model from the <a class="reference external" href="https://www.dgl.ai/">Deep Graph Library</a> in Python.</p>
 <p>The goal of GNN’s is to learn an embedding space for nodes which captures both node feature representation and graph structure. Intuitively, if two nodes are connected and belong to the same class they should be close together in the embedding space. Conversely, if two nodes are connected but do not belong to the same class we want them to be separated in the embedding space. Thus, we cannot rely on graph structure alone and necessitates the requirement to include node feature representation also. The method in which we capture this similarity is through the message passing algorithm discussed below.</p>
 <a class="reference internal image-reference" href="_images/GNN_Learning.png"><img alt="fishy" class="align-center" src="_images/GNN_Learning.png" style="width: 600px;" /></a>
