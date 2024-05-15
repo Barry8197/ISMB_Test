@@ -17,13 +17,14 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-{0 : [0,1] , 1 : [0,1] .... 32 : [1,0]}
+gen_graph_legend()
 ------------------
 
-[1;36m  Input [1;32mIn [12][1;36m[0m
-[1;33m    {0 : [0,1] , 1 : [0,1] .... 32 : [1,0]}[0m
-[1;37m                           ^[0m
-[1;31mSyntaxError[0m[1;31m:[0m invalid syntax
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mTypeError[0m                                 Traceback (most recent call last)
+Input [1;32mIn [3][0m, in [0;36m<cell line: 1>[1;34m()[0m
+[1;32m----> 1[0m [43mgen_graph_legend[49m[43m([49m[43m)[49m
 
-SyntaxError: invalid syntax (3099182095.py, line 1)
+[1;31mTypeError[0m: gen_graph_legend() missing 3 required positional arguments: 'node_colours', 'G', and 'attr'
+TypeError: gen_graph_legend() missing 3 required positional arguments: 'node_colours', 'G', and 'attr'
 
