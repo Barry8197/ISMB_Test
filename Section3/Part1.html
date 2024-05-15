@@ -195,10 +195,7 @@
 <li class="toctree-l2"><a class="reference internal" href="Part4.html"><font color="darkblue"> Part 4 : Similarity Network Fusion with Graph Convolutional Networks</font></a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../Functions.html">Functions Overview Section</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../Functions/functions.html">API Reference</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../functions_definitions.html">CUSTOM FUNCTIONS</a></li>
 </ul>
 
     </div>
@@ -455,23 +452,6 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gen_graph_legend</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="nn">Input In [3],</span> in <span class="ni">&lt;cell line: 1&gt;</span><span class="nt">()</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">gen_graph_legend</span><span class="p">()</span>
-
-<span class="ne">TypeError</span>: gen_graph_legend() missing 3 required positional arguments: &#39;node_colours&#39;, &#39;G&#39;, and &#39;attr&#39;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate a node colour for each club in karate club</span>
 <span class="n">node_colours</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">get_node_attributes</span><span class="p">(</span><span class="n">G</span> <span class="p">,</span> <span class="s1">&#39;club&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Mr. Hi&#39;</span> <span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Officer&#39;</span> <span class="p">,</span> <span class="s1">&#39;skyblue&#39;</span><span class="p">)</span>
 
@@ -486,7 +466,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/dfb306c689c5fa602daa8d0d4f7d1fde85cf4026945e7ee69d46957a8a8ff390.png" src="../_images/dfb306c689c5fa602daa8d0d4f7d1fde85cf4026945e7ee69d46957a8a8ff390.png" />
+<img alt="../_images/87df2e3da45e5507fa96e82d3d1bcddce2a00fd474db8a63f85a2da78053427d.png" src="../_images/87df2e3da45e5507fa96e82d3d1bcddce2a00fd474db8a63f85a2da78053427d.png" />
 </div>
 </div>
 <section id="message-passing-features">
@@ -563,7 +543,7 @@ Node: 32 Feature: [1 0]
 Node: 33 Feature: [1 0]
 </pre></div>
 </div>
-<img alt="../_images/4a10c2b101a5247bb9b5010744bafe161176977f79226c22a4ac0cac8c6b801a.png" src="../_images/4a10c2b101a5247bb9b5010744bafe161176977f79226c22a4ac0cac8c6b801a.png" />
+<img alt="../_images/6782e7fc89dfe1fd83aa0daa238657b838f8c43b583d9658e2fbe4395b059686.png" src="../_images/6782e7fc89dfe1fd83aa0daa238657b838f8c43b583d9658e2fbe4395b059686.png" />
 </div>
 </div>
 </section>
@@ -733,7 +713,7 @@ Node: 32 Feature: [1. 0.]
 Node: 33 Feature: [1. 0.]
 </pre></div>
 </div>
-<img alt="../_images/1e75718d3ea6ee238cece2dedbe61441ff9792c4ee4fbeabf46219d7e29efbab.png" src="../_images/1e75718d3ea6ee238cece2dedbe61441ff9792c4ee4fbeabf46219d7e29efbab.png" />
+<img alt="../_images/c7a4517ff115eae143b7dc88079c1b65a19d1222265da0c0cb6daa67a6c04337.png" src="../_images/c7a4517ff115eae143b7dc88079c1b65a19d1222265da0c0cb6daa67a6c04337.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -778,7 +758,7 @@ Node: 4 Feature: [0.23706055 0.76293945]
 Node: 5 Feature: [0.23706055 0.76293945]
 Node: 6 Feature: [0.23706055 0.76293945]
 Node: 7 Feature: [0.25 0.75]
-Node: 8 Feature: [1.00000000e+00 1.97215226e-31]
+Node: 8 Feature: [1. 0.]
 Node: 9 Feature: [0.75 0.25]
 Node: 10 Feature: [0.23706055 0.76293945]
 Node: 11 Feature: [0.25 0.75]
@@ -800,7 +780,7 @@ Node: 26 Feature: [1. 0.]
 Node: 27 Feature: [1. 0.]
 Node: 28 Feature: [1. 0.]
 Node: 29 Feature: [1. 0.]
-Node: 30 Feature: [1. 0.]
+Node: 30 Feature: [1.00000000e+00 2.22044605e-16]
 Node: 31 Feature: [1. 0.]
 Node: 32 Feature: [1. 0.]
 Node: 33 Feature: [1. 0.]
