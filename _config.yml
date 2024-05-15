@@ -9,7 +9,7 @@ logo: logo.png
 # See https://jupyterbook.org/content/execute.html
 execute:
   execute_notebooks: force
-  timeout: 300
+  timeout: 30
 
 # Define the name of the latex output file for PDF builds
 latex:
@@ -31,3 +31,13 @@ repository:
 html:
   use_issues_button: true
   use_repository_button: true
+
+sphinx:
+  extra_extensions:
+  - 'sphinx.ext.autodoc'
+  - 'sphinx.ext.napoleon'
+  - 'sphinx.ext.viewcode'
+  config:
+    add_module_names: True
+  local_extensions:
+    functions : "."

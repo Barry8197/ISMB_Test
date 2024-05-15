@@ -19,8 +19,68 @@ import torch.nn as nn
 import torch.nn.functional as F
 from dgl.nn import GraphConv
 
-def pearson_corr(data) : 
+def message_passing(node, G):
+    """
+    Perform message passing for a given node in a graph.
 
+    Args:
+        node (int): The node for which message passing is performed.
+        G (networkx.Graph): The graph containing the node and its neighbors.
+
+    Returns:
+        numpy.ndarray: The aggregated message from the neighboring nodes.
+
+    Notes:
+        This function gathers the messages for a single node and will be used in the message_passing_iteration.
+        The function performs propagation and aggregation.
+        Propagation: Gather the node features of all neighboring nodes.
+        Aggregation: Aggregate the gathered messages using median aggregation.
+    """
+    neighbors = list(G.neighbors(node))
+    if not neighbors:
+        return G.nodes[node]['feature']
+    else:
+        neighbor_features = [G.nodes[neighbor]['feature'] for neighbor in neighbors]
+        aggregated_message = np.median(neighbor_features, axis=0)
+        
+        return aggregated_message
+
+def message_passing_iteration(G):
+    """
+    Perform message passing iteration on a graph.
+
+    Args:
+        G (networkx.Graph): The input graph.
+
+    Returns:
+        None
+
+    Description:
+        This function performs message passing iteration on a graph. It iterates through all nodes in the graph and updates their features based on the aggregated message from neighboring nodes.
+
+    Note:
+        The function `message_passing` is defined above.
+
+    """
+    updated_features = {}
+
+    for node in G.nodes:
+        updated_features[node] = message_passing(node, G)
+    
+    for node, feature in updated_features.items():
+        G.nodes[node]['feature'] = feature
+
+def pearson_corr(data):
+    """
+    Calculate the Pearson correlation coefficient matrix for a given DataFrame.
+
+    Args:
+        data (pandas.DataFrame): The input DataFrame containing numeric data.
+
+    Returns:
+        pandas.DataFrame: The correlation coefficient matrix.
+
+    """
     data = data._get_numeric_data()
     cols = data.columns
     idx = cols.copy()
@@ -33,13 +93,22 @@ def pearson_corr(data) :
 
     cov = np.cov(mat)
 
-    for i in range(K) : 
-        correl[i , : ] = cov[i , :] / np.sqrt(cov[i,i] * np.diag(cov))
-        
-    return pd.DataFrame(data = correl , index=idx , columns=cols , dtype=np.float32)
+    for i in range(K):
+        correl[i, :] = cov[i, :] / np.sqrt(cov[i, i] * np.diag(cov))
 
-def abs_bicorr(data) : 
+    return pd.DataFrame(data=correl, index=idx, columns=cols, dtype=np.float32)
 
+def abs_bicorr(data):
+    """
+    Calculate the absolute biweight midcorrelation matrix for the given data.
+
+    Args:
+        data (pandas.DataFrame): The input DataFrame containing numeric data.
+
+    Returns:
+        pandas.DataFrame: The absolute biweight midcorrelation matrix.
+
+    """
     data = data._get_numeric_data()
     cols = data.columns
     idx = cols.copy()
@@ -52,24 +121,48 @@ def abs_bicorr(data) :
 
     bicorr = astropy.stats.biweight_midcovariance(mat)
 
-    for i in range(K) : 
-        correl[i , : ] = bicorr[i , :] / np.sqrt(bicorr[i,i] * np.diag(bicorr))
-        
-    return pd.DataFrame(data = correl , index=idx , columns=cols , dtype=np.float32)
+    for i in range(K):
+        correl[i, :] = bicorr[i, :] / np.sqrt(bicorr[i, i] * np.diag(bicorr))
 
-def get_k_neighbours(df , k ) : 
+    return pd.DataFrame(data=correl, index=idx, columns=cols, dtype=np.float32)
+
+def get_k_neighbours(df, k):
+    """
+    Returns a dictionary of k-nearest neighbors for each node in the dataframe.
+
+    Args:
+        df (DataFrame): The similarity matrix dataframe.
+        k (int): The number of neighbors to retrieve.
+
+    Returns:
+        dict: A dictionary where the keys are the nodes and the values are lists of k-nearest neighbors.
+    """
     k_neighbours = {}
-    if abs(df.max().max()) > 1 : 
+    if abs(df.max().max()) > 1:
         print('Dataframe should be a similarity matrix of max value 1')
     else:
-        np.fill_diagonal(df.values , 1)
-        for node in df.index : 
-            neighbours = df.loc[node].nlargest(k+1).index.to_list()[1:] #Exclude the node itself
+        np.fill_diagonal(df.values, 1)
+        for node in df.index:
+            neighbours = df.loc[node].nlargest(k+1).index.to_list()[1:]  # Exclude the node itself
             k_neighbours[node] = neighbours
-        
+
     return k_neighbours
 
 def plot_knn_network(df , K , labels , node_colours = ['skyblue'] , node_size = 300) : 
+    """
+    Plots a k-nearest neighbors network based on the given dataframe and parameters.
+
+    Args:
+        df (pandas.DataFrame): The input dataframe.
+        K (int): The number of nearest neighbors to consider.
+        labels (pandas.Series): The labels for each node in the dataframe.
+        node_colours (list, optional): The colors for the nodes. Defaults to ['skyblue'].
+        node_size (int, optional): The size of the nodes. Defaults to 300.
+
+    Returns:
+        nx.Graph: The NetworkX graph representing the k-nearest neighbors network.
+    """
+    
     # Get K-nearest neighbours for each node
     k_neighbours = get_k_neighbours(df , k = K)
     
@@ -92,15 +185,45 @@ def plot_knn_network(df , K , labels , node_colours = ['skyblue'] , node_size = 
     
     return G
 
-def gen_graph_legend(node_colours , G , attr) : 
-    
+def gen_graph_legend(node_colours, G, attr):
+    """
+    Generate a legend for a graph based on node colors and attributes.
+
+    Args:
+        node_colours (pd.Series): A series of node colors.
+        G (networkx.Graph): The graph object.
+        attr (str): The attribute to use for labeling.
+
+    Returns:
+        patches (list): A list of matplotlib patches representing the legend.
+
+    """
     patches = []
-    for col , lab in zip(node_colours.drop_duplicates() , pd.Series(nx.get_node_attributes(G , attr)).drop_duplicates()) : 
+    for col, lab in zip(node_colours.drop_duplicates(), pd.Series(nx.get_node_attributes(G, attr)).drop_duplicates()):
         patches.append(mpatches.Patch(color=col, label=lab))
-    
+
     return patches
 
 def train(g, h, train_split , val_split , device ,  model , labels , epochs , lr):
+    """
+    Trains a model using the specified graph, node features, 
+    train/validation splits, device, model, labels, epochs, and learning rate.
+
+    Args:
+        g (Graph): The graph object.
+        h (Tensor): The node features tensor.
+        train_split (Tensor): The train split tensor.
+        val_split (Tensor): The validation split tensor.
+        device (str): The device to train the model on.
+        model (nn.Module): The model to train.
+        labels (Tensor): The labels tensor.
+        epochs (int): The number of training epochs.
+        lr (float): The learning rate.
+
+    Returns:
+        tuple: A tuple containing the figures for training and validation loss.
+    """
+
     # loss function, optimizer and scheduler
     loss_fcn = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=lr , weight_decay=1e-4)
@@ -165,6 +288,25 @@ def train(g, h, train_split , val_split , device ,  model , labels , epochs , lr
     return fig1 , fig2
 
 def evaluate(split, device, g , h, model , labels):
+    """
+    Evaluate the performance of a model on a given dataset split.
+
+    Args:
+        split (Tensor): The index of the dataset split to evaluate.
+        device: The device to perform the evaluation on.
+        g: The graph input to the model.
+        h: The node features input to the model.
+        model: The model to evaluate.
+        labels: The ground truth labels for the dataset.
+
+    Returns:
+        tuple: A tuple containing the evaluation metrics:
+            - loss (float): The loss value.
+            - acc (float): The accuracy value.
+            - F1 (float): The F1 score.
+            - PRC (float): The precision-recall curve value.
+            - SNS (float): The sensitivity value.
+    """
     model.eval()
     loss_fcn = nn.CrossEntropyLoss()
     acc = 0
@@ -191,6 +333,18 @@ def evaluate(split, device, g , h, model , labels):
     return loss , acc , F1 , PRC , SNS
     
 class GCN(nn.Module):
+    """
+    Graph Convolutional Network (GCN) class.
+    
+    This class represents a Graph Convolutional Network (GCN) model.
+    It inherits from the `nn.Module` class of PyTorch.
+    
+    Args:
+        input_dim (int): The dimensionality of the input features.
+        hidden_feats (list): A list of integers representing the number of hidden units in each layer.
+        num_classes (int): The number of output classes.
+    """
+    
     def __init__(self, input_dim,  hidden_feats, num_classes):
         
         super().__init__()
@@ -218,7 +372,18 @@ class GCN(nn.Module):
         self.drop = nn.Dropout(0.05)
 
     def forward(self, g, h):
-        # list of hidden representation at each layer (including the input layer)
+        """
+        Forward pass of the GCN model.
+        
+        This method performs the forward pass of the GCN model for an arbitrary number of layers.
+        
+        Args:
+            g (Graph): The input graph.
+            h (Tensor): The input node features.
+        
+        Returns:
+            Tensor: The output scores of the model.
+        """
         
         for layers in range(self.num_layers) : 
             if layers == self.num_layers - 1 : 
