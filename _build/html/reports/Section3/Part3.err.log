@@ -32,14 +32,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-from sklearn.linear_model import LogisticRegression # Import the logistic regression model from sklearn
-
-y_vals = labels.detach().cpu().numpy() # Get the labels as numpy arrays
-input_data = g.ndata['feat'].detach().cpu().numpy() # Get the input features as numpy arrays
-
-glmnet = LogisticRegression(penalty='l1' , solver='saga', max_iter = 1000 ) # Create a logistic regression model with L1 regularization
-glmnet.fit(input_data[train_index] , y_vals[train_index][: , 0]) # Fit the logistic regression model
-glmnet_acc = glmnet.score(input_data[test_index] , y_vals[test_index][: , 0]) # Get the accuracy of the logistic regression model on the test set
-print(f'Baseline Logistic Regression ACC : {glmnet_acc}') # Print the accuracy of the logistic regression model
+['from sklearn.model_selection import train_test_split', '', "device = ('cuda' if torch.cuda.is_available() else 'cpu') # Set the device to GPU if available else CPU", '', 'g = g.to(device) # Move the graph to the device']
+...
+['# Print the test accuracy and F1 score', 'print(', '    "GNN Model | Test Accuracy = {:.4f} | F1 = {:.4f} |".format(', '     test_output_metrics[1] , test_output_metrics[2] )', ')']
 -------------------
 

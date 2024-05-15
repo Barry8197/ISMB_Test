@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
@@ -194,10 +194,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../Section3/Part4.html"><font color="darkblue"> Part 4 : Similarity Network Fusion with Graph Convolutional Networks</font></a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../Functions.html">Functions Overview Section</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../Functions/functions.html">CUSTOM FUNCTIONS</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../functions_definitions.html">CUSTOM FUNCTIONS</a></li>
 </ul>
 
     </div>
@@ -370,7 +367,7 @@ document.write(`
 <span class="kn">from</span> <span class="nn">dgl.nn</span> <span class="kn">import</span> <span class="n">GraphConv</span>
 
 <div class="viewcode-block" id="message_passing">
-<a class="viewcode-back" href="../Functions/functions.html#functions.message_passing">[docs]</a>
+<a class="viewcode-back" href="../functions_definitions.html#functions.message_passing">[docs]</a>
 <span class="k">def</span> <span class="nf">message_passing</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">G</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Perform message passing for a given node in a graph.</span>
@@ -399,7 +396,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="message_passing_iteration">
-<a class="viewcode-back" href="../Functions/functions.html#functions.message_passing_iteration">[docs]</a>
+<a class="viewcode-back" href="../functions_definitions.html#functions.message_passing_iteration">[docs]</a>
 <span class="k">def</span> <span class="nf">message_passing_iteration</span><span class="p">(</span><span class="n">G</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Perform message passing iteration on a graph.</span>
@@ -427,7 +424,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="pearson_corr">
-<a class="viewcode-back" href="../Functions/functions.html#functions.pearson_corr">[docs]</a>
+<a class="viewcode-back" href="../functions_definitions.html#functions.pearson_corr">[docs]</a>
 <span class="k">def</span> <span class="nf">pearson_corr</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the Pearson correlation coefficient matrix for a given DataFrame.</span>
@@ -458,7 +455,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="abs_bicorr">
-<a class="viewcode-back" href="../Functions/functions.html#functions.abs_bicorr">[docs]</a>
+<a class="viewcode-back" href="../functions_definitions.html#functions.abs_bicorr">[docs]</a>
 <span class="k">def</span> <span class="nf">abs_bicorr</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the absolute biweight midcorrelation matrix for the given data.</span>
@@ -489,7 +486,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="get_k_neighbours">
-<a class="viewcode-back" href="../Functions/functions.html#functions.get_k_neighbours">[docs]</a>
+<a class="viewcode-back" href="../functions_definitions.html#functions.get_k_neighbours">[docs]</a>
 <span class="k">def</span> <span class="nf">get_k_neighbours</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns a dictionary of k-nearest neighbors for each node in the dataframe.</span>
@@ -514,7 +511,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="plot_knn_network">
-<a class="viewcode-back" href="../Functions/functions.html#functions.plot_knn_network">[docs]</a>
+<a class="viewcode-back" href="../functions_definitions.html#functions.plot_knn_network">[docs]</a>
 <span class="k">def</span> <span class="nf">plot_knn_network</span><span class="p">(</span><span class="n">df</span> <span class="p">,</span> <span class="n">K</span> <span class="p">,</span> <span class="n">labels</span> <span class="p">,</span> <span class="n">node_colours</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;skyblue&#39;</span><span class="p">]</span> <span class="p">,</span> <span class="n">node_size</span> <span class="o">=</span> <span class="mi">300</span><span class="p">)</span> <span class="p">:</span> 
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Plots a k-nearest neighbors network based on the given dataframe and parameters.</span>
@@ -554,7 +551,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="gen_graph_legend">
-<a class="viewcode-back" href="../Functions/functions.html#functions.gen_graph_legend">[docs]</a>
+<a class="viewcode-back" href="../functions_definitions.html#functions.gen_graph_legend">[docs]</a>
 <span class="k">def</span> <span class="nf">gen_graph_legend</span><span class="p">(</span><span class="n">node_colours</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate a legend for a graph based on node colors and attributes.</span>
@@ -576,7 +573,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="train">
-<a class="viewcode-back" href="../Functions/functions.html#functions.train">[docs]</a>
+<a class="viewcode-back" href="../functions_definitions.html#functions.train">[docs]</a>
 <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">train_split</span> <span class="p">,</span> <span class="n">val_split</span> <span class="p">,</span> <span class="n">device</span> <span class="p">,</span>  <span class="n">model</span> <span class="p">,</span> <span class="n">labels</span> <span class="p">,</span> <span class="n">epochs</span> <span class="p">,</span> <span class="n">lr</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Trains a model using the specified graph, node features, </span>
@@ -662,7 +659,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="evaluate">
-<a class="viewcode-back" href="../Functions/functions.html#functions.evaluate">[docs]</a>
+<a class="viewcode-back" href="../functions_definitions.html#functions.evaluate">[docs]</a>
 <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="n">split</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">g</span> <span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">model</span> <span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Evaluate the performance of a model on a given dataset split.</span>
@@ -710,7 +707,7 @@ document.write(`
 
     
 <div class="viewcode-block" id="GCN">
-<a class="viewcode-back" href="../Functions/functions.html#functions.GCN">[docs]</a>
+<a class="viewcode-back" href="../functions_definitions.html#functions.GCN">[docs]</a>
 <span class="k">class</span> <span class="nc">GCN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Graph Convolutional Network (GCN) class.</span>
@@ -751,7 +748,7 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">drop</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
 
 <div class="viewcode-block" id="GCN.forward">
-<a class="viewcode-back" href="../Functions/functions.html#functions.GCN.forward">[docs]</a>
+<a class="viewcode-back" href="../functions_definitions.html#functions.GCN.forward">[docs]</a>
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">h</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Forward pass of the GCN model.</span>
