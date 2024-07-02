@@ -11,7 +11,8 @@ chapters:
   - file: Section1/Part2
 - file: Section2_intro
   sections: 
-  - file: Section2/Part1
+  - file: Section2/section2_part1
+  - file: Section2/section2_part2
 - file: Section3_intro
   sections:
   - file: Section3/Part1
