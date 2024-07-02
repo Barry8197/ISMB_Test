@@ -1,12 +1,13 @@
 
+
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Part 3 : Smoking Network Classification using Graph Convolutional Networks &#8212; My sample book</title>
   
@@ -18,48 +19,49 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
-  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
-    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js?v=36754332"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script type="application/vnd.jupyter.widget-state+json">{"state": {"037c9b19a3c14c8fadfeea651dc7a923": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "f50922a3bfae4b609e29618ca7789ede": {"model_name": "ProgressStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "bar_color": null, "description_width": ""}}, "685a2ad755e9481f85b4161cb6836295": {"model_name": "FloatProgressModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "ProgressView", "bar_style": "success", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_037c9b19a3c14c8fadfeea651dc7a923", "max": 1000.0, "min": 0.0, "orientation": "horizontal", "style": "IPY_MODEL_f50922a3bfae4b609e29618ca7789ede", "value": 1000.0}}, "ba414928df644caaa0dc3d67f12091bf": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "b690f6778db64f478cef9640d6d2e37e": {"model_name": "DescriptionStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "DescriptionStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": ""}}, "ec7b3cde4fae46768378106c93736dd1": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HTMLView", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_ba414928df644caaa0dc3d67f12091bf", "placeholder": "\u200b", "style": "IPY_MODEL_b690f6778db64f478cef9640d6d2e37e", "value": "Epoch 00995 | Loss 0.6620 | Train Acc. 0.6571 | Validation Acc. 0.6950 : 100%"}}, "5e469fbd0ec64df0b8d84d1d8069b580": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "09b20e2a29db4698b03a47401521094c": {"model_name": "DescriptionStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "DescriptionStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": ""}}, "a695fb85974a498f8b6434d234c48b1b": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HTMLView", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_5e469fbd0ec64df0b8d84d1d8069b580", "placeholder": "\u200b", "style": "IPY_MODEL_09b20e2a29db4698b03a47401521094c", "value": " 1000/1000 [00:17&lt;00:00, 60.43epoch/s]"}}, "412f20577e064c7faf3e46c6b8230e1f": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "e816be4e5bcd4714a9c14f207f2a26f6": {"model_name": "HBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_ec7b3cde4fae46768378106c93736dd1", "IPY_MODEL_685a2ad755e9481f85b4161cb6836295", "IPY_MODEL_a695fb85974a498f8b6434d234c48b1b"], "layout": "IPY_MODEL_412f20577e064c7faf3e46c6b8230e1f"}}}, "version_major": 2, "version_minor": 0}</script>
-    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script crossorigin="anonymous" data-jupyter-widgets-cdn="https://cdn.jsdelivr.net/npm/" src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@1.0.6/dist/embed-amd.js"></script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'Section3/Part3';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -74,9 +76,10 @@
 
   
   
-  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
+
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>
@@ -117,14 +120,11 @@
 </form></div>
   </div>
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar">
-    </header>
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
   
-
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
-      
-      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -158,18 +158,7 @@
   
   
 </a></div>
-        <div class="sidebar-primary-item">
-
- <script>
- document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
-        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -205,7 +194,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../Section2/Part1.html">Section 2: Network Analysis</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Section3_intro.html"><font color="darkblue"><u> Introduction to Graph Neural Networks </u></font></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Section3_intro.html">Introduction to Graph Neural Networks</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="Part1.html"><font color="darkblue"> Part 1 : Message Passing </font></a></li>
 <li class="toctree-l2"><a class="reference internal" href="Part2.html"><font color="darkblue"> Part 2 : Problem Formulation / Patient Similarity Network Generation </font></a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#"><font color="darkblue"> Part 3 : Smoking Network Classification using Graph Convolutional Networks</font></a></li>
@@ -213,7 +202,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../ConceptGlossary.html">Concept Glossary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../functions_definitions.html">CUSTOM FUNCTIONS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../functions_definitions.html">Custom Function Definitions</a></li>
 </ul>
 
     </div>
@@ -409,11 +398,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-functions-and-packages"><font color="darkblue">Import Functions and Packages </font></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data-and-network"><font color="darkblue"> Load Data and Network </font></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-deep-graph-library"><font color="darkblue"> Working with Deep Graph Library</font></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-convolutional-network"><font color="darkblue">Graph Convolutional Network </font></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-evaluation"><font color="darkblue"> Training &amp; Evaluation </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-import-functions-and-packages-font"><font color="darkblue">Import Functions and Packages </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-load-data-and-network-font"><font color="darkblue"> Load Data and Network </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-working-with-deep-graph-library-font"><font color="darkblue"> Working with Deep Graph Library</font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-graph-convolutional-network-font"><font color="darkblue">Graph Convolutional Network </font></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-training-evaluation-font"><font color="darkblue"> Training &amp; Evaluation </font></a></li>
 </ul>
 </li>
 </ul>
@@ -425,10 +414,10 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article">
+                <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="part-3-smoking-network-classification-using-graph-convolutional-networks">
-<h1><font color='darkblue'> Part 3 : Smoking Network Classification using Graph Convolutional Networks</font><a class="headerlink" href="#part-3-smoking-network-classification-using-graph-convolutional-networks" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="font-color-darkblue-part-3-smoking-network-classification-using-graph-convolutional-networks-font">
+<h1><font color='darkblue'> Part 3 : Smoking Network Classification using Graph Convolutional Networks</font><a class="headerlink" href="#font-color-darkblue-part-3-smoking-network-classification-using-graph-convolutional-networks-font" title="Permalink to this heading">#</a></h1>
 <p>In this part we will work with a Graph Convolutional Network (GCN).</p>
 <p>In the previous part we formulated a task to predict whether individuals in the Generation Scotland Dataset have ever smoked.</p>
 <p>We generated a patient similarity network from CpG sites which are known to be associated with smoking. We will also work with the patient similarity network generated in section 1.</p>
@@ -442,8 +431,8 @@ We will now highlight the difference between our two networks to see if we can l
 <li><p>Comparing the performance of PSN’s</p></li>
 <li><p>Comparing the performance of GCN to simple linear regression</p></li>
 </ul>
-<section id="import-functions-and-packages">
-<h2><font color='darkblue'>Import Functions and Packages </font><a class="headerlink" href="#import-functions-and-packages" title="Link to this heading">#</a></h2>
+<section id="font-color-darkblue-import-functions-and-packages-font">
+<h2><font color='darkblue'>Import Functions and Packages </font><a class="headerlink" href="#font-color-darkblue-import-functions-and-packages-font" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
@@ -458,20 +447,20 @@ We will now highlight the difference between our two networks to see if we can l
 </div>
 </div>
 </section>
-<section id="load-data-and-network">
-<h2><font color='darkblue'> Load Data and Network </font><a class="headerlink" href="#load-data-and-network" title="Link to this heading">#</a></h2>
+<section id="font-color-darkblue-load-data-and-network-font">
+<h2><font color='darkblue'> Load Data and Network </font><a class="headerlink" href="#font-color-darkblue-load-data-and-network-font" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the data using pickle</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./../data/GCN_Data.pkl&#39;</span> <span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span> <span class="p">:</span> 
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/data/intermediate/GCN_Data.pkl&#39;</span> <span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span> <span class="p">:</span> 
     <span class="n">loaded_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="working-with-deep-graph-library">
-<h2><font color='darkblue'> Working with <a class="reference external" href="https://www.dgl.ai/">Deep Graph Library</a></font><a class="headerlink" href="#working-with-deep-graph-library" title="Link to this heading">#</a></h2>
+<section id="font-color-darkblue-working-with-deep-graph-library-font">
+<h2><font color='darkblue'> Working with <a class="reference external" href="https://www.dgl.ai/">Deep Graph Library</a></font><a class="headerlink" href="#font-color-darkblue-working-with-deep-graph-library-font" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -509,8 +498,8 @@ We will now highlight the difference between our two networks to see if we can l
 </div>
 </div>
 </section>
-<section id="graph-convolutional-network">
-<h2><font color='darkblue'>Graph Convolutional Network </font><a class="headerlink" href="#graph-convolutional-network" title="Link to this heading">#</a></h2>
+<section id="font-color-darkblue-graph-convolutional-network-font">
+<h2><font color='darkblue'>Graph Convolutional Network </font><a class="headerlink" href="#font-color-darkblue-graph-convolutional-network-font" title="Permalink to this heading">#</a></h2>
 <p>Here we will specify the layers of the GCN model using the <a class="reference external" href="https://docs.dgl.ai/en/2.0.x/generated/dgl.nn.pytorch.conv.GraphConv.html">GraphConv</a> class from DGL.</p>
 <p>See <a class="reference external" href="https://www.w3schools.com/python/python_classes.asp">Object Oriented Programming</a> for more information on building classes in python.</p>
 <p>See <a class="reference external" href="https://docs.dgl.ai/en/2.0.x/generated/dgl.nn.pytorch.conv.GraphConv.html">GraphConv</a> for more documentation on the class.</p>
@@ -579,8 +568,8 @@ We will now highlight the difference between our two networks to see if we can l
 </div>
 </div>
 </div>
-<section id="training-evaluation">
-<h3><font color='darkblue'> Training &amp; Evaluation </font><a class="headerlink" href="#training-evaluation" title="Link to this heading">#</a></h3>
+<section id="font-color-darkblue-training-evaluation-font">
+<h3><font color='darkblue'> Training &amp; Evaluation </font><a class="headerlink" href="#font-color-darkblue-training-evaluation-font" title="Permalink to this heading">#</a></h3>
 <p>We need to define training and evaluation functions for our GCN model. The code provided follows the outline defined in Chapter 6 of <a class="reference external" href="https://www.cs.mcgill.ca/~wlh/grl_book/">Hamilton’s book</a> for training GNN’s.</p>
 <p>The code below is fully operational and provided for practical demonstration. Similar examples of GNN training functions are provided by DGL in their <a class="reference external" href="https://docs.dgl.ai/tutorials/blitz/index.html">Blitz Introduction</a></p>
 <p>In these functions we implement <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html">Cross Entropy Loss</a> for multi-class classification. We use the <a class="reference external" href="https://pytorch.org/docs/stable/optim.html#torch.optim.Adam">Adam Optimizer</a> to update the model parameters and we use the <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.StepLR.html">StepLR</a> function to decay the learning rate</p>
@@ -688,11 +677,6 @@ We will now highlight the difference between our two networks to see if we can l
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;frozen importlib._bootstrap&gt;:228: RuntimeWarning: scipy._lib.messagestream.MessageStream size changed, may indicate binary incompatibility. Expected 56 from C header, got 64 from PyObject
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -747,14 +731,14 @@ We will now highlight the difference between our two networks to see if we can l
   )
   (drop): Dropout(p=0.1, inplace=False)
 )
-Graph(num_nodes=1000, num_edges=39380,
-      ndata_schemes={&#39;idx&#39;: Scheme(shape=(), dtype=torch.int32), &#39;label&#39;: Scheme(shape=(), dtype=torch.int8), &#39;feat&#39;: Scheme(shape=(23676,), dtype=torch.float32)}
+Graph(num_nodes=1000, num_edges=39616,
+      ndata_schemes={&#39;idx&#39;: Scheme(shape=(), dtype=torch.int64), &#39;label&#39;: Scheme(shape=(), dtype=torch.int8), &#39;feat&#39;: Scheme(shape=(23676,), dtype=torch.float32)}
       edata_schemes={})
 </pre></div>
 </div>
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "e816be4e5bcd4714a9c14f207f2a26f6"}</script><img alt="../_images/2dd28f1d6e8a0c6428ade31321ff8d494d689394a318f17f0d476b0ec1965872.png" src="../_images/2dd28f1d6e8a0c6428ade31321ff8d494d689394a318f17f0d476b0ec1965872.png" />
-<img alt="../_images/4ea5f1ec0de4298e5362f6aa6ac20e14cef859694ce48524217390079707ae83.png" src="../_images/4ea5f1ec0de4298e5362f6aa6ac20e14cef859694ce48524217390079707ae83.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GNN Model | Test Accuracy = 0.6150 | F1 = 0.5920 |
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "41a168cf2fae45c1bfffb760b28336b9", "version_major": 2, "version_minor": 0}</script><img alt="../_images/fa17f19e3558d4c98d1e3eb0edbd542608099323ef507929a1f9b26bbf279923.png" src="../_images/fa17f19e3558d4c98d1e3eb0edbd542608099323ef507929a1f9b26bbf279923.png" />
+<img alt="../_images/b7a668cbd52a730a4f6c7d9638a52d8cd9785c5160b45b2f6a60449825e83640.png" src="../_images/b7a668cbd52a730a4f6c7d9638a52d8cd9785c5160b45b2f6a60449825e83640.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GNN Model | Test Accuracy = 0.7125 | F1 = 0.6816 |
 </pre></div>
 </div>
 </div>
@@ -774,7 +758,7 @@ Graph(num_nodes=1000, num_edges=39380,
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Baseline Logistic Regression ACC : 0.755
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Baseline Logistic Regression ACC : 0.745
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\Barry\anaconda3\lib\site-packages\sklearn\linear_model\_sag.py:350: ConvergenceWarning: The max_iter was reached which means the coef_ did not converge
@@ -799,16 +783,16 @@ Graph(num_nodes=1000, num_edges=39380,
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "bryanismb"
         },
         kernelOptions: {
-            name: "python3",
+            name: "bryanismb",
             path: "./Section3"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'bryanismb'</script>
 
                 </article>
               
@@ -847,18 +831,17 @@ Graph(num_nodes=1000, num_edges=39380,
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
-
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-functions-and-packages"><font color="darkblue">Import Functions and Packages </font></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data-and-network"><font color="darkblue"> Load Data and Network </font></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-deep-graph-library"><font color="darkblue"> Working with Deep Graph Library</font></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-convolutional-network"><font color="darkblue">Graph Convolutional Network </font></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-evaluation"><font color="darkblue"> Training &amp; Evaluation </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-import-functions-and-packages-font"><font color="darkblue">Import Functions and Packages </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-load-data-and-network-font"><font color="darkblue"> Load Data and Network </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-working-with-deep-graph-library-font"><font color="darkblue"> Working with Deep Graph Library</font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-graph-convolutional-network-font"><font color="darkblue">Graph Convolutional Network </font></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-training-evaluation-font"><font color="darkblue"> Training &amp; Evaluation </font></a></li>
 </ul>
 </li>
 </ul>
@@ -885,7 +868,7 @@ By The Jupyter Book Community
 
   <p class="copyright">
     
-      © Copyright 2023.
+      © Copyright 2022.
       <br/>
     
   </p>
@@ -909,8 +892,8 @@ By The Jupyter Book Community
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
   <footer class="bd-footer">
   </footer>

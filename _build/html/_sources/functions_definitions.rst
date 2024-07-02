@@ -1,5 +1,5 @@
-CUSTOM FUNCTIONS
-===================
+Custom Function Definitions
+============================
 
 .. automodule:: functions
     :members:
