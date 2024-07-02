@@ -46,6 +46,7 @@ We have developed a Jupyter Book containing all code and some extra materials to
     <img src="./ian_simpson.jpg" alt="Profile Photo 1" style="width: 100px; height: 100px; border-radius: 50%;">
     <h3>Ian Simpson</h3>
     <p>Short bio for person 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    <p>ian.simpson@ed.ac.uk</p>
   </div>
 
   <div style="flex: 1; min-width: 250px; text-align: center;">
@@ -59,6 +60,7 @@ We have developed a Jupyter Book containing all code and some extra materials to
     <img src="chaeeun_lee.png" alt="Profile Photo 3" style="width: 100px; height: 100px; border-radius: 50%;">
     <h3>Chaeeun Lee</h3>
     <p>Short bio for person 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    <p>chaeeun.lee@ed.ac.uk</p>
   </div>
 
 </div>
@@ -69,12 +71,14 @@ We have developed a Jupyter Book containing all code and some extra materials to
     <img src="sebestyen_kamp.jpg" alt="Profile Photo 1" style="width: 100px; height: 100px; border-radius: 50%;">
     <h3>Sebestyén Kamp</h3>
     <p>Short bio for person 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    <p>sebestyen.kamp@ed.ac.uk</p>
   </div>
 
   <div style="flex: 1; min-width: 250px; text-align: center;">
     <img src="hanane_issa.jpeg" alt="Profile Photo 2" style="width: 100px; height: 100px; border-radius: 50%;">
     <h3>Hanane Issa</h3>
-    <p>Short bio for person 2. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    <p>I am a student in the HDRUK-Turing Wellcome PhD Programme in Health Data Science, based at the University of Edinburgh. My thesis will focus on patient similarity networks and explainable AI for rare disease diagnosis.</p>
+    <p>h.issa@sms.ed.ac.uk</p>
   </div>
 
 
