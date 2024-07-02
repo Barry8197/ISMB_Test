@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Section 2: Network Analysis &#8212; My sample book</title>
+    <title>Section 2: Network Analysis &#8212; ISMB Tutorial Book</title>
   
   
   
@@ -28,11 +28,11 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
@@ -150,8 +150,8 @@
       
     
     
-    <img src="../_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
-    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+    <img src="../_static/logo.png" class="logo__image only-light" alt="ISMB Tutorial Book - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="ISMB Tutorial Book - Home"/>`);</script>
   
   
 </a></div>
@@ -202,7 +202,7 @@
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Section 2: Network Analysis</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../Section3_intro.html"><font color="darkblue"><u> Introduction to Graph Neural Networks </u></font></a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Section3_intro.html">Introduction to Graph Neural Networks</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../Section3/Part1.html"><font color="darkblue"> Part 1 : Message Passing </font></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Section3/Part2.html"><font color="darkblue"> Part 2 : Problem Formulation / Patient Similarity Network Generation </font></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Section3/Part3.html"><font color="darkblue"> Part 3 : Smoking Network Classification using Graph Convolutional Networks</font></a></li>
@@ -210,7 +210,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../ConceptGlossary.html">Concept Glossary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../functions_definitions.html">CUSTOM FUNCTIONS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../functions_definitions.html">Custom Function Definitions</a></li>
 </ul>
 
     </div>
@@ -469,11 +469,6 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;frozen importlib._bootstrap&gt;:228: RuntimeWarning: scipy._lib.messagestream.MessageStream size changed, may indicate binary incompatibility. Expected 56 from C header, got 64 from PyObject
-</pre></div>
-</div>
-</div>
 </div>
 <section id="load-datasets">
 <h2>0. Load Datasets<a class="headerlink" href="#load-datasets" title="Link to this heading">#</a></h2>
@@ -493,7 +488,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\Barry\OneDrive - University of Edinburgh\PhD_Research\Year2\Python\ismb_jupyterbook\ISMB_Test\Section2
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/chaeeunlee/Documents/VSC_workspaces/ismb_public/Section 3
 </pre></div>
 </div>
 </div>
@@ -533,34 +528,9 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="nn">Input In [3],</span> in <span class="ni">&lt;cell line: 6&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">G_gxp_path</span> <span class="o">=</span> <span class="s1">&#39;section2_data/section1_networks/gene_coexpression_network.gml&#39;</span> 
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="c1"># Load the GML graphs</span>
-<span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">G_gxp</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">read_gml</span><span class="p">(</span><span class="n">G_gxp_path</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">G_patient_gxp</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">read_gml</span><span class="p">(</span><span class="n">G_patient_gxp_path</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">G_patient_dnam</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">read_gml</span><span class="p">(</span><span class="n">G_patient_dnam_path</span><span class="p">)</span>
-
-<span class="nn">File ~\anaconda3\lib\site-packages\networkx\utils\decorators.py:770,</span> in <span class="ni">argmap.__call__.&lt;locals&gt;.func</span><span class="nt">(_argmap__wrapper, *args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">769</span> <span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">__wrapper</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">770</span>     <span class="k">return</span> <span class="n">argmap</span><span class="o">.</span><span class="n">_lazy_compile</span><span class="p">(</span><span class="n">__wrapper</span><span class="p">)(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-<span class="nn">File &lt;class &#39;networkx.utils.decorators.argmap&#39;&gt; compilation 5:3,</span> in <span class="ni">argmap_read_gml_1</span><span class="nt">(path, label, destringizer, backend, **backend_kwargs)</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">bz2</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">collections</span>
-<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">gzip</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">inspect</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">itertools</span>
-
-<span class="nn">File ~\anaconda3\lib\site-packages\networkx\utils\decorators.py:193,</span> in <span class="ni">open_file.&lt;locals&gt;._open_file</span><span class="nt">(path)</span>
-<span class="g g-Whitespace">    </span><span class="mi">189</span> <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">190</span>     <span class="c1"># could be None, or a file handle, in which case the algorithm will deal with it</span>
-<span class="g g-Whitespace">    </span><span class="mi">191</span>     <span class="k">return</span> <span class="n">path</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="kc">None</span>
-<span class="ne">--&gt; </span><span class="mi">193</span> <span class="n">fobj</span> <span class="o">=</span> <span class="n">_dispatch_dict</span><span class="p">[</span><span class="n">ext</span><span class="p">](</span><span class="n">path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">194</span> <span class="k">return</span> <span class="n">fobj</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">fobj</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;section2_data/section1_networks/gene_coexpression_network.gml&#39;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>300
+265
+232
 </pre></div>
 </div>
 </div>
@@ -5343,7 +5313,7 @@ memory usage: 27.8+ KB
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><font color='darkblue'><u> Introduction to Graph Neural Networks </font></u></p>
+        <p class="prev-next-title">Introduction to Graph Neural Networks</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -5399,7 +5369,7 @@ memory usage: 27.8+ KB
   <div class="footer-item">
     
 <p class="component-author">
-By The Jupyter Book Community
+By Barry Ryan
 </p>
 
   </div>

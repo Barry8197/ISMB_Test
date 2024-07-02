@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Part 2 : Problem Formulation / Patient Similarity Network Generation &#8212; My sample book</title>
+    <title>Part 2 : Problem Formulation / Patient Similarity Network Generation &#8212; ISMB Tutorial Book</title>
   
   
   
@@ -28,11 +28,11 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
@@ -150,8 +150,8 @@
       
     
     
-    <img src="../_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
-    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+    <img src="../_static/logo.png" class="logo__image only-light" alt="ISMB Tutorial Book - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="ISMB Tutorial Book - Home"/>`);</script>
   
   
 </a></div>
@@ -202,7 +202,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../Section2/Part1.html">Section 2: Network Analysis</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Section3_intro.html"><font color="darkblue"><u> Introduction to Graph Neural Networks </u></font></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Section3_intro.html">Introduction to Graph Neural Networks</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="Part1.html"><font color="darkblue"> Part 1 : Message Passing </font></a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#"><font color="darkblue"> Part 2 : Problem Formulation / Patient Similarity Network Generation </font></a></li>
 <li class="toctree-l2"><a class="reference internal" href="Part3.html"><font color="darkblue"> Part 3 : Smoking Network Classification using Graph Convolutional Networks</font></a></li>
@@ -210,7 +210,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../ConceptGlossary.html">Concept Glossary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../functions_definitions.html">CUSTOM FUNCTIONS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../functions_definitions.html">Custom Function Definitions</a></li>
 </ul>
 
     </div>
@@ -425,7 +425,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="part-2-problem-formulation-patient-similarity-network-generation">
+  <section id="part-2-problem-formulation-patient-similarity-network-generation">
 <h1><font color='darkblue'> Part 2 : Problem Formulation / Patient Similarity Network Generation </font><a class="headerlink" href="#part-2-problem-formulation-patient-similarity-network-generation" title="Link to this heading">#</a></h1>
 <p>In this section we will formulate a task to predict if an individual in the Generation Scotland dataset is a smoker or not. We will formulate the task using the Patient Similarity Networks generated earlier. We will also highlight that not every network is created equal.</p>
 <p>Networks are flexible and we can leverage/incorporate additional informative information. We have used the <a class="reference external" href="https://www.ewascatalog.org/">EWAS Catalog</a> to identify CpG sites affected by smoking. We will compare the effectiveness of GNN’s when incorporating external informative versus doing a direct correlation network.</p>
@@ -444,11 +444,6 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;frozen importlib._bootstrap&gt;:228: RuntimeWarning: scipy._lib.messagestream.MessageStream size changed, may indicate binary incompatibility. Expected 56 from C header, got 64 from PyObject
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 <section id="import-and-process-generation-scotland-data">
@@ -457,7 +452,7 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the data using pickle</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./../data/ISMB_GS_Data.pkl&#39;</span> <span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span> <span class="p">:</span> 
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/data/raw/ISMB_GS_Data.pkl&#39;</span> <span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span> <span class="p">:</span> 
     <span class="n">loaded_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -508,7 +503,7 @@ document.write(`
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Distribution of Smokers and Non-Smokers&#39;)
 </pre></div>
 </div>
-<img alt="../_images/b81ac3de0c44e3a20a59ab7cb691fcea78078850d3af34e00aac6e2adb7ead31.png" src="../_images/b81ac3de0c44e3a20a59ab7cb691fcea78078850d3af34e00aac6e2adb7ead31.png" />
+<img alt="../_images/28f10b0f74686526deff57bae3f256a844f3927785bec0741b556fc179643475.png" src="../_images/28f10b0f74686526deff57bae3f256a844f3927785bec0741b556fc179643475.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -528,7 +523,7 @@ document.write(`
 <p>Here we will extract the CpG’s and related genes which we will use to build our network.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;./../data/smoking.tsv&#39;</span> <span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span> <span class="c1">#Tab seperated document from EWAS</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;/data/raw/smoking.tsv&#39;</span> <span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span> <span class="c1">#Tab seperated document from EWAS</span>
 </pre></div>
 </div>
 </div>
@@ -770,7 +765,7 @@ document.write(`
 Smoker : 1
 </pre></div>
 </div>
-<img alt="../_images/9fe86a224f6b24f53c7a977eb2111b850c3a5da8815b56d7aff6f45693b4b92c.png" src="../_images/9fe86a224f6b24f53c7a977eb2111b850c3a5da8815b56d7aff6f45693b4b92c.png" />
+<img alt="../_images/38e955e6023b3a98f963162e68ecbbc3d02bf04a09c16a1c208b2f2976974078.png" src="../_images/38e955e6023b3a98f963162e68ecbbc3d02bf04a09c16a1c208b2f2976974078.png" />
 </div>
 </div>
 </section>
@@ -779,15 +774,49 @@ Smoker : 1
 <h2><font color='darkblue'>Save Network and Data for GNN Learning </font><a class="headerlink" href="#save-network-and-data-for-gnn-learning" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span><span class="w"> </span><span class="nb">printf</span><span class="w"> </span><span class="s1">&#39;barry&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>su<span class="w"> </span>bryan
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>barryPassword: 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Put the data in a single dictionary</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Feat&#39;</span> <span class="p">:</span> <span class="n">w1</span> <span class="p">,</span> <span class="s1">&#39;phenotypes&#39;</span> <span class="p">:</span> <span class="n">phenotypes</span> <span class="p">,</span> <span class="s1">&#39;PSN_raw&#39;</span> <span class="p">:</span> <span class="p">[]</span> <span class="p">,</span> <span class="s1">&#39;PSN_EWAS&#39;</span> <span class="p">:</span> <span class="n">G</span><span class="p">}</span>
 
 <span class="c1"># File path to save the pickle file</span>
-<span class="n">file_path</span> <span class="o">=</span> <span class="s1">&#39;./../data/GCN_Data.pkl&#39;</span>
+<span class="n">file_path</span> <span class="o">=</span> <span class="s1">&#39;/data/intermediate/GCN_Data.pkl&#39;</span>
 
 <span class="c1"># Save data to a pickle file</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">PermissionError</span><span class="g g-Whitespace">                           </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">43</span><span class="p">],</span> <span class="n">line</span> <span class="mi">8</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">file_path</span> <span class="o">=</span> <span class="s1">&#39;/data/intermediate/GCN_Data.pkl&#39;</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="c1"># Save data to a pickle file</span>
+<span class="ne">----&gt; </span><span class="mi">8</span> <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+<span class="nn">File ~/.conda/envs/bryanISMB/lib/python3.8/site-packages/IPython/core/interactiveshell.py:284,</span> in <span class="ni">_modified_open</span><span class="nt">(file, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">277</span> <span class="k">if</span> <span class="n">file</span> <span class="ow">in</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}:</span>
+<span class="g g-Whitespace">    </span><span class="mi">278</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">279</span>         <span class="sa">f</span><span class="s2">&quot;IPython won&#39;t let you open fd=</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2"> by default &quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">280</span>         <span class="s2">&quot;as it is likely to crash IPython. If you know what you are doing, &quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">281</span>         <span class="s2">&quot;you can use builtins&#39; open.&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">282</span>     <span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">284</span> <span class="k">return</span> <span class="n">io_open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="ne">PermissionError</span>: [Errno 13] Permission denied: &#39;/data/intermediate/GCN_Data.pkl&#39;
 </pre></div>
 </div>
 </div>
@@ -804,16 +833,16 @@ Smoker : 1
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "bryanismb"
         },
         kernelOptions: {
-            name: "python3",
+            name: "bryanismb",
             path: "./Section3"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'bryanismb'</script>
 
                 </article>
               
@@ -881,7 +910,7 @@ Smoker : 1
   <div class="footer-item">
     
 <p class="component-author">
-By The Jupyter Book Community
+By Barry Ryan
 </p>
 
   </div>

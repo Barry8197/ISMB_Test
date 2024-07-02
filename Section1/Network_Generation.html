@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Section 2 &#8212; My sample book</title>
+    <title>Section 2 &#8212; ISMB Tutorial Book</title>
   
   
   
@@ -28,11 +28,11 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
@@ -150,8 +150,8 @@
       
     
     
-    <img src="../_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
-    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+    <img src="../_static/logo.png" class="logo__image only-light" alt="ISMB Tutorial Book - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="ISMB Tutorial Book - Home"/>`);</script>
   
   
 </a></div>
@@ -202,7 +202,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../Section2/Part1.html">Section 2: Network Analysis</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../Section3_intro.html"><font color="darkblue"><u> Introduction to Graph Neural Networks </u></font></a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Section3_intro.html">Introduction to Graph Neural Networks</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../Section3/Part1.html"><font color="darkblue"> Part 1 : Message Passing </font></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Section3/Part2.html"><font color="darkblue"> Part 2 : Problem Formulation / Patient Similarity Network Generation </font></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Section3/Part3.html"><font color="darkblue"> Part 3 : Smoking Network Classification using Graph Convolutional Networks</font></a></li>
@@ -210,7 +210,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../ConceptGlossary.html">Concept Glossary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../functions_definitions.html">CUSTOM FUNCTIONS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../functions_definitions.html">Custom Function Definitions</a></li>
 </ul>
 
     </div>
@@ -451,7 +451,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="section-2">
+  <section id="section-2">
 <h1>Section 2<a class="headerlink" href="#section-2" title="Link to this heading">#</a></h1>
 <section id="structuring-biomedical-data-using-networks-workshop">
 <h2>Structuring Biomedical Data Using Networks  workshop<a class="headerlink" href="#structuring-biomedical-data-using-networks-workshop" title="Link to this heading">#</a></h2>
@@ -482,15 +482,10 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;frozen importlib._bootstrap&gt;:228: RuntimeWarning: scipy._lib.messagestream.MessageStream size changed, may indicate binary incompatibility. Expected 56 from C header, got 64 from PyObject
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="data">
+<section id="data">
 <h1>Data<a class="headerlink" href="#data" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -508,20 +503,13 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="nn">Input In [3],</span> in <span class="ni">&lt;cell line: 1&gt;</span><span class="nt">()</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="s2">&quot;ISMB_TCGA_GE.pkl&quot;</span><span class="p">),</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;../../ismb_data\\ISMB_TCGA_GE.pkl&#39;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;datExpr&#39;, &#39;datMeta&#39;])
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="metadata-analysis">
+<section id="metadata-analysis">
 <h1>Metadata analysis<a class="headerlink" href="#metadata-analysis" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -765,7 +753,7 @@ document.write(`
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="expression-data-analysis">
+<section id="expression-data-analysis">
 <h1>Expression data analysis<a class="headerlink" href="#expression-data-analysis" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1088,7 +1076,7 @@ document.write(`
 </div>
 <p>498 rows × 22637 columns is a quite large matrix, thus we have to consider reducing the dimensionality.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="filtering-before-calculating-the-correlation-matrices">
+<section id="filtering-before-calculating-the-correlation-matrices">
 <h1>Filtering before calculating the correlation matrices<a class="headerlink" href="#filtering-before-calculating-the-correlation-matrices" title="Link to this heading">#</a></h1>
 <ul class="simple">
 <li><p>Filter by Variance: Select genes with high variance across samples, as low variance genes might not contribute significantly to the analysis.</p></li>
@@ -1527,7 +1515,7 @@ Number of duplicate columns: 0
 </div>
 </section>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="ensg-to-hgcn-gene-symbol">
+<section id="ensg-to-hgcn-gene-symbol">
 <h1>ENSG to HGCN gene symbol<a class="headerlink" href="#ensg-to-hgcn-gene-symbol" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1959,7 +1947,7 @@ Number of duplicate columns: 0
 </div>
 </section>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="calculate-correlation-matrices">
+<section id="calculate-correlation-matrices">
 <h1>Calculate Correlation Matrices<a class="headerlink" href="#calculate-correlation-matrices" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2086,7 +2074,7 @@ dict_keys([&#39;pearson&#39;, &#39;spearman&#39;, &#39;biweight_midcorrelation&#
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="todo-remove-eye">
+<section id="todo-remove-eye">
 <h1>TODO: remove eye()<a class="headerlink" href="#todo-remove-eye" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2110,7 +2098,7 @@ dict_keys([&#39;pearson&#39;, &#39;spearman&#39;, &#39;biweight_midcorrelation&#
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="construct-graphs-from-correlation-matrices">
+<section id="construct-graphs-from-correlation-matrices">
 <h1>Construct Graphs from correlation matrices<a class="headerlink" href="#construct-graphs-from-correlation-matrices" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2292,7 +2280,7 @@ No self-loops in the graph.
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="cleaning-the-network">
+<section id="cleaning-the-network">
 <h1>Cleaning the network<a class="headerlink" href="#cleaning-the-network" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2472,7 +2460,7 @@ Average clustering coefficient: 0.6766781614263463
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="sparsification-methods">
+<section id="sparsification-methods">
 <h1>Sparsification methods<a class="headerlink" href="#sparsification-methods" title="Link to this heading">#</a></h1>
 <p>Edge Sampling: Randomly removes a fraction of edges.
 Thresholding: Removes edges with weights below a certain threshold.
@@ -3095,7 +3083,7 @@ Pathways: N/A
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="interactive-visualization">
+<section id="interactive-visualization">
 <h1>Interactive Visualization<a class="headerlink" href="#interactive-visualization" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -3216,7 +3204,7 @@ Pathways: N/A
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="storing-generated-networks">
+<section id="storing-generated-networks">
 <h1>Storing generated networks<a class="headerlink" href="#storing-generated-networks" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -3227,7 +3215,7 @@ Pathways: N/A
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="patient-similarity-network">
+<section id="patient-similarity-network">
 <h1>Patient similarity network<a class="headerlink" href="#patient-similarity-network" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -3695,7 +3683,7 @@ No self-loops in the graph.
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="dnameth-pn">
+<section id="dnameth-pn">
 <h1>DNAmeth PN<a class="headerlink" href="#dnameth-pn" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -4416,7 +4404,7 @@ No self-loops in the graph.
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="setting-up-pip-network-using-string">
+<section id="setting-up-pip-network-using-string">
 <h1>Setting up PIP network using String<a class="headerlink" href="#setting-up-pip-network-using-string" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -4563,7 +4551,7 @@ No self-loops in the graph.
   <div class="footer-item">
     
 <p class="component-author">
-By The Jupyter Book Community
+By Barry Ryan
 </p>
 
   </div>
