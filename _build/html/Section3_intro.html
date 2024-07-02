@@ -1,15 +1,14 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="./" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Introduction to Graph Neural Networks &#8212; My sample book</title>
+    <title>Section 3 - SNF + GNN’s &#8212; ISMB Tutorial Book</title>
   
   
   
@@ -19,51 +18,45 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
-  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'Section3_intro';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -78,10 +71,9 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>
@@ -122,11 +114,14 @@ const thebe_selector_output = ".output, .cell_output"
 </form></div>
   </div>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -155,12 +150,23 @@ const thebe_selector_output = ".output, .cell_output"
       
     
     
-    <img src="_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
-    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+    <img src="_static/logo.png" class="logo__image only-light" alt="ISMB Tutorial Book - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="ISMB Tutorial Book - Home"/>`);</script>
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -172,7 +178,7 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="Section1_intro.html">Introduction to Network Basics</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="Section1_intro.html">Section 1 - Network Basics</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="Section1/Part1.html"><font color="darkblue">Retrieval of Protein-Protein Interactions from STRING</font></a></li>
 
 
@@ -192,11 +198,11 @@ const thebe_selector_output = ".output, .cell_output"
 
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="Section2_intro.html">Introduction to Network Analysis</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="Section2_intro.html">Section 2 - Network Analysis</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="Section2/Part1.html">Section 2: Network Analysis</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Introduction to Graph Neural Networks</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Section 3 - SNF + GNN’s</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="Section3/Part1.html"><font color="darkblue"> Part 1 : Message Passing </font></a></li>
 <li class="toctree-l2"><a class="reference internal" href="Section3/Part2.html"><font color="darkblue"> Part 2 : Problem Formulation / Patient Similarity Network Generation </font></a></li>
 <li class="toctree-l2"><a class="reference internal" href="Section3/Part3.html"><font color="darkblue"> Part 3 : Smoking Network Classification using Graph Convolutional Networks</font></a></li>
@@ -390,7 +396,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Introduction to Graph Neural Networks</h1>
+    <h1>Section 3 - SNF + GNN’s</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -400,6 +406,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-graph-neural-networks">Introduction to Graph Neural Networks</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#message-passing-in-gnn-s">Message Passing in GNN’s</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#propagation">Propagation</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aggregation">Aggregation</a></li>
@@ -420,56 +427,59 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-graph-neural-networks">
-<h1>Introduction to Graph Neural Networks<a class="headerlink" href="#introduction-to-graph-neural-networks" title="Permalink to this heading">#</a></h1>
+  <section id="section-3-snf-gnn-s">
+<h1>Section 3 - SNF + GNN’s<a class="headerlink" href="#section-3-snf-gnn-s" title="Link to this heading">#</a></h1>
+<section id="introduction-to-graph-neural-networks">
+<h2>Introduction to Graph Neural Networks<a class="headerlink" href="#introduction-to-graph-neural-networks" title="Link to this heading">#</a></h2>
 <p>Graph Neural Networks (GNN) are a powerful architecture for the learning of graph structure and information in a supervised setting. In this workshop we will implement a Graph Convolutional Network (GCN) model from the <a class="reference external" href="https://www.dgl.ai/">Deep Graph Library</a> in Python.</p>
 <p>The goal of GNN’s is to learn an embedding space for nodes which captures both node feature representation and graph structure. Intuitively, if two nodes are connected and belong to the same class they should be close together in the embedding space. Conversely, if two nodes are connected but do not belong to the same class we want them to be separated in the embedding space. Thus, we cannot rely on graph structure alone and necessitates the requirement to include node feature representation also. The method in which we capture this similarity is through the message passing algorithm discussed below.</p>
 <a class="reference internal image-reference" href="_images/GNN_Learning.png"><img alt="fishy" class="align-center" src="_images/GNN_Learning.png" style="width: 600px;" /></a>
 <p>The differentiation between GCN and neural network architectures is their ability to learn from the local neighbourhood as opposed to handcrafted network features. The performance of GCN and other GNN architectures has been demonstrated on a variety of benchmark tasks, hence extending their application to a biomedical setting is an exciting avenue.</p>
+</section>
 <section id="message-passing-in-gnn-s">
-<h2>Message Passing in GNN’s<a class="headerlink" href="#message-passing-in-gnn-s" title="Permalink to this heading">#</a></h2>
+<h2>Message Passing in GNN’s<a class="headerlink" href="#message-passing-in-gnn-s" title="Link to this heading">#</a></h2>
 <p>Message passing is the method of information exchange among nodes. It is performed so that similar nodes are mapped to similar embedding spaces during the learning phase of the GNN. i.e. if A, D and B are cancer patients, we want D and B to exchange this information with A, but we want C to exchange the information that it is not a cancer patient. In doing so, A will see that it is connected to 2 cancer patients and 1 non cancer patient thus, learning that it is more likely also a cancer patient.</p>
 <a class="reference internal image-reference" href="_images/GNNMessagePassing.png"><img alt="fishy" class="align-center" src="_images/GNNMessagePassing.png" style="width: 1200px;" /></a>
-<p>The message passing algorithm consists of three core steps : Propagation, Aggregation and Update. For a single node “u”, the hidden embedding <span class="math notranslate nohighlight">\(h(k)_u\)</span> can be formulated as per the general equation, where <span class="math notranslate nohighlight">\(N(u)\)</span> is the neighbourhood of u.</p>
-<a class="reference internal image-reference" href="MessagePassingalgo.png"><img alt="fishy" class="align-center" src="MessagePassingalgo.png" style="width: 1000px;" /></a>
+<p>The message passing algorithm consists of three core steps : Propagation, Aggregation and Update. For a single node “u”, the hidden embedding $h(k)_u$ can be formulated as per the general equation, where $N(u)$ is the neighbourhood of u.</p>
+<a class="reference internal image-reference" href="_images/MessagePassingalgo.png"><img alt="fishy" class="align-center" src="_images/MessagePassingalgo.png" style="width: 1000px;" /></a>
 <section id="propagation">
-<h3>Propagation<a class="headerlink" href="#propagation" title="Permalink to this heading">#</a></h3>
-<p>The first step of message passing simply involves gathering all embeddings <span class="math notranslate nohighlight">\(h(k)_v\)</span> for every node u. During this step it is common to apply an augmentation. In a GCN this augmentation is a Multi Layer Perceptron of arbitrary dimension. In this manner each node receives a single augmented message from its neighbours.</p>
+<h3>Propagation<a class="headerlink" href="#propagation" title="Link to this heading">#</a></h3>
+<p>The first step of message passing simply involves gathering all embeddings $h(k)_v$ for every node u. During this step it is common to apply an augmentation. In a GCN this augmentation is a Multi Layer Perceptron of arbitrary dimension. In this manner each node receives a single augmented message from its neighbours.</p>
 <p>It is important to note that this step makes GNN’s invariant to the order of the nodes. i.e. it does not matter if the message ordering to A is D, B, C or B, C, D. As we perform an augmentation on a set of node embeddings, the GNN is unaffected by permutations to the ordering.</p>
 </section>
 <section id="aggregation">
-<h3>Aggregation<a class="headerlink" href="#aggregation" title="Permalink to this heading">#</a></h3>
+<h3>Aggregation<a class="headerlink" href="#aggregation" title="Link to this heading">#</a></h3>
 <p>The method of node aggregation is a significant differentiator between different GNN architecture. For example, GCN’s employ mean pooling whereas, GraphSage employs max-pooling. The aggregation step summarises the information received from the other nodes.</p>
 </section>
 <section id="update">
-<h3>Update<a class="headerlink" href="#update" title="Permalink to this heading">#</a></h3>
+<h3>Update<a class="headerlink" href="#update" title="Link to this heading">#</a></h3>
 <p>Finally, the node updates its embedding position based on the new information it has gathered from its neighbouring nodes.</p>
 </section>
 </section>
 <section id="graph-convolutional-network-gcn">
-<h2>Graph Convolutional Network (GCN)<a class="headerlink" href="#graph-convolutional-network-gcn" title="Permalink to this heading">#</a></h2>
+<h2>Graph Convolutional Network (GCN)<a class="headerlink" href="#graph-convolutional-network-gcn" title="Link to this heading">#</a></h2>
 <p>In this workshop we will work exclusively with the GCN model shown below. The GCN uses Multi Layer Perceptron linear layers for message augmentation and propagation, element-wise mean pooling and intermediate ReLU non-linearity for aggregation. GCN’s require the full network to be present during training and use a semi supervised approach for learning from network and data structures.</p>
 <a class="reference internal image-reference" href="_images/GCN.png"><img alt="fishy" class="align-center" src="_images/GCN.png" style="width: 1000px;" /></a>
 <a class="reference internal image-reference" href="_images/GCN2.png"><img alt="fishy" class="align-center" src="_images/GCN2.png" style="width: 1200px;" /></a>
 </section>
 <section id="gnn-task-node-classification">
-<h2>GNN Task : Node Classification<a class="headerlink" href="#gnn-task-node-classification" title="Permalink to this heading">#</a></h2>
+<h2>GNN Task : Node Classification<a class="headerlink" href="#gnn-task-node-classification" title="Link to this heading">#</a></h2>
 <p>Node classification in GNNs is a task where the goal is to predict the label or class of individual nodes in a graph based on their features and the structure of the graph. We have introduced the concept of using message passing to generate node embeddings. These embeddings can be used for edge predictions (prediciting missing edges), graph classification (predicting label based on graph structure) or as is our case node classification. In node classification a classifier (often a simple linear layer) is trained to predict the node’s class based on its embedding. This approach allows for the prediction of node classes even in the presence of complex and non-Euclidean graph structures.</p>
 <a class="reference internal image-reference" href="_images/prediction_tasks.png"><img alt="fishy" class="align-center" src="_images/prediction_tasks.png" style="width: 1200px;" /></a>
 </section>
 <section id="deep-graph-library-dgl">
-<h2>Deep Graph Library (DGL)<a class="headerlink" href="#deep-graph-library-dgl" title="Permalink to this heading">#</a></h2>
+<h2>Deep Graph Library (DGL)<a class="headerlink" href="#deep-graph-library-dgl" title="Link to this heading">#</a></h2>
 <p>DGL is a framework agnostic library of GNN architectures. In this tutorial we will work with a PyTorch implementation but Tensorflow and Apache MXNet are also supported. Our use of DGL will be limited to the implementation of GCN, in particular the GraphConv function. We encourage you to interact further with the DGL library and explore some of their <a class="reference external" href="https://docs.dgl.ai/tutorials/blitz/index.html">tutorials</a> and other <a class="reference external" href="https://docs.dgl.ai/api/python/nn-pytorch.html">model architecutres</a></p>
 </section>
 <section id="similarity-network-fusion-snf">
-<h2>Similarity Network Fusion (SNF)<a class="headerlink" href="#similarity-network-fusion-snf" title="Permalink to this heading">#</a></h2>
+<h2>Similarity Network Fusion (SNF)<a class="headerlink" href="#similarity-network-fusion-snf" title="Link to this heading">#</a></h2>
 <p>As introduced earlier, SNF is an algorithm for the fusion of networks. It is applied to fuse the graphs into a single network representing the full spectrum of the underlying data. It allows complimentary information to be shared between modalities, and is effective in identifying novel relationships between patients. It also integrates missing patient samples inherently by complimenting a missing edge in one modality with the same relationship from others.</p>
 <a class="reference internal image-reference" href="_images/SNF.png"><img alt="fishy" class="align-center" src="_images/SNF.png" style="width: 1200px;" /></a>
 </section>
 <section id="generation-scotland-dataset">
-<h2>Generation Scotland Dataset<a class="headerlink" href="#generation-scotland-dataset" title="Permalink to this heading">#</a></h2>
+<h2>Generation Scotland Dataset<a class="headerlink" href="#generation-scotland-dataset" title="Link to this heading">#</a></h2>
 <p>Generation Scotland is a research study looking at the health and well-being of volunteers and their families. Volunteers answer questionnaires and provide samples for genetic testing. These are combined with NHS health records and innovative laboratory science to create a rich evidence base for understanding health.</p>
 <p>Generation Scotland has been recruiting volunteers since 2006, with over 24000 participants from around 7000 families joined. The goal of Generation Scotland is to improve the health and well-being of current and future generations through partnership between researchers and volunteers. So far, research papers into COVID-19, cancer, diabetes, depression, dementia and more have been published. See the Generation Scotland <a class="reference external" href="https://www.ed.ac.uk/generation-scotland">website</a> for more information.</p>
 <p>In this section we will use a subset of the dataset consisting of 2733 participants. We will use DNA Methylation from these participants to predict if they are “Smokers” or “non-Smokers”. The data used is anonymous with normally distributed jitter added to the phenotypes to further preserve anonymity while maintaining the overall data distribution.</p>
@@ -535,12 +545,14 @@ document.write(`
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-graph-neural-networks">Introduction to Graph Neural Networks</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#message-passing-in-gnn-s">Message Passing in GNN’s</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#propagation">Propagation</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aggregation">Aggregation</a></li>
@@ -566,7 +578,7 @@ document.write(`
   <div class="footer-item">
     
 <p class="component-author">
-By The Jupyter Book Community
+By https://biomedicalinformaticsgroup.github.io/
 </p>
 
   </div>
@@ -576,7 +588,7 @@ By The Jupyter Book Community
 
   <p class="copyright">
     
-      © Copyright 2022.
+      © Copyright 2023.
       <br/>
     
   </p>
@@ -600,8 +612,8 @@ By The Jupyter Book Community
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>
