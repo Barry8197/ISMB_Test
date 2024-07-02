@@ -1,12 +1,13 @@
 
+
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Part 4 : Similarity Network Fusion with Graph Convolutional Networks &#8212; My sample book</title>
   
@@ -18,48 +19,49 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
-  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
-    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js?v=36754332"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script type="application/vnd.jupyter.widget-state+json">{"state": {"cfbf901aeb524abfb2eec79e66632e6b": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "ff26d4d1503746bd8dc47376a51570eb": {"model_name": "ProgressStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "bar_color": null, "description_width": ""}}, "dece8f56099644bcbb3fcbce22ca5cfd": {"model_name": "FloatProgressModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "ProgressView", "bar_style": "success", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_cfbf901aeb524abfb2eec79e66632e6b", "max": 1200.0, "min": 0.0, "orientation": "horizontal", "style": "IPY_MODEL_ff26d4d1503746bd8dc47376a51570eb", "value": 1200.0}}, "9f311e9c0a4841da8d5c6b1c0744bc76": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "9a2ed886d8894c508ed485e3d0a710fd": {"model_name": "DescriptionStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "DescriptionStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": ""}}, "a009ec1a921142c7a1928e132260b5fa": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HTMLView", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_9f311e9c0a4841da8d5c6b1c0744bc76", "placeholder": "\u200b", "style": "IPY_MODEL_9a2ed886d8894c508ed485e3d0a710fd", "value": "Epoch 01195 | Loss 0.5175 | Train Acc. 0.9000 | Validation Acc. 0.9333 : 100%"}}, "242886f433ae4347bd21899f471f8dad": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "3e31bf06031a486391e904fb1d070aec": {"model_name": "DescriptionStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "DescriptionStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": ""}}, "0d4a1d8ac0144e50938ec49c324efe7c": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HTMLView", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_242886f433ae4347bd21899f471f8dad", "placeholder": "\u200b", "style": "IPY_MODEL_3e31bf06031a486391e904fb1d070aec", "value": " 1200/1200 [00:14&lt;00:00, 87.35epoch/s]"}}, "2ecc57925c294014be19f6013724bc1d": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "6b6ac53580934bbda36555325f95a287": {"model_name": "HBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_a009ec1a921142c7a1928e132260b5fa", "IPY_MODEL_dece8f56099644bcbb3fcbce22ca5cfd", "IPY_MODEL_0d4a1d8ac0144e50938ec49c324efe7c"], "layout": "IPY_MODEL_2ecc57925c294014be19f6013724bc1d"}}, "d11faa058fbe40b4b9df00a15a64bfd7": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "f86a9787c7f24bea8387cc505b9d7cea": {"model_name": "ProgressStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "bar_color": null, "description_width": ""}}, "b3831656b1ba483f9a49a9f63112f49d": {"model_name": "FloatProgressModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "ProgressView", "bar_style": "success", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_d11faa058fbe40b4b9df00a15a64bfd7", "max": 1200.0, "min": 0.0, "orientation": "horizontal", "style": "IPY_MODEL_f86a9787c7f24bea8387cc505b9d7cea", "value": 1200.0}}, "41fcd54a341140318692e4222a7b7f07": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "f4d0528e654e46c19bf7eb6449147632": {"model_name": "DescriptionStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "DescriptionStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": ""}}, "a184a10ab886479a81153304d52faf6f": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HTMLView", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_41fcd54a341140318692e4222a7b7f07", "placeholder": "\u200b", "style": "IPY_MODEL_f4d0528e654e46c19bf7eb6449147632", "value": "Epoch 01195 | Loss 0.4051 | Train Acc. 0.8888 | Validation Acc. 0.8750 : 100%"}}, "76bdcfdae39c430d88991cac7dc436dc": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "321ddf9262d24069836e5712cf5d7df0": {"model_name": "DescriptionStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "DescriptionStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": ""}}, "c64abebacdae4d9daa11b83f64586779": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HTMLView", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_76bdcfdae39c430d88991cac7dc436dc", "placeholder": "\u200b", "style": "IPY_MODEL_321ddf9262d24069836e5712cf5d7df0", "value": " 1200/1200 [00:14&lt;00:00, 86.88epoch/s]"}}, "4a263341cdc54dab94eb509441369ce1": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "945a809b2c8b482bb996ec258f305adf": {"model_name": "HBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_a184a10ab886479a81153304d52faf6f", "IPY_MODEL_b3831656b1ba483f9a49a9f63112f49d", "IPY_MODEL_c64abebacdae4d9daa11b83f64586779"], "layout": "IPY_MODEL_4a263341cdc54dab94eb509441369ce1"}}}, "version_major": 2, "version_minor": 0}</script>
-    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script crossorigin="anonymous" data-jupyter-widgets-cdn="https://cdn.jsdelivr.net/npm/" src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@1.0.6/dist/embed-amd.js"></script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'Section3/Part4';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -74,9 +76,10 @@
 
   
   
-  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
+
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>
@@ -117,14 +120,11 @@
 </form></div>
   </div>
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar">
-    </header>
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
   
-
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
-      
-      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -158,18 +158,7 @@
   
   
 </a></div>
-        <div class="sidebar-primary-item">
-
- <script>
- document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
-        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -205,7 +194,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../Section2/Part1.html">Section 2: Network Analysis</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Section3_intro.html"><font color="darkblue"><u> Introduction to Graph Neural Networks </u></font></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Section3_intro.html">Introduction to Graph Neural Networks</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="Part1.html"><font color="darkblue"> Part 1 : Message Passing </font></a></li>
 <li class="toctree-l2"><a class="reference internal" href="Part2.html"><font color="darkblue"> Part 2 : Problem Formulation / Patient Similarity Network Generation </font></a></li>
 <li class="toctree-l2"><a class="reference internal" href="Part3.html"><font color="darkblue"> Part 3 : Smoking Network Classification using Graph Convolutional Networks</font></a></li>
@@ -213,7 +202,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../ConceptGlossary.html">Concept Glossary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../functions_definitions.html">CUSTOM FUNCTIONS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../functions_definitions.html">Custom Function Definitions</a></li>
 </ul>
 
     </div>
@@ -409,15 +398,15 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-functions-and-packages"><font color="darkblue">Import Functions and Packages </font></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-and-process-generation-scotland-data"><font color="darkblue">Import and Process Generation Scotland Data</font></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-patient-similarity-network-for-second-modality"><font color="darkblue"> Create Patient Similarity Network for Second Modality </font></a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-import-functions-and-packages-font"><font color="darkblue">Import Functions and Packages </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-import-and-process-generation-scotland-data-font"><font color="darkblue">Import and Process Generation Scotland Data</font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-create-patient-similarity-network-for-second-modality-font"><font color="darkblue"> Create Patient Similarity Network for Second Modality </font></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#note-creating-temporary-second-modality-of-time-since-last-cigarette-waiting-for-more-gen-scot-data-this-will-be-artificially-high">NOTE : Creating temporary second modality of time since last cigarette. Waiting for more Gen Scot data. This will be artificially high</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-gcn-on-second-modality-for-comparison-of-performance"><font color="darkblue"> Train GCN on second modality for comparison of performance </font></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#similarity-network-fusion-snf"><font color="darkblue"> Similarity Network Fusion (SNF) </font></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gcn-on-snf-network"><font color="darkblue"> GCN on SNF network </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-train-gcn-on-second-modality-for-comparison-of-performance-font"><font color="darkblue"> Train GCN on second modality for comparison of performance </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-similarity-network-fusion-snf-font"><font color="darkblue"> Similarity Network Fusion (SNF) </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-gcn-on-snf-network-font"><font color="darkblue"> GCN on SNF network </font></a></li>
 </ul>
             </nav>
         </div>
@@ -427,10 +416,10 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article">
+                <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="part-4-similarity-network-fusion-with-graph-convolutional-networks">
-<h1><font color='darkblue'> Part 4 : Similarity Network Fusion with Graph Convolutional Networks</font><a class="headerlink" href="#part-4-similarity-network-fusion-with-graph-convolutional-networks" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="font-color-darkblue-part-4-similarity-network-fusion-with-graph-convolutional-networks-font">
+<h1><font color='darkblue'> Part 4 : Similarity Network Fusion with Graph Convolutional Networks</font><a class="headerlink" href="#font-color-darkblue-part-4-similarity-network-fusion-with-graph-convolutional-networks-font" title="Permalink to this heading">#</a></h1>
 <p>In the previous notebook we trained a Graph Convolutional Network on two similarity matrices. We found that when our network is bad, our performance is bad. When we have a more informative network we can improve this performance.</p>
 <p>Neither of our networks were more expressive than performing a basic linear regression however. We are not fully leveraging the power of neworks, in particular their flexibility.</p>
 <p>In this notebook we will use the Similarity Network Fusion (SNF) algorithm to integrate a second modality.</p>
@@ -441,8 +430,8 @@ document.write(`
 <li><p>Perform SNF to integrate our two modalities</p></li>
 <li><p>Retrain a GCN on the combined network</p></li>
 </ul>
-<section id="import-functions-and-packages">
-<h2><font color='darkblue'>Import Functions and Packages </font><a class="headerlink" href="#import-functions-and-packages" title="Link to this heading">#</a></h2>
+<section id="font-color-darkblue-import-functions-and-packages-font">
+<h2><font color='darkblue'>Import Functions and Packages </font><a class="headerlink" href="#font-color-darkblue-import-functions-and-packages-font" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
@@ -463,18 +452,13 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;frozen importlib._bootstrap&gt;:228: RuntimeWarning: scipy._lib.messagestream.MessageStream size changed, may indicate binary incompatibility. Expected 56 from C header, got 64 from PyObject
-</pre></div>
-</div>
-</div>
 </div>
 </section>
-<section id="import-and-process-generation-scotland-data">
-<h2><font color='darkblue'>Import and Process Generation Scotland Data</font><a class="headerlink" href="#import-and-process-generation-scotland-data" title="Link to this heading">#</a></h2>
+<section id="font-color-darkblue-import-and-process-generation-scotland-data-font">
+<h2><font color='darkblue'>Import and Process Generation Scotland Data</font><a class="headerlink" href="#font-color-darkblue-import-and-process-generation-scotland-data-font" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./../data/GCN_Data.pkl&#39;</span> <span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span> <span class="p">:</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/data/intermediate/GCN_Data.pkl&#39;</span> <span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span> <span class="p">:</span> 
     <span class="n">loaded_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
 
 <span class="n">phenotypes</span> <span class="o">=</span> <span class="n">loaded_data</span><span class="p">[</span><span class="s1">&#39;phenotypes&#39;</span><span class="p">]</span>
@@ -483,10 +467,10 @@ document.write(`
 </div>
 </div>
 </section>
-<section id="create-patient-similarity-network-for-second-modality">
-<h2><font color='darkblue'> Create Patient Similarity Network for Second Modality </font><a class="headerlink" href="#create-patient-similarity-network-for-second-modality" title="Link to this heading">#</a></h2>
+<section id="font-color-darkblue-create-patient-similarity-network-for-second-modality-font">
+<h2><font color='darkblue'> Create Patient Similarity Network for Second Modality </font><a class="headerlink" href="#font-color-darkblue-create-patient-similarity-network-for-second-modality-font" title="Permalink to this heading">#</a></h2>
 <section id="note-creating-temporary-second-modality-of-time-since-last-cigarette-waiting-for-more-gen-scot-data-this-will-be-artificially-high">
-<h3>NOTE : Creating temporary second modality of time since last cigarette. Waiting for more Gen Scot data. This will be artificially high<a class="headerlink" href="#note-creating-temporary-second-modality-of-time-since-last-cigarette-waiting-for-more-gen-scot-data-this-will-be-artificially-high" title="Link to this heading">#</a></h3>
+<h3>NOTE : Creating temporary second modality of time since last cigarette. Waiting for more Gen Scot data. This will be artificially high<a class="headerlink" href="#note-creating-temporary-second-modality-of-time-since-last-cigarette-waiting-for-more-gen-scot-data-this-will-be-artificially-high" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
@@ -531,18 +515,18 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/95d221c4300734b373f57c3539fa98421ed3c7dc53ea1858670684b765588883.png" src="../_images/95d221c4300734b373f57c3539fa98421ed3c7dc53ea1858670684b765588883.png" />
+<img alt="../_images/6efc2a6b285b0bda2abfbf4f857fc98059d67433e267af7477357abc5b4ef009.png" src="../_images/6efc2a6b285b0bda2abfbf4f857fc98059d67433e267af7477357abc5b4ef009.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Non-Smoker : 0 
 Smoker : 1
 </pre></div>
 </div>
-<img alt="../_images/0fecf954cb672e916348b449c5f96317d650ed431e6a96aeb1cff80008d73ea0.png" src="../_images/0fecf954cb672e916348b449c5f96317d650ed431e6a96aeb1cff80008d73ea0.png" />
+<img alt="../_images/c15fe7cf1fa1e807c74396020e7be0be61cda151b5c04d39cf48980843c37af0.png" src="../_images/c15fe7cf1fa1e807c74396020e7be0be61cda151b5c04d39cf48980843c37af0.png" />
 </div>
 </div>
 </section>
 </section>
-<section id="train-gcn-on-second-modality-for-comparison-of-performance">
-<h2><font color='darkblue'> Train GCN on second modality for comparison of performance </font><a class="headerlink" href="#train-gcn-on-second-modality-for-comparison-of-performance" title="Link to this heading">#</a></h2>
+<section id="font-color-darkblue-train-gcn-on-second-modality-for-comparison-of-performance-font">
+<h2><font color='darkblue'> Train GCN on second modality for comparison of performance </font><a class="headerlink" href="#font-color-darkblue-train-gcn-on-second-modality-for-comparison-of-performance-font" title="Permalink to this heading">#</a></h2>
 <p>Here we will re-use the code from the previous section, specifically the train and evaluate functions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -598,21 +582,21 @@ Smoker : 1
   )
   (drop): Dropout(p=0.05, inplace=False)
 )
-Graph(num_nodes=1000, num_edges=34595,
-      ndata_schemes={&#39;idx&#39;: Scheme(shape=(), dtype=torch.int32), &#39;label&#39;: Scheme(shape=(), dtype=torch.int8), &#39;feat&#39;: Scheme(shape=(23676,), dtype=torch.float32)}
+Graph(num_nodes=1000, num_edges=34855,
+      ndata_schemes={&#39;idx&#39;: Scheme(shape=(), dtype=torch.int64), &#39;label&#39;: Scheme(shape=(), dtype=torch.int8), &#39;feat&#39;: Scheme(shape=(23676,), dtype=torch.float32)}
       edata_schemes={})
 </pre></div>
 </div>
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "6b6ac53580934bbda36555325f95a287"}</script><img alt="../_images/b61ec4739895a77f5fc30303d9cbeb59dede02ef87401f4a1ed3022007924580.png" src="../_images/b61ec4739895a77f5fc30303d9cbeb59dede02ef87401f4a1ed3022007924580.png" />
-<img alt="../_images/7cff48afa4dfb3cc195989bd18bff9cd167278be3df21d5cf72502c18514da0f.png" src="../_images/7cff48afa4dfb3cc195989bd18bff9cd167278be3df21d5cf72502c18514da0f.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GNN Model | Test Accuracy = 0.9150 | F1 = 0.8972 |
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "ba80ffe92b6e42ab98c613390e27cfe4", "version_major": 2, "version_minor": 0}</script><img alt="../_images/88a8b9486f8eb5e02ad55c38ace730f1a9c8431b6efdd46a4ec9abe169462f80.png" src="../_images/88a8b9486f8eb5e02ad55c38ace730f1a9c8431b6efdd46a4ec9abe169462f80.png" />
+<img alt="../_images/aa0e7f0e5f16f9cc745ce73cf9c9ac56473a662456211a5108de9ded6064d9a5.png" src="../_images/aa0e7f0e5f16f9cc745ce73cf9c9ac56473a662456211a5108de9ded6064d9a5.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GNN Model | Test Accuracy = 0.8825 | F1 = 0.8613 |
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="similarity-network-fusion-snf">
-<h2><font color='darkblue'> Similarity Network Fusion (SNF) </font><a class="headerlink" href="#similarity-network-fusion-snf" title="Link to this heading">#</a></h2>
+<section id="font-color-darkblue-similarity-network-fusion-snf-font">
+<h2><font color='darkblue'> Similarity Network Fusion (SNF) </font><a class="headerlink" href="#font-color-darkblue-similarity-network-fusion-snf-font" title="Permalink to this heading">#</a></h2>
 <p>We will once again implement SNF from the paper by <a class="reference external" href="https://www.nature.com/articles/nmeth.2810">Wang et al.</a></p>
 <p>We will implement it using the python package <a class="reference external" href="https://pypi.org/project/snfpy/">snfpy</a></p>
 <div class="cell docutils container">
@@ -676,12 +660,12 @@ Graph(num_nodes=1000, num_edges=34595,
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/e8bd4fded16c40ae16ce5eac74a78fb607efb31168b36a66d329d2e3096e9895.png" src="../_images/e8bd4fded16c40ae16ce5eac74a78fb607efb31168b36a66d329d2e3096e9895.png" />
+<img alt="../_images/6bc2bf00635fae71c2236d5f5b81f5f9b8f422e9d977db15ff97989a21f0b4d6.png" src="../_images/6bc2bf00635fae71c2236d5f5b81f5f9b8f422e9d977db15ff97989a21f0b4d6.png" />
 </div>
 </div>
 </section>
-<section id="gcn-on-snf-network">
-<h2><font color='darkblue'> GCN on SNF network </font><a class="headerlink" href="#gcn-on-snf-network" title="Link to this heading">#</a></h2>
+<section id="font-color-darkblue-gcn-on-snf-network-font">
+<h2><font color='darkblue'> GCN on SNF network </font><a class="headerlink" href="#font-color-darkblue-gcn-on-snf-network-font" title="Permalink to this heading">#</a></h2>
 <p>We now have fused our graphs into a single patient similarity network and we are ready to learn from this.</p>
 <p>Again we will re-use the code from the previous part but changing our graph to the the SNF graph created above.</p>
 <div class="cell docutils container">
@@ -738,14 +722,14 @@ Graph(num_nodes=1000, num_edges=34595,
   )
   (drop): Dropout(p=0.05, inplace=False)
 )
-Graph(num_nodes=1000, num_edges=30534,
+Graph(num_nodes=1000, num_edges=30320,
       ndata_schemes={&#39;idx&#39;: Scheme(shape=(), dtype=torch.int32), &#39;label&#39;: Scheme(shape=(), dtype=torch.int8), &#39;feat&#39;: Scheme(shape=(23676,), dtype=torch.float32)}
       edata_schemes={})
 </pre></div>
 </div>
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "945a809b2c8b482bb996ec258f305adf"}</script><img alt="../_images/5e5da6cdc63ea28d2a571719d6f3f2ad67c8126ed0cc08d498955b810fe3ddcf.png" src="../_images/5e5da6cdc63ea28d2a571719d6f3f2ad67c8126ed0cc08d498955b810fe3ddcf.png" />
-<img alt="../_images/f90974f6bed69d96db5076e566696914de3306d393343de45ac0ddde763bd873.png" src="../_images/f90974f6bed69d96db5076e566696914de3306d393343de45ac0ddde763bd873.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GNN Model | Test Accuracy = 0.8775 | F1 = 0.8548 |
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "bbc4cca8777f4b04805735118fd28bba", "version_major": 2, "version_minor": 0}</script><img alt="../_images/c6fc975905e772c983395d4ab7a94b8647200169ec055586bfb7b83219fb5482.png" src="../_images/c6fc975905e772c983395d4ab7a94b8647200169ec055586bfb7b83219fb5482.png" />
+<img alt="../_images/17f23b05af328188af19070d39b48a64b372b789ab5573dab4c768c019a15e26.png" src="../_images/17f23b05af328188af19070d39b48a64b372b789ab5573dab4c768c019a15e26.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GNN Model | Test Accuracy = 0.8675 | F1 = 0.8447 |
 </pre></div>
 </div>
 </div>
@@ -762,16 +746,16 @@ Graph(num_nodes=1000, num_edges=30534,
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "bryanismb"
         },
         kernelOptions: {
-            name: "python3",
+            name: "bryanismb",
             path: "./Section3"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'bryanismb'</script>
 
                 </article>
               
@@ -810,22 +794,21 @@ Graph(num_nodes=1000, num_edges=30534,
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
-
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-functions-and-packages"><font color="darkblue">Import Functions and Packages </font></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-and-process-generation-scotland-data"><font color="darkblue">Import and Process Generation Scotland Data</font></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-patient-similarity-network-for-second-modality"><font color="darkblue"> Create Patient Similarity Network for Second Modality </font></a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-import-functions-and-packages-font"><font color="darkblue">Import Functions and Packages </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-import-and-process-generation-scotland-data-font"><font color="darkblue">Import and Process Generation Scotland Data</font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-create-patient-similarity-network-for-second-modality-font"><font color="darkblue"> Create Patient Similarity Network for Second Modality </font></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#note-creating-temporary-second-modality-of-time-since-last-cigarette-waiting-for-more-gen-scot-data-this-will-be-artificially-high">NOTE : Creating temporary second modality of time since last cigarette. Waiting for more Gen Scot data. This will be artificially high</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-gcn-on-second-modality-for-comparison-of-performance"><font color="darkblue"> Train GCN on second modality for comparison of performance </font></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#similarity-network-fusion-snf"><font color="darkblue"> Similarity Network Fusion (SNF) </font></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gcn-on-snf-network"><font color="darkblue"> GCN on SNF network </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-train-gcn-on-second-modality-for-comparison-of-performance-font"><font color="darkblue"> Train GCN on second modality for comparison of performance </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-similarity-network-fusion-snf-font"><font color="darkblue"> Similarity Network Fusion (SNF) </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-gcn-on-snf-network-font"><font color="darkblue"> GCN on SNF network </font></a></li>
 </ul>
   </nav></div>
 
@@ -850,7 +833,7 @@ By The Jupyter Book Community
 
   <p class="copyright">
     
-      © Copyright 2023.
+      © Copyright 2022.
       <br/>
     
   </p>
@@ -874,8 +857,8 @@ By The Jupyter Book Community
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
   <footer class="bd-footer">
   </footer>
