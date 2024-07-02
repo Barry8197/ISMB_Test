@@ -45,7 +45,7 @@ We have developed a Jupyter Book containing all code and some extra materials to
   <div style="flex: 1; min-width: 250px; text-align: center;">
     <img src="./ian_simpson.jpg" alt="Profile Photo 1" style="width: 100px; height: 100px; border-radius: 50%;">
     <h3>Ian Simpson</h3>
-    <p>Short bio for person 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    <p>I am a Professor of Biomedical Informatics and Director of the UKRI AI Centre for Doctoral Training in Biomedical Innovation at the University of Edinburgh. I originally trained in Biochemistry and Genetics before moving into Biomedical Informatics.</p>
     <p>ian.simpson@ed.ac.uk</p>
   </div>
 
