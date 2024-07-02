@@ -1,1 +1,3 @@
-# Introduction to Network Basics
+# Section 1 - Network Basics
+
+## Introduction to Network Basics
