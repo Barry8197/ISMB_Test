@@ -28,7 +28,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -60,6 +60,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'Section1/Section1';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Section 2: Network Analysis" href="../Section2_intro.html" />
+    <link rel="prev" title="Section 1 - Network Basics" href="../Section1_intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -121,8 +123,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -176,10 +176,10 @@
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../GettingStarted.html">Getting Started</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../Section1_intro.html">Introduction to Network Basics</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="Part1.html"><font color="darkblue">Retrieval of Protein-Protein Interactions from STRING</font></a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Section1_intro.html">Section 1 - Network Basics</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Section 1</a></li>
 
 
 
@@ -188,7 +188,11 @@
 
 
 
-<li class="toctree-l2"><a class="reference internal" href="Part2.html">Section 2</a></li>
+
+
+
+
+
 
 
 
@@ -198,11 +202,12 @@
 
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../Section2_intro.html">Introduction to Network Analysis</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../Section2/Part1.html">Section 2: Network Analysis</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Section2_intro.html">Section 2: Network Analysis</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Section2/Part1.html">Part 1: Over-representation and Enrichment Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Section2/Part2.html">Part 2: Similarity Network Fusion</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../Section3_intro.html">Introduction to Graph Neural Networks</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Section3_intro.html">Section 3 - SNF + GNN’s</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../Section3/Part1.html"><font color="darkblue"> Part 1 : Message Passing </font></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Section3/Part2.html"><font color="darkblue"> Part 2 : Problem Formulation / Patient Similarity Network Generation </font></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Section3/Part3.html"><font color="darkblue"> Part 3 : Smoking Network Classification using Graph Convolutional Networks</font></a></li>
@@ -419,10 +424,15 @@ document.write(`
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#metadata-analysis">Metadata analysis</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#expression-data-analysis">Expression data analysis</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-filtering-and-preprocessing">Data Filtering and Preprocessing</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#thresholding-based-on-gene-expression-levels">Thresholding Based on Gene Expression Levels</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gene-retention-at-various-thresholds">Gene Retention at Various Thresholds</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analyse-gene-expression-levels">Analyse Gene Expression Levels</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#thresholding-based-on-gene-expression-variance">Thresholding Based on Gene Expression Variance</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instead-of-gene-expression">instead of Gene Expression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#task-1-variance-based-gene-filtering">Task 1: Variance-Based Gene Filtering</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-calculate-variance">Step 1: Calculate Variance</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-set-a-variance-threshold">Step 2: Set a Variance Threshold</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-filter-genes">Step 3: Filter Genes</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gene-retention-at-different-variance-levels">Gene Retention at Different Variance Levels</a></li>
@@ -430,7 +440,7 @@ document.write(`
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gene-symbol-conversion-ensg-to-hgcn">Gene Symbol Conversion: ENSG to HGCN</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-for-missing-data-and-outliers">Checking for Missing Data and Outliers</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-heterogeneity">Data heterogeneity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-data-investigation">Further Data Investigation</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-matrix-calculation">Correlation Matrix Calculation</a><ul class="visible nav section-nav flex-column">
@@ -819,12 +829,13 @@ document.write(`
   with pd.option_context(&#39;mode.use_inf_as_na&#39;, True):
 </pre></div>
 </div>
-<img alt="../_images/5ce11f62a0e9f129a0d0026ba63ebf236b902ab58471d9f4bc1ec6921907dbd7.png" src="../_images/5ce11f62a0e9f129a0d0026ba63ebf236b902ab58471d9f4bc1ec6921907dbd7.png" />
+<img alt="../_images/b055cd5c6419b9cb45adaa40af3930c25ca19787d412251f49f304fd2f7324fa.png" src="../_images/b055cd5c6419b9cb45adaa40af3930c25ca19787d412251f49f304fd2f7324fa.png" />
 </div>
 </div>
 </section>
 <section id="expression-data-analysis">
 <h1>Expression data analysis<a class="headerlink" href="#expression-data-analysis" title="Link to this heading">#</a></h1>
+<p>This dataset contains gene expression levels for various samples, identified by their TCGA (The Cancer Genome Atlas) codes. Each row represents a different sample, while each column represents a different gene, identified by its Ensembl gene ID. The values in the table are the expression levels of the genes for each sample.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expression_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;datExpr&quot;</span><span class="p">]</span>
@@ -1150,7 +1161,8 @@ document.write(`
 <h1>Data Filtering and Preprocessing<a class="headerlink" href="#data-filtering-and-preprocessing" title="Link to this heading">#</a></h1>
 <ul class="simple">
 <li><p>Filter by Variance: Select genes with high variance across samples, as low variance genes might not contribute significantly to the analysis.</p></li>
-<li><p>Filter by Mean Expression: Select genes with high mean expression levels</p></li>
+<li><p>Filter by Mean Expression: Select genes with high mean expression levels\</p></li>
+<li><p>We are doing this to make sure our computations are computationally efficient, the network complexity is manageable, the biological signal is enhanced thus we make sure our analysis is biologically relevant.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1190,11 +1202,11 @@ Number of duplicate columns: 0
 </div>
 </div>
 </div>
-<section id="thresholding-based-on-gene-expression-levels">
-<h2>Thresholding Based on Gene Expression Levels<a class="headerlink" href="#thresholding-based-on-gene-expression-levels" title="Link to this heading">#</a></h2>
+<section id="analyse-gene-expression-levels">
+<h2>Analyse Gene Expression Levels<a class="headerlink" href="#analyse-gene-expression-levels" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the distribution of gene expression levels and choose a threshold to exclude low-expressed genes</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the distribution of gene expression levels </span>
 
 <span class="c1"># Calculate the mean expression level for each gene</span>
 <span class="n">gene_means</span> <span class="o">=</span> <span class="n">expression_data</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -1206,7 +1218,7 @@ Number of duplicate columns: 0
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribution of Gene Expression Levels&#39;</span><span class="p">)</span>
 
-<span class="c1"># Choose a threshold (example threshold at the mean of the gene means)</span>
+<span class="c1"># mean of the gene means</span>
 <span class="n">threshold</span> <span class="o">=</span> <span class="n">gene_means</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">threshold</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Threshold = </span><span class="si">{</span><span class="n">threshold</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
@@ -1223,52 +1235,47 @@ Number of duplicate columns: 0
 <img alt="../_images/0dabf73f9955a770531b851edf909fb1591f1c5700f8b45c64d3fd2bf2dd4913.png" src="../_images/0dabf73f9955a770531b851edf909fb1591f1c5700f8b45c64d3fd2bf2dd4913.png" />
 </div>
 </div>
+<p>We could use this for thersholding, however it is</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Function to filter out low-expressed genes</span>
-<span class="k">def</span> <span class="nf">filter_low_expression_genes</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
-    <span class="c1"># Calculate the mean expression for each gene</span>
-    <span class="n">gene_means</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="c1"># Filter out genes with mean expression below the threshold</span>
-    <span class="n">mask</span> <span class="o">=</span> <span class="n">gene_means</span> <span class="o">&gt;=</span> <span class="n">threshold</span>
-    <span class="n">filtered_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">mask</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">filtered_data</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># # Function to filter out low-expressed genes</span>
+<span class="c1"># def filter_low_expression_genes(data, threshold=1.0):</span>
+<span class="c1">#     # Calculate the mean expression for each gene</span>
+<span class="c1">#     gene_means = data.mean(axis=0)</span>
+<span class="c1">#     # Filter out genes with mean expression below the threshold</span>
+<span class="c1">#     mask = gene_means &gt;= threshold</span>
+<span class="c1">#     filtered_data = data.loc[:, mask]</span>
+<span class="c1">#     return filtered_data</span>
 </pre></div>
 </div>
 </div>
 </div>
-</section>
-<section id="gene-retention-at-various-thresholds">
-<h2>Gene Retention at Various Thresholds<a class="headerlink" href="#gene-retention-at-various-thresholds" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define a range of thresholds</span>
-<span class="n">thresholds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Gene Retention at Various Thresholds</span>
+<span class="c1"># Define a range of thresholds</span>
+<span class="c1"># thresholds = np.arange(0, 15, 0.5)</span>
 
-<span class="c1"># List to store the number of genes retained at each threshold</span>
-<span class="n">num_genes</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1"># # List to store the number of genes retained at each threshold</span>
+<span class="c1"># num_genes = []</span>
 
-<span class="c1"># Assuming df_renamed is your DataFrame with gene expression data</span>
-<span class="k">for</span> <span class="n">threshold</span> <span class="ow">in</span> <span class="n">thresholds</span><span class="p">:</span>
-    <span class="n">df_filtered</span> <span class="o">=</span> <span class="n">filter_low_expression_genes</span><span class="p">(</span><span class="n">expression_data</span><span class="p">,</span> <span class="n">threshold</span><span class="p">)</span>
-    <span class="n">num_genes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df_filtered</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="c1"># # Assuming df_renamed is your DataFrame with gene expression data</span>
+<span class="c1"># for threshold in thresholds:</span>
+<span class="c1">#     df_filtered = filter_low_expression_genes(expression_data, threshold)</span>
+<span class="c1">#     num_genes.append(df_filtered.shape[1])</span>
 
-<span class="c1"># Plot the results</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">thresholds</span><span class="p">,</span> <span class="n">num_genes</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Threshold&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Number of Genes Retained&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Number of Genes Retained at Different Thresholds&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1"># # Plot the results</span>
+<span class="c1"># plt.figure(figsize=(10, 6))</span>
+<span class="c1"># plt.plot(thresholds, num_genes, marker=&#39;o&#39;)</span>
+<span class="c1"># plt.xlabel(&#39;Threshold&#39;)</span>
+<span class="c1"># plt.ylabel(&#39;Number of Genes Retained&#39;)</span>
+<span class="c1"># plt.title(&#39;Number of Genes Retained at Different Thresholds&#39;)</span>
+<span class="c1"># plt.grid(True)</span>
+<span class="c1"># plt.show()</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/f0dba6767841754602fe39e1c2102093b5452542f746036fcd80e22dd5064acb.png" src="../_images/f0dba6767841754602fe39e1c2102093b5452542f746036fcd80e22dd5064acb.png" />
 </div>
-</div>
-<p>Based on these two diagrams, let’s choose threshold 8.11</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Assign the filtered data to a new variable</span>
@@ -1288,6 +1295,21 @@ Number of duplicate columns: 0
 <li><p>Low-variance genes often represent housekeeping genes or noise.</p></li>
 <li><p>High-dimensional data can be computationally expensive to process.</p></li>
 </ol>
+</section>
+<section id="task-1-variance-based-gene-filtering">
+<h3>Task 1: Variance-Based Gene Filtering<a class="headerlink" href="#task-1-variance-based-gene-filtering" title="Link to this heading">#</a></h3>
+<p>Write a function that takes in a dataframe and a threshold value as argument, and call it filter_high_variance_genes()</p>
+<section id="step-1-calculate-variance">
+<h4>Step 1: Calculate Variance<a class="headerlink" href="#step-1-calculate-variance" title="Link to this heading">#</a></h4>
+<p>Compute the variance of expression levels for each gene across all samples.</p>
+</section>
+<section id="step-2-set-a-variance-threshold">
+<h4>Step 2: Set a Variance Threshold<a class="headerlink" href="#step-2-set-a-variance-threshold" title="Link to this heading">#</a></h4>
+<p>Determine a threshold for variance. Genes with variance below this threshold are considered to have low variance and can be filtered out.</p>
+</section>
+<section id="step-3-filter-genes">
+<h4>Step 3: Filter Genes<a class="headerlink" href="#step-3-filter-genes" title="Link to this heading">#</a></h4>
+<p>Retain only those genes with variance above the threshold for network construction.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">filter_high_variance_genes</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
@@ -1314,8 +1336,11 @@ Number of duplicate columns: 0
 </div>
 </section>
 </section>
+</section>
 <section id="gene-retention-at-different-variance-levels">
 <h2>Gene Retention at Different Variance Levels<a class="headerlink" href="#gene-retention-at-different-variance-levels" title="Link to this heading">#</a></h2>
+<p>Calculate the 75th percentile of the variance distribution, and use it as a threshold<br />
+It is a good balance between retaining enough data for meaningful analysis and removing low-variance noise</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define a range of variance thresholds</span>
@@ -1381,6 +1406,7 @@ Number of duplicate columns: 0
 </section>
 <section id="gene-symbol-conversion-ensg-to-hgcn">
 <h1>Gene Symbol Conversion: ENSG to HGCN<a class="headerlink" href="#gene-symbol-conversion-ensg-to-hgcn" title="Link to this heading">#</a></h1>
+<p>Converting Ensembl gene IDs (ENSG) to HGNC (HUGO Gene Nomenclature Committee) gene symbols is often a good practice as HGCN is standard identifier, more human readable, is widely used in publications, thus helps domain experts understand more effectively the analysis.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">rename_ensembl_to_gene_names</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
@@ -1466,32 +1492,24 @@ Number of duplicate columns: 0
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_filtered_variance</span><span class="o">.</span><span class="n">shape</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shape of df_filtered_variance:&quot;</span><span class="p">,</span> <span class="n">df_filtered_variance</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shape of df_renamed:&quot;</span><span class="p">,</span> <span class="n">df_renamed</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(498, 5671)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of df_filtered_variance: (498, 5671)
+Shape of df_renamed: (498, 5338)
 </pre></div>
 </div>
 </div>
 </div>
+<p>The output of the mygene and the different number of rows indicate that some of the genes werent mapped to a gene ID or multiple were mapped to the same gene ID.<br />
+In the first case we disregard those genes, in the second we calculate the mean expression value.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_renamed</span><span class="o">.</span><span class="n">shape</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(498, 5338)
-</pre></div>
-</div>
-</div>
-</div>
-<p>Different number of rows indicate that some of the genes werent mapped to a gene ID or multiple were mapped to the same gene ID.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_renamed</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># let&#39;s inspect the first few rows of the renamed DataFrame</span>
+<span class="n">df_renamed</span>
 </pre></div>
 </div>
 </div>
@@ -1897,8 +1915,8 @@ Number of duplicate columns: 0
 </div>
 </div>
 </section>
-<section id="data-heterogeneity">
-<h2>Data heterogeneity<a class="headerlink" href="#data-heterogeneity" title="Link to this heading">#</a></h2>
+<section id="further-data-investigation">
+<h2>Further Data Investigation<a class="headerlink" href="#further-data-investigation" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Select numerical columns</span>
@@ -1907,11 +1925,11 @@ Number of duplicate columns: 0
 <span class="c1"># Calculate the mean of each column for the numerical columns only</span>
 <span class="n">means</span> <span class="o">=</span> <span class="n">numerical_columns</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 
-<span class="c1"># Get the top 10 and bottom 10 columns based on mean values</span>
+<span class="c1"># Get the top 8 and bottom 8 columns based on mean values</span>
 <span class="n">top_8_columns</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 <span class="n">bottom_8_columns</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">nsmallest</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 
-<span class="c1"># Combine top 10 and bottom 10 columns for plotting</span>
+<span class="c1"># Combine top 8 and bottom 8 columns for plotting</span>
 <span class="n">columns_to_plot</span> <span class="o">=</span> <span class="n">top_8_columns</span> <span class="o">+</span> <span class="n">bottom_8_columns</span>
 
 <span class="c1"># Filter the numerical columns to only include those to plot</span>
@@ -1927,10 +1945,17 @@ Number of duplicate columns: 0
 
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">filtered_numerical_columns</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
     <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[</span><span class="n">i</span><span class="p">]</span>
-    <span class="n">filtered_numerical_columns</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">filtered_numerical_columns</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">8</span> <span class="k">else</span> <span class="s1">&#39;lightcoral&#39;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Value&#39;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
+    
+    <span class="c1"># Adding mean and median lines</span>
+    <span class="n">mean_val</span> <span class="o">=</span> <span class="n">filtered_numerical_columns</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">median_val</span> <span class="o">=</span> <span class="n">filtered_numerical_columns</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">mean_val</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">median_val</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">({</span><span class="s1">&#39;Mean&#39;</span><span class="p">:</span> <span class="n">mean_val</span><span class="p">,</span> <span class="s1">&#39;Median&#39;</span><span class="p">:</span> <span class="n">median_val</span><span class="p">})</span>
 
 <span class="c1"># Hide any unused axes if the number of plots isn&#39;t a perfect multiple of 4</span>
 <span class="k">if</span> <span class="n">num_plots</span> <span class="o">%</span> <span class="mi">4</span><span class="p">:</span>
@@ -1943,13 +1968,16 @@ Number of duplicate columns: 0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/ca2e5f0b9c680b3a4fa6f83f6e658386de4fac46d9b240636bd3057e71587208.png" src="../_images/ca2e5f0b9c680b3a4fa6f83f6e658386de4fac46d9b240636bd3057e71587208.png" />
+<img alt="../_images/4d66d50372835c46e591dabe80a2572d2dde0fc023385d916c06bfce351fa159.png" src="../_images/4d66d50372835c46e591dabe80a2572d2dde0fc023385d916c06bfce351fa159.png" />
 </div>
 </div>
 </section>
 </section>
 <section id="correlation-matrix-calculation">
 <h1>Correlation Matrix Calculation<a class="headerlink" href="#correlation-matrix-calculation" title="Link to this heading">#</a></h1>
+<p>In order to create a biological network, we have to calculate the correlation matrix of the gene expression data.<br />
+The correlation matrix shows how strongly pairs of genes are related. It helps identify which genes’ expression levels move together across different samples.<br />
+Using the correlation matrix, we can build a gene expression network. In this network, genes are connected based on significant correlations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># function to calculate absolute biweight midcorrelation </span>
@@ -3864,6 +3892,24 @@ No self-loops in the graph.
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="../Section1_intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Section 1 - Network Basics</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Section2_intro.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Section 2: Network Analysis</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -3893,10 +3939,15 @@ No self-loops in the graph.
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#metadata-analysis">Metadata analysis</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#expression-data-analysis">Expression data analysis</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-filtering-and-preprocessing">Data Filtering and Preprocessing</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#thresholding-based-on-gene-expression-levels">Thresholding Based on Gene Expression Levels</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gene-retention-at-various-thresholds">Gene Retention at Various Thresholds</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analyse-gene-expression-levels">Analyse Gene Expression Levels</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#thresholding-based-on-gene-expression-variance">Thresholding Based on Gene Expression Variance</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instead-of-gene-expression">instead of Gene Expression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#task-1-variance-based-gene-filtering">Task 1: Variance-Based Gene Filtering</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-calculate-variance">Step 1: Calculate Variance</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-set-a-variance-threshold">Step 2: Set a Variance Threshold</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-filter-genes">Step 3: Filter Genes</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gene-retention-at-different-variance-levels">Gene Retention at Different Variance Levels</a></li>
@@ -3904,7 +3955,7 @@ No self-loops in the graph.
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gene-symbol-conversion-ensg-to-hgcn">Gene Symbol Conversion: ENSG to HGCN</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-for-missing-data-and-outliers">Checking for Missing Data and Outliers</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-heterogeneity">Data heterogeneity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-data-investigation">Further Data Investigation</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-matrix-calculation">Correlation Matrix Calculation</a><ul class="visible nav section-nav flex-column">

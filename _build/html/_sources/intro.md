@@ -59,7 +59,7 @@ We have developed a Jupyter Book containing all code and some extra materials to
   <div style="flex: 1; min-width: 250px; text-align: center;">
     <img src="chaeeun_lee.png" alt="Profile Photo 3" style="width: 100px; height: 100px; border-radius: 50%;">
     <h3>Chaeeun Lee</h3>
-    <p>Short bio for person 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    <p>I am a UKRI CDT student in Biomedical AI in Edinburgh. My research focuses on Natural Language Processing (NLP) within the biomedical domain, addressing challenges such as factual hallucination and domain adaptation. </p>
     <p>chaeeun.lee@ed.ac.uk</p>
   </div>
 
