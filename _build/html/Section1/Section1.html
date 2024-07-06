@@ -60,7 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'Section1/Section1';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Section 2: Network Analysis" href="../Section2_intro.html" />
+    <link rel="next" title="Patient similarity network" href="Section1-PSN.html" />
     <link rel="prev" title="Section 1 - Network Basics" href="../Section1_intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -199,6 +199,8 @@
 
 
 
+
+<li class="toctree-l2"><a class="reference internal" href="Section1-PSN.html">Patient similarity network</a></li>
 
 </ul>
 </li>
@@ -414,17 +416,17 @@ document.write(`
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Section 1</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#structuring-biomedical-data-using-networks-workshop-network-generation">Structuring Biomedical Data Using Networks  workshop - Network Generation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-of-contents">Table of Contents</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#libraries">Libraries</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tcga-luad-project">TCGA-LUAD Project</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#biomedical-networks">1. Biomedical Networks</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#libraries">1.1 Libraries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tcga-luad-project">1.2 TCGA-LUAD Project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metadata-analysis">1.3 Metadata Analysis</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#metadata-analysis">Metadata analysis</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#expression-data-analysis">Expression data analysis</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-filtering-and-preprocessing">Data Filtering and Preprocessing</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analyse-gene-expression-levels">Analyse Gene Expression Levels</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-filtering-and-preprocessing">2. Data Filtering and Preprocessing</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analysing-gene-expression-levels">2.1 Analysing Gene Expression Levels</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#thresholding-based-on-gene-expression-variance">Thresholding Based on Gene Expression Variance</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instead-of-gene-expression">instead of Gene Expression</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#task-1-variance-based-gene-filtering">Task 1: Variance-Based Gene Filtering</a><ul class="nav section-nav flex-column">
@@ -448,8 +450,9 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#todo-check-grouping-ordering">TODO: check grouping, ordering ?</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-construction-from-correlation-matrices">Graph Construction from Correlation Matrices</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-construction-from-correlation-matrices">5. Graph Construction from Correlation Matrices</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#todo-list-comprehension-for-graph-generation">TODO: list comprehension for Graph generation ??</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#todo-remove-isolates">TODO: remove isolates ?</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#show-densities-what-treshold-is-useful-to-get-rid-of-the-fully-connected-network">show densities, what treshold is useful to get rid of the fully connected network</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#network-cleaning">Network Cleaning</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sparsification-methods">Sparsification methods</a></li>
@@ -514,8 +517,11 @@ document.write(`
 <li><p><strong>Setting up Protein Interaction Network Using STRING Database</strong></p></li>
 </ol>
 </section>
+</section>
+<section id="biomedical-networks">
+<h1>1. Biomedical Networks<a class="headerlink" href="#biomedical-networks" title="Link to this heading">#</a></h1>
 <section id="libraries">
-<h2>Libraries<a class="headerlink" href="#libraries" title="Link to this heading">#</a></h2>
+<h2>1.1 Libraries<a class="headerlink" href="#libraries" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># standard libraries</span>
@@ -545,11 +551,8 @@ document.write(`
 </div>
 </div>
 </section>
-</section>
-<section id="data">
-<h1>Data<a class="headerlink" href="#data" title="Link to this heading">#</a></h1>
 <section id="tcga-luad-project">
-<h2>TCGA-LUAD Project<a class="headerlink" href="#tcga-luad-project" title="Link to this heading">#</a></h2>
+<h2>1.2 TCGA-LUAD Project<a class="headerlink" href="#tcga-luad-project" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><strong>Title</strong>: The Cancer Genome Atlas Lung Adenocarcinoma (TCGA-LUAD)</p></li>
 <li><p><strong>Main Focus</strong>: Study of lung adenocarcinoma (a common type of lung cancer)</p></li>
@@ -561,7 +564,7 @@ document.write(`
 <li><p>Cystic, Mucinous, and Serous Neoplasms</p></li>
 </ul>
 </li>
-<li><p><strong>Number of Cases</strong>: 585</p></li>
+<li><p><strong>Number of Cases</strong>: 585 (498 with transcriptomic data)</p></li>
 <li><p><strong>Data Accessibility</strong>: Available on the NIH-GDC Data Portal</p></li>
 <li><p><strong>Link</strong>: <a class="reference external" href="https://portal.gdc.cancer.gov/projects/TCGA-LUAD">TCGA-LUAD Project Page</a></p></li>
 </ul>
@@ -580,7 +583,24 @@ document.write(`
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load the data from the pickle file</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="s2">&quot;ISMB_TCGA_GE.pkl&quot;</span><span class="p">),</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Obviously this is not <strong>yet</strong> a graph dataset, so our first course of action is to decide how are we going to analyse this dataset. <br />
+There are several ways we could do that, however today we are focusing on the network biology aspect of cancer genome data. <br />
+In order to construct a biological network, we are going to first:</p>
+<ul class="simple">
+<li><p>examine the TCGA metadata</p></li>
+<li><p>come up with useful strategies to tackle the large data size</p></li>
+<li><p>create the basis of a biological network</p></li>
+</ul>
+</section>
+<section id="metadata-analysis">
+<h2>1.3 Metadata Analysis<a class="headerlink" href="#metadata-analysis" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -590,10 +610,6 @@ document.write(`
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="metadata-analysis">
-<h1>Metadata analysis<a class="headerlink" href="#metadata-analysis" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;datMeta&quot;</span><span class="p">]</span>
@@ -769,12 +785,27 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;datMeta&quot;</span><span class="p">][</span><span class="s1">&#39;sample_type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;datMeta&quot;</span><span class="p">][</span><span class="s2">&quot;patient&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">size</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;Primary Tumor&#39;, &#39;Solid Tissue Normal&#39;], dtype=object)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>498
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;datMeta&quot;</span><span class="p">][</span><span class="s1">&#39;sample_type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sample_type
+Primary Tumor          469
+Solid Tissue Normal     29
+Name: count, dtype: int64
 </pre></div>
 </div>
 </div>
@@ -829,9 +860,25 @@ document.write(`
   with pd.option_context(&#39;mode.use_inf_as_na&#39;, True):
 </pre></div>
 </div>
-<img alt="../_images/b055cd5c6419b9cb45adaa40af3930c25ca19787d412251f49f304fd2f7324fa.png" src="../_images/b055cd5c6419b9cb45adaa40af3930c25ca19787d412251f49f304fd2f7324fa.png" />
+<img alt="../_images/5ce11f62a0e9f129a0d0026ba63ebf236b902ab58471d9f4bc1ec6921907dbd7.png" src="../_images/5ce11f62a0e9f129a0d0026ba63ebf236b902ab58471d9f4bc1ec6921907dbd7.png" />
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;datMeta&#39;</span><span class="p">][</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;datMeta&#39;</span><span class="p">][</span><span class="s1">&#39;sample_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Primary Tumor&#39;</span><span class="p">][</span><span class="s1">&#39;Smoked&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Smoked
+Smoker    323
+Never     146
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="expression-data-analysis">
 <h1>Expression data analysis<a class="headerlink" href="#expression-data-analysis" title="Link to this heading">#</a></h1>
@@ -1158,10 +1205,10 @@ document.write(`
 <p>498 rows × 22637 columns is a quite large matrix, thus we have to consider reducing the dimensionality.</p>
 </section>
 <section id="data-filtering-and-preprocessing">
-<h1>Data Filtering and Preprocessing<a class="headerlink" href="#data-filtering-and-preprocessing" title="Link to this heading">#</a></h1>
+<h1>2. Data Filtering and Preprocessing<a class="headerlink" href="#data-filtering-and-preprocessing" title="Link to this heading">#</a></h1>
 <ul class="simple">
 <li><p>Filter by Variance: Select genes with high variance across samples, as low variance genes might not contribute significantly to the analysis.</p></li>
-<li><p>Filter by Mean Expression: Select genes with high mean expression levels\</p></li>
+<li><p>Filter by Mean Expression: Select genes with high mean expression levels</p></li>
 <li><p>We are doing this to make sure our computations are computationally efficient, the network complexity is manageable, the biological signal is enhanced thus we make sure our analysis is biologically relevant.</p></li>
 </ul>
 <div class="cell docutils container">
@@ -1202,8 +1249,8 @@ Number of duplicate columns: 0
 </div>
 </div>
 </div>
-<section id="analyse-gene-expression-levels">
-<h2>Analyse Gene Expression Levels<a class="headerlink" href="#analyse-gene-expression-levels" title="Link to this heading">#</a></h2>
+<section id="analysing-gene-expression-levels">
+<h2>2.1 Analysing Gene Expression Levels<a class="headerlink" href="#analysing-gene-expression-levels" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the distribution of gene expression levels </span>
@@ -1220,7 +1267,7 @@ Number of duplicate columns: 0
 
 <span class="c1"># mean of the gene means</span>
 <span class="n">threshold</span> <span class="o">=</span> <span class="n">gene_means</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">threshold</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Threshold = </span><span class="si">{</span><span class="n">threshold</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">threshold</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Mean = </span><span class="si">{</span><span class="n">threshold</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -1232,7 +1279,7 @@ Number of duplicate columns: 0
   with pd.option_context(&#39;mode.use_inf_as_na&#39;, True):
 </pre></div>
 </div>
-<img alt="../_images/0dabf73f9955a770531b851edf909fb1591f1c5700f8b45c64d3fd2bf2dd4913.png" src="../_images/0dabf73f9955a770531b851edf909fb1591f1c5700f8b45c64d3fd2bf2dd4913.png" />
+<img alt="../_images/c1159eb425082c8c00119a8a0dccff11cda1037b86d5414e2fe821e1ccce3e73.png" src="../_images/c1159eb425082c8c00119a8a0dccff11cda1037b86d5414e2fe821e1ccce3e73.png" />
 </div>
 </div>
 <p>We could use this for thersholding, however it is</p>
@@ -1291,9 +1338,9 @@ Number of duplicate columns: 0
 <section id="instead-of-gene-expression">
 <h3>instead of Gene Expression<a class="headerlink" href="#instead-of-gene-expression" title="Link to this heading">#</a></h3>
 <ol class="arabic simple">
+<li><p>High-dimensional data can be computationally expensive to process.</p></li>
 <li><p>Genes with higher variance across samples are likely to be more biologically relevant.</p></li>
 <li><p>Low-variance genes often represent housekeeping genes or noise.</p></li>
-<li><p>High-dimensional data can be computationally expensive to process.</p></li>
 </ol>
 </section>
 <section id="task-1-variance-based-gene-filtering">
@@ -1364,7 +1411,7 @@ It is a good balance between retaining enough data for meaningful analysis and r
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">variance_thresholds</span><span class="p">,</span> <span class="n">num_genes</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">variance_threshold</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;75th Percentile Threshold = </span><span class="si">{</span><span class="n">variance_threshold</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Variance Threshold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Variance&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Number of Genes Retained&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Number of Genes Retained at Different Variance Thresholds&#39;</span><span class="p">)</span>
@@ -1377,7 +1424,7 @@ It is a good balance between retaining enough data for meaningful analysis and r
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Chosen Variance Threshold: 1.2018901296749187
 </pre></div>
 </div>
-<img alt="../_images/77c9b87def99e294b820d61d6ba9d10f7ab02bf738ae3b9fcc2dc259c60b7814.png" src="../_images/77c9b87def99e294b820d61d6ba9d10f7ab02bf738ae3b9fcc2dc259c60b7814.png" />
+<img alt="../_images/f47d742f7f0342b89a98144cef054c8917eb21e5f28f22e59394a4766e675de6.png" src="../_images/f47d742f7f0342b89a98144cef054c8917eb21e5f28f22e59394a4766e675de6.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1976,7 +2023,8 @@ In the first case we disregard those genes, in the second we calculate the mean 
 <section id="correlation-matrix-calculation">
 <h1>Correlation Matrix Calculation<a class="headerlink" href="#correlation-matrix-calculation" title="Link to this heading">#</a></h1>
 <p>In order to create a biological network, we have to calculate the correlation matrix of the gene expression data.<br />
-The correlation matrix shows how strongly pairs of genes are related. It helps identify which genes’ expression levels move together across different samples.<br />
+The correlation matrix shows how strongly pairs of genes are related. <br />
+The assumption is that if genes are correlated, then this means they influence their each others behaviour, hence we introduce an edge connection between them.<br />
 Using the correlation matrix, we can build a gene expression network. In this network, genes are connected based on significant correlations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2069,6 +2117,12 @@ Using the correlation matrix, we can build a gene expression network. In this ne
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Correlation matrices calculated:
+dict_keys([&#39;pearson&#39;, &#39;spearman&#39;, &#39;biweight_midcorrelation&#39;])
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2110,6 +2164,48 @@ Using the correlation matrix, we can build a gene expression network. In this ne
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy.cluster.hierarchy</span> <span class="kn">import</span> <span class="n">linkage</span><span class="p">,</span> <span class="n">leaves_list</span>
+
+<span class="k">def</span> <span class="nf">plot_correlation_matrices</span><span class="p">(</span><span class="n">correlation_matrices</span><span class="p">):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>  <span class="c1"># Adjust to 1 row and 3 columns</span>
+    <span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">matrix</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">correlation_matrices</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+        <span class="c1"># Perform hierarchical clustering</span>
+        <span class="n">Z</span> <span class="o">=</span> <span class="n">linkage</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;average&#39;</span><span class="p">)</span>  <span class="c1"># You can use other methods like &#39;single&#39;, &#39;complete&#39;, etc.</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">leaves_list</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+        
+        <span class="c1"># Reorder matrix</span>
+        <span class="n">ordered_matrix</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">]</span>
+        
+        <span class="c1"># Plot heatmap</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">ordered_matrix</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">xticklabels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">yticklabels</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">key</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s1"> Correlation Matrix&#39;</span><span class="p">)</span>
+        
+        <span class="c1"># Set square aspect ratio</span>
+        <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">,</span> <span class="n">adjustable</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">)</span>
+    
+    <span class="c1"># Hide any unused subplots</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">axes</span><span class="p">)):</span>
+        <span class="n">axes</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Example usage</span>
+<span class="c1"># Assuming correlation_matrices is a dictionary of correlation matrices</span>
+<span class="n">plot_correlation_matrices</span><span class="p">(</span><span class="n">correlation_matrices</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/444b8c85e1a849de2e5a34ec23affdef79f1a6aff2d83b1d5649452a546379bc.png" src="../_images/444b8c85e1a849de2e5a34ec23affdef79f1a6aff2d83b1d5649452a546379bc.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correlation_matrices</span><span class="p">[</span><span class="s1">&#39;pearson&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
@@ -2131,10 +2227,13 @@ Using the correlation matrix, we can build a gene expression network. In this ne
 </div>
 </section>
 <section id="graph-construction-from-correlation-matrices">
-<h1>Graph Construction from Correlation Matrices<a class="headerlink" href="#graph-construction-from-correlation-matrices" title="Link to this heading">#</a></h1>
+<h1>5. Graph Construction from Correlation Matrices<a class="headerlink" href="#graph-construction-from-correlation-matrices" title="Link to this heading">#</a></h1>
 </section>
 <section id="todo-list-comprehension-for-graph-generation">
 <h1>TODO: list comprehension for Graph generation ??<a class="headerlink" href="#todo-list-comprehension-for-graph-generation" title="Link to this heading">#</a></h1>
+</section>
+<section id="todo-remove-isolates">
+<h1>TODO: remove isolates ?<a class="headerlink" href="#todo-remove-isolates" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_graph_from_correlation</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.8</span><span class="p">):</span>
@@ -2169,6 +2268,38 @@ Using the correlation matrix, we can build a gene expression network. In this ne
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_graph_from_correlation_lc</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.8</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a graph from a correlation matrix using a specified threshold.</span>
+<span class="sd">    Only adds nodes that have edges, ignoring isolated nodes.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    correlation_matrix (pd.DataFrame): DataFrame containing the correlation matrix.</span>
+<span class="sd">    threshold (float): Threshold for including edges based on correlation value.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    G (nx.Graph): Graph created from the correlation matrix.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+
+    <span class="c1"># Use a list comprehension to extract edges that meet the threshold criteria</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="n">correlation_matrix</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">correlation_matrix</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">correlation_matrix</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">correlation_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">threshold</span>
+    <span class="p">]</span>
+
+    <span class="c1"># Add edges to the graph, nodes are added implicitly</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_weighted_edges_from</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">G</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">verify_edge_weights</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Verifies that edges in the graph have the correct weights from the correlation matrix.</span>
@@ -2194,6 +2325,13 @@ Using the correlation matrix, we can build a gene expression network. In this ne
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># correlation_matrices is a dictionary containing correlation matrices</span>
 <span class="n">pearson_graph</span> <span class="o">=</span> <span class="n">create_graph_from_correlation</span><span class="p">(</span><span class="n">correlation_matrices</span><span class="p">[</span><span class="s1">&#39;pearson&#39;</span><span class="p">],</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pearson_graph</span> <span class="o">=</span> <span class="n">create_graph_from_correlation_lc</span><span class="p">(</span><span class="n">correlation_matrices</span><span class="p">[</span><span class="s1">&#39;pearson&#39;</span><span class="p">],</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2256,7 +2394,7 @@ Edge (A2M, SLIT2) - weight: 0.8041515706739126
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/bc1bf43a3cb189bf4108490e06ef682753dfa20310d909fd6442b9255c24ecce.png" src="../_images/bc1bf43a3cb189bf4108490e06ef682753dfa20310d909fd6442b9255c24ecce.png" />
+<img alt="../_images/edb476e8e5f537418d508d28ae4adf87a6ed2da6b6be3e04bd213d990db95e7d.png" src="../_images/edb476e8e5f537418d508d28ae4adf87a6ed2da6b6be3e04bd213d990db95e7d.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2302,12 +2440,12 @@ Edge (A2M, SLIT2) - weight: 0.8041515706739126
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of nodes: 5338
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of nodes: 1114
 Number of edges: 13449
-Sample nodes: [&#39;A2M&#39;, &#39;A2ML1&#39;, &#39;A4GALT&#39;, &#39;AACSP1&#39;, &#39;AADAC&#39;, &#39;AADACP1&#39;, &#39;AARD&#39;, &#39;AASS&#39;, &#39;AATBC&#39;, &#39;AATK&#39;]
+Sample nodes: [&#39;A2M&#39;, &#39;ABCA8&#39;, &#39;ADAMTS8&#39;, &#39;AOC3&#39;, &#39;C7&#39;, &#39;INMT&#39;, &#39;ITGA8&#39;, &#39;MFAP4&#39;, &#39;PKNOX2&#39;, &#39;SCN7A&#39;]
 Sample edges: [(&#39;A2M&#39;, &#39;ABCA8&#39;, {&#39;weight&#39;: 0.8308274641648915}), (&#39;A2M&#39;, &#39;ADAMTS8&#39;, {&#39;weight&#39;: 0.8036704002698273}), (&#39;A2M&#39;, &#39;AOC3&#39;, {&#39;weight&#39;: 0.8767411078325781}), (&#39;A2M&#39;, &#39;C7&#39;, {&#39;weight&#39;: 0.8013688242083488}), (&#39;A2M&#39;, &#39;INMT&#39;, {&#39;weight&#39;: 0.8117391230502314}), (&#39;A2M&#39;, &#39;ITGA8&#39;, {&#39;weight&#39;: 0.8724141478160804}), (&#39;A2M&#39;, &#39;MFAP4&#39;, {&#39;weight&#39;: 0.8444697225886688}), (&#39;A2M&#39;, &#39;PKNOX2&#39;, {&#39;weight&#39;: 0.8062841461653377}), (&#39;A2M&#39;, &#39;SCN7A&#39;, {&#39;weight&#39;: 0.8382334505662205}), (&#39;A2M&#39;, &#39;SLIT2&#39;, {&#39;weight&#39;: 0.8041515706739126})]
 No self-loops in the graph.
-Average clustering coefficient: 0.1045798392696385
+Average clustering coefficient: 0.5011195529814455
 </pre></div>
 </div>
 </div>
@@ -2334,14 +2472,14 @@ Average clustering coefficient: 0.1045798392696385
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Graph Information:
-Number of nodes: 5338
+Number of nodes: 1114
 Number of edges: 13449
-Sample nodes: [&#39;A2M&#39;, &#39;A2ML1&#39;, &#39;A4GALT&#39;, &#39;AACSP1&#39;, &#39;AADAC&#39;, &#39;AADACP1&#39;, &#39;AARD&#39;, &#39;AASS&#39;, &#39;AATBC&#39;, &#39;AATK&#39;]
+Sample nodes: [&#39;A2M&#39;, &#39;ABCA8&#39;, &#39;ADAMTS8&#39;, &#39;AOC3&#39;, &#39;C7&#39;, &#39;INMT&#39;, &#39;ITGA8&#39;, &#39;MFAP4&#39;, &#39;PKNOX2&#39;, &#39;SCN7A&#39;]
 Sample edges: [(&#39;A2M&#39;, &#39;ABCA8&#39;, {&#39;weight&#39;: 0.8308274641648915}), (&#39;A2M&#39;, &#39;ADAMTS8&#39;, {&#39;weight&#39;: 0.8036704002698273}), (&#39;A2M&#39;, &#39;AOC3&#39;, {&#39;weight&#39;: 0.8767411078325781}), (&#39;A2M&#39;, &#39;C7&#39;, {&#39;weight&#39;: 0.8013688242083488}), (&#39;A2M&#39;, &#39;INMT&#39;, {&#39;weight&#39;: 0.8117391230502314}), (&#39;A2M&#39;, &#39;ITGA8&#39;, {&#39;weight&#39;: 0.8724141478160804}), (&#39;A2M&#39;, &#39;MFAP4&#39;, {&#39;weight&#39;: 0.8444697225886688}), (&#39;A2M&#39;, &#39;PKNOX2&#39;, {&#39;weight&#39;: 0.8062841461653377}), (&#39;A2M&#39;, &#39;SCN7A&#39;, {&#39;weight&#39;: 0.8382334505662205}), (&#39;A2M&#39;, &#39;SLIT2&#39;, {&#39;weight&#39;: 0.8041515706739126})]
 No self-loops in the graph.
 
 Clustering Coefficient:
-Average clustering coefficient: 0.1045798392696385
+Average clustering coefficient: 0.5011195529814455
 </pre></div>
 </div>
 </div>
@@ -2364,6 +2502,8 @@ Average clustering coefficient: 0.1045798392696385
 <span class="sd">    Returns:</span>
 <span class="sd">    G (nx.Graph): Cleaned graph.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">G</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># Work on a copy of the graph to avoid modifying the original graph</span>
+
     <span class="c1"># Remove self-loops</span>
     <span class="n">G</span><span class="o">.</span><span class="n">remove_edges_from</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">selfloop_edges</span><span class="p">(</span><span class="n">G</span><span class="p">))</span>
 
@@ -2401,7 +2541,7 @@ Average clustering coefficient: 0.1045798392696385
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/14afac0911d491b474d925364fe4e55458fef0daa81595ee5e598a1bed51dd61.png" src="../_images/14afac0911d491b474d925364fe4e55458fef0daa81595ee5e598a1bed51dd61.png" />
+<img alt="../_images/9fdd42a753cc0200ad65bcd43edb1d4a51441f27058a1d951c581219a8df54c4.png" src="../_images/9fdd42a753cc0200ad65bcd43edb1d4a51441f27058a1d951c581219a8df54c4.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2415,7 +2555,7 @@ Average clustering coefficient: 0.1045798392696385
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of nodes: 1114
 Number of edges: 13449
-Sample nodes: [&#39;A2M&#39;, &#39;ABCA8&#39;, &#39;ABCC9&#39;, &#39;ACKR1&#39;, &#39;ACKR2&#39;, &#39;ACOXL&#39;, &#39;ACOXL-AS1&#39;, &#39;ACTG2&#39;, &#39;ADAM12&#39;, &#39;ADAMTS12&#39;]
+Sample nodes: [&#39;A2M&#39;, &#39;ABCA8&#39;, &#39;ADAMTS8&#39;, &#39;AOC3&#39;, &#39;C7&#39;, &#39;INMT&#39;, &#39;ITGA8&#39;, &#39;MFAP4&#39;, &#39;PKNOX2&#39;, &#39;SCN7A&#39;]
 Sample edges: [(&#39;A2M&#39;, &#39;ABCA8&#39;, {&#39;weight&#39;: 0.8308274641648915}), (&#39;A2M&#39;, &#39;ADAMTS8&#39;, {&#39;weight&#39;: 0.8036704002698273}), (&#39;A2M&#39;, &#39;AOC3&#39;, {&#39;weight&#39;: 0.8767411078325781}), (&#39;A2M&#39;, &#39;C7&#39;, {&#39;weight&#39;: 0.8013688242083488}), (&#39;A2M&#39;, &#39;INMT&#39;, {&#39;weight&#39;: 0.8117391230502314}), (&#39;A2M&#39;, &#39;ITGA8&#39;, {&#39;weight&#39;: 0.8724141478160804}), (&#39;A2M&#39;, &#39;MFAP4&#39;, {&#39;weight&#39;: 0.8444697225886688}), (&#39;A2M&#39;, &#39;PKNOX2&#39;, {&#39;weight&#39;: 0.8062841461653377}), (&#39;A2M&#39;, &#39;SCN7A&#39;, {&#39;weight&#39;: 0.8382334505662205}), (&#39;A2M&#39;, &#39;SLIT2&#39;, {&#39;weight&#39;: 0.8041515706739126})]
 No self-loops in the graph.
 Average clustering coefficient: 0.5011195529814455
@@ -2440,7 +2580,7 @@ Average clustering coefficient: 0.5011195529814455
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/3cef0f71b20e1ce9dab0b998dc07cd3cc548ffaefc417cb26ff4c440dd0e63bd.png" src="../_images/3cef0f71b20e1ce9dab0b998dc07cd3cc548ffaefc417cb26ff4c440dd0e63bd.png" />
+<img alt="../_images/09ad5130b7b07616925e1e788264a9971a9ce49c34e3b180ef88ba07ae9f8ffe.png" src="../_images/09ad5130b7b07616925e1e788264a9971a9ce49c34e3b180ef88ba07ae9f8ffe.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2740,9 +2880,10 @@ Average clustering coefficient: 0.6766781614263463
 <span class="sd">    Returns:</span>
 <span class="sd">    nx.Graph: The sparsified graph.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">graph_copy</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">sparsified_graph</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
-    <span class="n">sparsified_graph</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-    <span class="n">sparsified_graph</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">((</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;weight&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">)</span>
+    <span class="n">sparsified_graph</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">graph_copy</span><span class="o">.</span><span class="n">nodes</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+    <span class="n">sparsified_graph</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">((</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">graph_copy</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;weight&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">sparsified_graph</span>
 
 <span class="k">def</span> <span class="nf">top_percentage_sparsification</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">top_percentage</span><span class="p">):</span>
@@ -2756,10 +2897,11 @@ Average clustering coefficient: 0.6766781614263463
 <span class="sd">    Returns:</span>
 <span class="sd">    nx.Graph: The sparsified graph.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">sorted_edges</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;weight&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">graph_copy</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">sorted_edges</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">graph_copy</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;weight&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">top_edges_count</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sorted_edges</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">top_percentage</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)))</span>
     <span class="n">sparsified_graph</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
-    <span class="n">sparsified_graph</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+    <span class="n">sparsified_graph</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">graph_copy</span><span class="o">.</span><span class="n">nodes</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
     <span class="n">sparsified_graph</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">sorted_edges</span><span class="p">[:</span><span class="n">top_edges_count</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">sparsified_graph</span>
 
@@ -2774,12 +2916,12 @@ Average clustering coefficient: 0.6766781614263463
 <span class="sd">    Returns:</span>
 <span class="sd">    nx.Graph: The sparsified graph.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">closeness</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">closeness_centrality</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+    <span class="n">graph_copy</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">closeness</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">closeness_centrality</span><span class="p">(</span><span class="n">graph_copy</span><span class="p">)</span>
     <span class="n">nodes_to_remove</span> <span class="o">=</span> <span class="p">[</span><span class="n">node</span> <span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="n">centrality</span> <span class="ow">in</span> <span class="n">closeness</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">centrality</span> <span class="o">&lt;</span> <span class="n">threshold</span><span class="p">]</span>
     
-    <span class="n">sparsified_graph</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">sparsified_graph</span><span class="o">.</span><span class="n">remove_nodes_from</span><span class="p">(</span><span class="n">nodes_to_remove</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">sparsified_graph</span>
+    <span class="n">graph_copy</span><span class="o">.</span><span class="n">remove_nodes_from</span><span class="p">(</span><span class="n">nodes_to_remove</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">graph_copy</span>
 
 <span class="k">def</span> <span class="nf">remove_by_degree</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">min_degree</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -2792,11 +2934,11 @@ Average clustering coefficient: 0.6766781614263463
 <span class="sd">    Returns:</span>
 <span class="sd">    nx.Graph: The sparsified graph.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">nodes_to_remove</span> <span class="o">=</span> <span class="p">[</span><span class="n">node</span> <span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="n">degree</span> <span class="ow">in</span> <span class="nb">dict</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">degree</span><span class="p">())</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">degree</span> <span class="o">&lt;</span> <span class="n">min_degree</span><span class="p">]</span>
+    <span class="n">graph_copy</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">nodes_to_remove</span> <span class="o">=</span> <span class="p">[</span><span class="n">node</span> <span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="n">degree</span> <span class="ow">in</span> <span class="nb">dict</span><span class="p">(</span><span class="n">graph_copy</span><span class="o">.</span><span class="n">degree</span><span class="p">())</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">degree</span> <span class="o">&lt;</span> <span class="n">min_degree</span><span class="p">]</span>
     
-    <span class="n">sparsified_graph</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">sparsified_graph</span><span class="o">.</span><span class="n">remove_nodes_from</span><span class="p">(</span><span class="n">nodes_to_remove</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">sparsified_graph</span>
+    <span class="n">graph_copy</span><span class="o">.</span><span class="n">remove_nodes_from</span><span class="p">(</span><span class="n">nodes_to_remove</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">graph_copy</span>
 
 <span class="k">def</span> <span class="nf">knn_sparsification</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -2809,12 +2951,38 @@ Average clustering coefficient: 0.6766781614263463
 <span class="sd">    Returns:</span>
 <span class="sd">    nx.Graph: The sparsified graph.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">graph_copy</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">sparsified_graph</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+    <span class="n">sparsified_graph</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">graph_copy</span><span class="o">.</span><span class="n">nodes</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+    
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">graph_copy</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">graph_copy</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;weight&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">sparsified_graph</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">edges</span><span class="p">[:</span><span class="n">k</span><span class="p">])</span>
+    
+    <span class="k">return</span> <span class="n">sparsified_graph</span>
+
+<span class="k">def</span> <span class="nf">knn_sparsification_</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sparsifies the graph by keeping only the top-k edges with the highest weights for each node.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    graph (nx.Graph): The original NetworkX graph.</span>
+<span class="sd">    k (int): The number of nearest neighbors to keep for each node.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    nx.Graph: The sparsified graph.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;k must be a positive integer&quot;</span><span class="p">)</span>
+
     <span class="n">sparsified_graph</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
     <span class="n">sparsified_graph</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
     
     <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
         <span class="n">edges</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;weight&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">sparsified_graph</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">edges</span><span class="p">[:</span><span class="n">k</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">[:</span><span class="n">k</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">sparsified_graph</span><span class="o">.</span><span class="n">has_edge</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+                <span class="n">sparsified_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">)</span>
     
     <span class="k">return</span> <span class="n">sparsified_graph</span>
 
@@ -2828,7 +2996,8 @@ Average clustering coefficient: 0.6766781614263463
 <span class="sd">    Returns:</span>
 <span class="sd">    nx.Graph: The sparsified graph.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">nx</span><span class="o">.</span><span class="n">minimum_spanning_tree</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;weight&#39;</span><span class="p">)</span>
+    <span class="n">graph_copy</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">nx</span><span class="o">.</span><span class="n">minimum_spanning_tree</span><span class="p">(</span><span class="n">graph_copy</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;weight&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2846,6 +3015,7 @@ Average clustering coefficient: 0.6766781614263463
 <span class="n">graphs</span><span class="p">[</span><span class="s1">&#39;closeness_below_0.3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">remove_by_closeness</span><span class="p">(</span><span class="n">graphs</span><span class="p">[</span><span class="s1">&#39;original&#39;</span><span class="p">],</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
 <span class="n">graphs</span><span class="p">[</span><span class="s1">&#39;degree_below_3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">remove_by_degree</span><span class="p">(</span><span class="n">graphs</span><span class="p">[</span><span class="s1">&#39;original&#39;</span><span class="p">],</span> <span class="n">min_degree</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">graphs</span><span class="p">[</span><span class="s1">&#39;knn_5&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">knn_sparsification</span><span class="p">(</span><span class="n">graphs</span><span class="p">[</span><span class="s1">&#39;original&#39;</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">graphs</span><span class="p">[</span><span class="s1">&#39;knn_5_&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">knn_sparsification_</span><span class="p">(</span><span class="n">graphs</span><span class="p">[</span><span class="s1">&#39;original&#39;</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 <span class="n">graphs</span><span class="p">[</span><span class="s1">&#39;spanning_tree&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">spanning_tree_sparsification</span><span class="p">(</span><span class="n">graphs</span><span class="p">[</span><span class="s1">&#39;original&#39;</span><span class="p">])</span>
 
 
@@ -2856,18 +3026,46 @@ Average clustering coefficient: 0.6766781614263463
 <span class="n">visualize_graph</span><span class="p">(</span><span class="n">graphs</span><span class="p">[</span><span class="s1">&#39;closeness_below_0.3&#39;</span><span class="p">],</span> <span class="s1">&#39;Closeness Centrality Below 0.3&#39;</span><span class="p">)</span>
 <span class="n">visualize_graph</span><span class="p">(</span><span class="n">graphs</span><span class="p">[</span><span class="s1">&#39;degree_below_3&#39;</span><span class="p">],</span> <span class="s1">&#39;Degree Below 3&#39;</span><span class="p">)</span>
 <span class="n">visualize_graph</span><span class="p">(</span><span class="n">graphs</span><span class="p">[</span><span class="s1">&#39;knn_5&#39;</span><span class="p">],</span> <span class="s1">&#39;K-Nearest Neighbors (k=5)&#39;</span><span class="p">)</span>
+<span class="n">visualize_graph</span><span class="p">(</span><span class="n">graphs</span><span class="p">[</span><span class="s1">&#39;knn_5_&#39;</span><span class="p">],</span> <span class="s1">&#39;K-Nearest Neighbors_ (k=5)&#39;</span><span class="p">)</span>
 <span class="n">visualize_graph</span><span class="p">(</span><span class="n">graphs</span><span class="p">[</span><span class="s1">&#39;spanning_tree&#39;</span><span class="p">],</span> <span class="s1">&#39;Minimum Spanning Tree&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/3d7ac31c2051d5a0e6a12a554ae4b48492d78da440b9706a8c00aca43b1f4094.png" src="../_images/3d7ac31c2051d5a0e6a12a554ae4b48492d78da440b9706a8c00aca43b1f4094.png" />
-<img alt="../_images/097c3953caca9c8468709c64658e4178827f5945c8c083796dbd856eb1bdba25.png" src="../_images/097c3953caca9c8468709c64658e4178827f5945c8c083796dbd856eb1bdba25.png" />
-<img alt="../_images/927f133af858e07d902644f2669c65051b7c63d556c1ae7f3b5b61c39f85da14.png" src="../_images/927f133af858e07d902644f2669c65051b7c63d556c1ae7f3b5b61c39f85da14.png" />
-<img alt="../_images/dd3108a5da4c09b0f1602c5e092a5979c2eee3c0f40553c9fe2a7f3624972fc8.png" src="../_images/dd3108a5da4c09b0f1602c5e092a5979c2eee3c0f40553c9fe2a7f3624972fc8.png" />
-<img alt="../_images/158b6d6d346542dfc480587a99849865e47c14839eef73440354275173b1516a.png" src="../_images/158b6d6d346542dfc480587a99849865e47c14839eef73440354275173b1516a.png" />
-<img alt="../_images/32a84cfedf994d7ec48988c38e762681af70afdbabbd8efcc99c08d7cc0361a8.png" src="../_images/32a84cfedf994d7ec48988c38e762681af70afdbabbd8efcc99c08d7cc0361a8.png" />
-<img alt="../_images/d4a8ecf26d92d513290d1614d8141ac12cf2ee6b0c899cec539af1f10458a04f.png" src="../_images/d4a8ecf26d92d513290d1614d8141ac12cf2ee6b0c899cec539af1f10458a04f.png" />
+<img alt="../_images/d0ab9effa44b1e19520f110af494f4de1b8c36336d30b0469aa37c81aa3655cf.png" src="../_images/d0ab9effa44b1e19520f110af494f4de1b8c36336d30b0469aa37c81aa3655cf.png" />
+<img alt="../_images/561aac09b2b43dd464b4bb2eaeed8c123c17bc2dc7586a6c40a8f5eeab52367c.png" src="../_images/561aac09b2b43dd464b4bb2eaeed8c123c17bc2dc7586a6c40a8f5eeab52367c.png" />
+<img alt="../_images/c3583ee6039fc063f613b7e2c65ac81edb6d8a5f4c56123fe7ae0c926d337166.png" src="../_images/c3583ee6039fc063f613b7e2c65ac81edb6d8a5f4c56123fe7ae0c926d337166.png" />
+<img alt="../_images/9a2bc718d64851e33c27bdf00d89de0729e491fdaa03a4789ce62005e10092c1.png" src="../_images/9a2bc718d64851e33c27bdf00d89de0729e491fdaa03a4789ce62005e10092c1.png" />
+<img alt="../_images/84e950b0ca449f910a7d614be60f47f1ff35c5fa761311e5181ad180244ec3c4.png" src="../_images/84e950b0ca449f910a7d614be60f47f1ff35c5fa761311e5181ad180244ec3c4.png" />
+<img alt="../_images/8677d45b3b6ad3a5e283989467b146de20cb593433206bd3208988e21575cadf.png" src="../_images/8677d45b3b6ad3a5e283989467b146de20cb593433206bd3208988e21575cadf.png" />
+<img alt="../_images/1b05dc5cf0b572beb070ff89485899beac98b4f33502e04d52a6b1be27efa9e4.png" src="../_images/1b05dc5cf0b572beb070ff89485899beac98b4f33502e04d52a6b1be27efa9e4.png" />
+<img alt="../_images/0597355e539c42b90f412dda1bb07b839da3e72f8d751f3ebdb327d4c6b584c5.png" src="../_images/0597355e539c42b90f412dda1bb07b839da3e72f8d751f3ebdb327d4c6b584c5.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">print_graph_info</span><span class="p">(</span><span class="n">graphs</span><span class="p">[</span><span class="s1">&#39;knn_5&#39;</span><span class="p">])</span>
+<span class="n">print_graph_info</span><span class="p">(</span><span class="n">graphs</span><span class="p">[</span><span class="s1">&#39;knn_5_&#39;</span><span class="p">])</span>
+<span class="n">calculate_average_clustering</span><span class="p">(</span><span class="n">graphs</span><span class="p">[</span><span class="s1">&#39;knn_5&#39;</span><span class="p">])</span>
+<span class="n">calculate_average_clustering</span><span class="p">(</span><span class="n">graphs</span><span class="p">[</span><span class="s1">&#39;knn_5_&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of nodes: 305
+Number of edges: 1078
+Sample nodes: [&#39;IGHV4-28&#39;, &#39;IL7R&#39;, &#39;APOC1&#39;, &#39;IGKJ5&#39;, &#39;IGKV1-6&#39;, &#39;IGKV1OR22-5&#39;, &#39;IGKV1-9&#39;, &#39;CRTAM&#39;, &#39;HCK&#39;, &#39;IGHV3-19&#39;]
+Sample edges: [(&#39;IGHV4-28&#39;, &#39;IGHV4-55&#39;, {&#39;weight&#39;: 0.9047727266223481}), (&#39;IGHV4-28&#39;, &#39;FCRL5&#39;, {&#39;weight&#39;: 0.882551425757531}), (&#39;IGHV4-28&#39;, &#39;IGKC&#39;, {&#39;weight&#39;: 0.8801426293580624}), (&#39;IGHV4-28&#39;, &#39;IGHJ4&#39;, {&#39;weight&#39;: 0.877618669495452}), (&#39;IGHV4-28&#39;, &#39;MZB1&#39;, {&#39;weight&#39;: 0.8732715729342876}), (&#39;IGHV4-28&#39;, &#39;IGHV3-62&#39;, {&#39;weight&#39;: 0.8497360100394314}), (&#39;IGHV4-28&#39;, &#39;IGHV2-26&#39;, {&#39;weight&#39;: 0.8068303022261193}), (&#39;IGHV4-28&#39;, &#39;IGHV3-30&#39;, {&#39;weight&#39;: 0.8459968086703913}), (&#39;IGHV4-28&#39;, &#39;IGHV4-30-2&#39;, {&#39;weight&#39;: 0.8597462331457945}), (&#39;IGHV4-28&#39;, &#39;IGHV3-33&#39;, {&#39;weight&#39;: 0.8371077943651606})]
+No self-loops in the graph.
+Number of nodes: 305
+Number of edges: 1078
+Sample nodes: [&#39;IGHV4-28&#39;, &#39;IL7R&#39;, &#39;APOC1&#39;, &#39;IGKJ5&#39;, &#39;IGKV1-6&#39;, &#39;IGKV1OR22-5&#39;, &#39;IGKV1-9&#39;, &#39;CRTAM&#39;, &#39;HCK&#39;, &#39;IGHV3-19&#39;]
+Sample edges: [(&#39;IGHV4-28&#39;, &#39;IGHV4-55&#39;, {&#39;weight&#39;: 0.9047727266223481}), (&#39;IGHV4-28&#39;, &#39;FCRL5&#39;, {&#39;weight&#39;: 0.882551425757531}), (&#39;IGHV4-28&#39;, &#39;IGKC&#39;, {&#39;weight&#39;: 0.8801426293580624}), (&#39;IGHV4-28&#39;, &#39;IGHJ4&#39;, {&#39;weight&#39;: 0.877618669495452}), (&#39;IGHV4-28&#39;, &#39;MZB1&#39;, {&#39;weight&#39;: 0.8732715729342876}), (&#39;IGHV4-28&#39;, &#39;IGHV3-62&#39;, {&#39;weight&#39;: 0.8497360100394314}), (&#39;IGHV4-28&#39;, &#39;IGHV2-26&#39;, {&#39;weight&#39;: 0.8068303022261193}), (&#39;IGHV4-28&#39;, &#39;IGHV3-30&#39;, {&#39;weight&#39;: 0.8459968086703913}), (&#39;IGHV4-28&#39;, &#39;IGHV4-30-2&#39;, {&#39;weight&#39;: 0.8597462331457945}), (&#39;IGHV4-28&#39;, &#39;IGHV3-33&#39;, {&#39;weight&#39;: 0.8371077943651606})]
+No self-loops in the graph.
+Average clustering coefficient: 0.5245715856842815
+Average clustering coefficient: 0.5245715856842815
+</pre></div>
+</div>
 </div>
 </div>
 <div class="cell docutils container">
@@ -3030,6 +3228,134 @@ Average clustering coefficient: 0.6766781614263463
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">save_graphs</span><span class="p">(</span><span class="n">correlation_matrices_dict</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">,</span> <span class="n">matrix_names</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">data_dir</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
+    
+    <span class="c1"># Define parameter combinations</span>
+    <span class="n">thresholds</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">]</span>
+    <span class="n">k_values</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+    <span class="n">degree_thresholds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">keep_largest_component_options</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">matrix_name</span> <span class="ow">in</span> <span class="n">matrix_names</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">matrix_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">correlation_matrices_dict</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Matrix </span><span class="si">{</span><span class="n">matrix_name</span><span class="si">}</span><span class="s2"> not found in the provided dictionary. Skipping...&quot;</span><span class="p">)</span>
+            <span class="k">continue</span>
+        
+        <span class="n">correlation_matrix</span> <span class="o">=</span> <span class="n">correlation_matrices_dict</span><span class="p">[</span><span class="n">matrix_name</span><span class="p">]</span>
+        
+        <span class="k">for</span> <span class="n">threshold</span> <span class="ow">in</span> <span class="n">thresholds</span><span class="p">:</span>
+            <span class="c1"># Create the initial graph from the correlation matrix</span>
+            <span class="n">initial_graph</span> <span class="o">=</span> <span class="n">create_graph_from_correlation</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span><span class="p">)</span>
+            
+            <span class="k">for</span> <span class="n">degree_threshold</span> <span class="ow">in</span> <span class="n">degree_thresholds</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">keep_largest_component</span> <span class="ow">in</span> <span class="n">keep_largest_component_options</span><span class="p">:</span>
+                    <span class="c1"># Clean the graph</span>
+                    <span class="n">cleaned_graph</span> <span class="o">=</span> <span class="n">clean_graph</span><span class="p">(</span><span class="n">initial_graph</span><span class="p">,</span> <span class="n">degree_threshold</span><span class="o">=</span><span class="n">degree_threshold</span><span class="p">,</span> <span class="n">keep_largest_component</span><span class="o">=</span><span class="n">keep_largest_component</span><span class="p">)</span>
+                    
+                    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">k_values</span><span class="p">:</span>
+                        <span class="c1"># Sparsify the graph using KNN</span>
+                        <span class="n">sparsified_graph</span> <span class="o">=</span> <span class="n">knn_sparsification</span><span class="p">(</span><span class="n">cleaned_graph</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+                        
+                        <span class="c1"># Calculate the average clustering coefficient</span>
+                        <span class="n">avg_clustering</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">average_clustering</span><span class="p">(</span><span class="n">sparsified_graph</span><span class="p">)</span>
+                        
+                        <span class="c1"># Construct the filename with relevant information</span>
+                        <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">matrix_name</span><span class="si">}</span><span class="s2">_network_threshold_</span><span class="si">{</span><span class="n">threshold</span><span class="si">}</span><span class="s2">_k_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">_degree_</span><span class="si">{</span><span class="n">degree_threshold</span><span class="si">}</span><span class="s2">_largest_</span><span class="si">{</span><span class="n">keep_largest_component</span><span class="si">}</span><span class="s2">_clustering_</span><span class="si">{</span><span class="n">avg_clustering</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">.gml&quot;</span>
+                        <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+                        
+                        <span class="c1"># Save the graph to a GML file</span>
+                        <span class="n">nx</span><span class="o">.</span><span class="n">write_gml</span><span class="p">(</span><span class="n">sparsified_graph</span><span class="p">,</span> <span class="n">filepath</span><span class="p">)</span>
+                        
+                        <span class="c1"># Print the details</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saved: </span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">correlation_matrices_dict</span><span class="p">,</span> <span class="n">matrix_names</span><span class="p">):</span>
+    <span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;../../ismb_data/05072024/GE&#39;</span>  <span class="c1"># Adjust the directory path as needed</span>
+    <span class="n">save_graphs</span><span class="p">(</span><span class="n">correlation_matrices_dict</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">,</span> <span class="n">matrix_names</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># correlation_matrices_dict = {</span>
+    <span class="c1">#     &#39;pearson&#39;: pd.DataFrame(),  # Replace with actual data</span>
+    <span class="c1">#     &#39;spearman&#39;: pd.DataFrame()  # Replace with actual data if needed</span>
+    <span class="c1"># }</span>
+    <span class="n">matrix_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;pearson&#39;</span><span class="p">]</span>  <span class="c1"># Replace with the desired correlation matrix names</span>
+    <span class="n">main</span><span class="p">(</span><span class="n">correlation_matrices</span><span class="p">,</span> <span class="n">matrix_names</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.6_k_3_degree_0_largest_False_clustering_0.29.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.6_k_5_degree_0_largest_False_clustering_0.33.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.6_k_7_degree_0_largest_False_clustering_0.35.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.6_k_10_degree_0_largest_False_clustering_0.38.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.6_k_3_degree_0_largest_True_clustering_0.32.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.6_k_5_degree_0_largest_True_clustering_0.36.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.6_k_7_degree_0_largest_True_clustering_0.39.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.6_k_10_degree_0_largest_True_clustering_0.42.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.6_k_3_degree_1_largest_False_clustering_0.29.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.6_k_5_degree_1_largest_False_clustering_0.33.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.6_k_7_degree_1_largest_False_clustering_0.35.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.6_k_10_degree_1_largest_False_clustering_0.38.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.6_k_3_degree_1_largest_True_clustering_0.32.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.6_k_5_degree_1_largest_True_clustering_0.36.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.6_k_7_degree_1_largest_True_clustering_0.39.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.6_k_10_degree_1_largest_True_clustering_0.42.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.7_k_3_degree_0_largest_False_clustering_0.32.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.7_k_5_degree_0_largest_False_clustering_0.35.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.7_k_7_degree_0_largest_False_clustering_0.38.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.7_k_10_degree_0_largest_False_clustering_0.41.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.7_k_3_degree_0_largest_True_clustering_0.36.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.7_k_5_degree_0_largest_True_clustering_0.41.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.7_k_7_degree_0_largest_True_clustering_0.44.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.7_k_10_degree_0_largest_True_clustering_0.48.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.7_k_3_degree_1_largest_False_clustering_0.32.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.7_k_5_degree_1_largest_False_clustering_0.35.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.7_k_7_degree_1_largest_False_clustering_0.38.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.7_k_10_degree_1_largest_False_clustering_0.41.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.7_k_3_degree_1_largest_True_clustering_0.36.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.7_k_5_degree_1_largest_True_clustering_0.41.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.7_k_7_degree_1_largest_True_clustering_0.44.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.7_k_10_degree_1_largest_True_clustering_0.48.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.8_k_3_degree_0_largest_False_clustering_0.32.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.8_k_5_degree_0_largest_False_clustering_0.35.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.8_k_7_degree_0_largest_False_clustering_0.37.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.8_k_10_degree_0_largest_False_clustering_0.39.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.8_k_3_degree_0_largest_True_clustering_0.51.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.8_k_5_degree_0_largest_True_clustering_0.52.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.8_k_7_degree_0_largest_True_clustering_0.54.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.8_k_10_degree_0_largest_True_clustering_0.58.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.8_k_3_degree_1_largest_False_clustering_0.32.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.8_k_5_degree_1_largest_False_clustering_0.35.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.8_k_7_degree_1_largest_False_clustering_0.37.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.8_k_10_degree_1_largest_False_clustering_0.39.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.8_k_3_degree_1_largest_True_clustering_0.51.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.8_k_5_degree_1_largest_True_clustering_0.52.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.8_k_7_degree_1_largest_True_clustering_0.54.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.8_k_10_degree_1_largest_True_clustering_0.58.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.9_k_3_degree_0_largest_False_clustering_0.26.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.9_k_5_degree_0_largest_False_clustering_0.29.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.9_k_7_degree_0_largest_False_clustering_0.31.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.9_k_10_degree_0_largest_False_clustering_0.34.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.9_k_3_degree_0_largest_True_clustering_0.35.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.9_k_5_degree_0_largest_True_clustering_0.46.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.9_k_7_degree_0_largest_True_clustering_0.51.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.9_k_10_degree_0_largest_True_clustering_0.57.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.9_k_3_degree_1_largest_False_clustering_0.26.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.9_k_5_degree_1_largest_False_clustering_0.29.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.9_k_7_degree_1_largest_False_clustering_0.31.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.9_k_10_degree_1_largest_False_clustering_0.34.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.9_k_3_degree_1_largest_True_clustering_0.35.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.9_k_5_degree_1_largest_True_clustering_0.46.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.9_k_7_degree_1_largest_True_clustering_0.51.gml
+Saved: ../../ismb_data/05072024/GE/pearson_network_threshold_0.9_k_10_degree_1_largest_True_clustering_0.57.gml
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top_genes_with_degrees</span> <span class="o">=</span> <span class="n">get_highest_degree_nodes</span><span class="p">(</span><span class="n">pearson_graph_pruned</span><span class="p">,</span> <span class="n">top_n</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">gene_symbols</span> <span class="o">=</span> <span class="p">[</span><span class="n">gene</span> <span class="k">for</span> <span class="n">gene</span><span class="p">,</span> <span class="n">degree</span> <span class="ow">in</span> <span class="n">top_genes_with_degrees</span><span class="p">]</span>
 
@@ -3042,89 +3368,14 @@ Average clustering coefficient: 0.6766781614263463
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4 input query terms found dup hits:	[(&#39;IGHJ4&#39;, 2), (&#39;IGKV3-20&#39;, 2), (&#39;IGKV3-11&#39;, 2), (&#39;IGKV1-39&#39;, 2)]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Gene Symbol: IGKJ1
-Degree: 118
-Gene Name: immunoglobulin kappa joining 1
-Entrez ID: 28950
-Summary: Predicted to be involved in adaptive immune response. Predicted to be located in extracellular region and plasma membrane. Predicted to be part of immunoglobulin complex. [provided by Alliance of Genome Resources, Apr 2022]
-Diseases: N/A
-Pathways: N/A
-----------------------------------------
-Gene Symbol: MZB1
-Degree: 109
-Gene Name: marginal zone B and B1 cell specific protein
-Entrez ID: 51237
-Summary: Involved in positive regulation of cell population proliferation. Located in cytoplasm and extracellular region. [provided by Alliance of Genome Resources, Apr 2022]
-Diseases: N/A
-Pathways: N/A
-----------------------------------------
-Gene Symbol: FCRL5
-Degree: 108
-Gene Name: Fc receptor like 5
-Entrez ID: 83416
-Summary: This gene encodes a member of the immunoglobulin receptor superfamily and the Fc-receptor like family. This gene and several other Fc receptor-like gene members are clustered on the long arm of chromosome 1. The encoded protein is a single-pass type I membrane protein and contains 8 immunoglobulin-like C2-type domains. This gene is implicated in B cell development and lymphomagenesis. Alternatively spliced transcript variants encoding different isoforms have been identified. [provided by RefSeq, Sep 2010].
-Diseases: N/A
-Pathways: N/A
-----------------------------------------
-Gene Symbol: IGKC
-Degree: 106
-Gene Name: immunoglobulin kappa constant
-Entrez ID: 3514
-Summary: Predicted to enable antigen binding activity and immunoglobulin receptor binding activity. Involved in retina homeostasis. Located in blood microparticle and extracellular exosome. [provided by Alliance of Genome Resources, Apr 2022]
-Diseases: N/A
-Pathways: N/A
-----------------------------------------
-Gene Symbol: IGHJ4
-Degree: 105
-Gene Name: immunoglobulin heavy joining 4
-Entrez ID: 28477
-Summary: N/A
-Diseases: N/A
-Pathways: N/A
-----------------------------------------
-Gene Symbol: IGLL5
-Degree: 99
-Gene Name: immunoglobulin lambda like polypeptide 5
-Entrez ID: 100423062
-Summary: This gene encodes one of the immunoglobulin lambda-like polypeptides. It is located within the immunoglobulin lambda locus but it does not require somatic rearrangement for expression. The first exon of this gene is unrelated to immunoglobulin variable genes; the second and third exons are the immunoglobulin lambda joining 1 and the immunoglobulin lambda constant 1 gene segments. Alternative splicing results in multiple transcript variants. [provided by RefSeq, May 2010].
-Diseases: N/A
-Pathways: N/A
-----------------------------------------
-Gene Symbol: IGKV3-20
-Degree: 97
-Gene Name: immunoglobulin kappa variable 3-20
-Entrez ID: 28912
-Summary: Involved in antibacterial humoral response and glomerular filtration. Located in extracellular space. Part of monomeric IgA immunoglobulin complex; pentameric IgM immunoglobulin complex; and secretory IgA immunoglobulin complex. [provided by Alliance of Genome Resources, Apr 2022]
-Diseases: N/A
-Pathways: N/A
-----------------------------------------
-Gene Symbol: IGKV3-11
-Degree: 96
-Gene Name: immunoglobulin kappa variable 3-11
-Entrez ID: 28914
-Summary: Predicted to be involved in immune response. Located in blood microparticle and extracellular exosome. [provided by Alliance of Genome Resources, Apr 2022]
-Diseases: N/A
-Pathways: N/A
-----------------------------------------
-Gene Symbol: IGKV3D-11
-Degree: 95
-Gene Name: immunoglobulin kappa variable 3D-11
-Entrez ID: 28876
-Summary: Predicted to be involved in immune response. Located in blood microparticle and extracellular exosome. [provided by Alliance of Genome Resources, Apr 2022]
-Diseases: N/A
-Pathways: N/A
-----------------------------------------
-Gene Symbol: IGKV1-39
-Degree: 95
-Gene Name: immunoglobulin kappa variable 1-39
-Entrez ID: 28930
-Summary: Predicted to be involved in immune response. Located in blood microparticle and extracellular exosome. [provided by Alliance of Genome Resources, Apr 2022]
-Diseases: N/A
-Pathways: N/A
-----------------------------------------
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">27</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">top_genes_with_degrees</span> <span class="o">=</span> <span class="n">get_highest_degree_nodes</span><span class="p">(</span><span class="n">pearson_graph_pruned</span><span class="p">,</span> <span class="n">top_n</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">gene_symbols</span> <span class="o">=</span> <span class="p">[</span><span class="n">gene</span> <span class="k">for</span> <span class="n">gene</span><span class="p">,</span> <span class="n">degree</span> <span class="ow">in</span> <span class="n">top_genes_with_degrees</span><span class="p">]</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1"># Fetch gene information</span>
+
+<span class="ne">NameError</span>: name &#39;pearson_graph_pruned&#39; is not defined
 </pre></div>
 </div>
 </div>
@@ -3266,6 +3517,13 @@ Pathways: N/A
 <span class="c1"># meaning that patients will become the rows and genes will become the columns.</span>
 <span class="c1"># By doing this, you can compute the correlation (or similarity) between patients based on their gene expression profiles,</span>
 <span class="c1"># and then create a network where nodes represent patients and edges represent similarities.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_renamed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="s2">&quot;expression_data_filtered.csv&quot;</span><span class="p">),</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -3604,7 +3862,7 @@ Pathways: N/A
 <span class="c1"># Pearson correlation</span>
 <span class="n">patient_correlation_matrices</span><span class="p">[</span><span class="s1">&#39;pearson&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">patient_gene_matrix</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;pearson&#39;</span><span class="p">)</span>
 
-<span class="n">patient_correlation_matrices</span><span class="p">[</span><span class="s1">&#39;biweight_midcorrelation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">abs_bicorr</span><span class="p">(</span><span class="n">patient_gene_matrix</span><span class="p">)</span>
+<span class="c1"># patient_correlation_matrices[&#39;biweight_midcorrelation&#39;] = abs_bicorr(patient_gene_matrix)</span>
 </pre></div>
 </div>
 </div>
@@ -3645,7 +3903,7 @@ Edge (TCGA-38-7271, TCGA-97-A4M2) - weight: 0.8045412817214057
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/90b6aebdf03722303177be3085bc89efefcd022280def576fc88a6f3a49eccbb.png" src="../_images/90b6aebdf03722303177be3085bc89efefcd022280def576fc88a6f3a49eccbb.png" />
+<img alt="../_images/0da47457af7538f888c711b78dc4c47e6e034413d8570f3f548aa02a86ec6be9.png" src="../_images/0da47457af7538f888c711b78dc4c47e6e034413d8570f3f548aa02a86ec6be9.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -3665,7 +3923,7 @@ Edge (TCGA-38-7271, TCGA-97-A4M2) - weight: 0.8045412817214057
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8b8baf20e79f55c9d3f221008e57b9b97ca2c3af4562bf397f225f6442d2b394.png" src="../_images/8b8baf20e79f55c9d3f221008e57b9b97ca2c3af4562bf397f225f6442d2b394.png" />
+<img alt="../_images/1a56d12e97838d957acd64e46d274910d979d49f815c6afa677e51e08637e578.png" src="../_images/1a56d12e97838d957acd64e46d274910d979d49f815c6afa677e51e08637e578.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -3701,7 +3959,7 @@ No self-loops in the graph.
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of nodes: 434
 Number of edges: 2956
 Sample nodes: [&#39;TCGA-38-7271&#39;, &#39;TCGA-55-7914&#39;, &#39;TCGA-73-4658&#39;, &#39;TCGA-86-8076&#39;, &#39;TCGA-55-7726&#39;, &#39;TCGA-44-6147&#39;, &#39;TCGA-50-5932&#39;, &#39;TCGA-44-2661&#39;, &#39;TCGA-86-7954&#39;, &#39;TCGA-73-4662&#39;]
-Sample edges: [(&#39;TCGA-38-7271&#39;, &#39;TCGA-53-7626&#39;, {&#39;weight&#39;: 0.893251013553719}), (&#39;TCGA-38-7271&#39;, &#39;TCGA-49-6744&#39;, {&#39;weight&#39;: 0.8919809060862212}), (&#39;TCGA-38-7271&#39;, &#39;TCGA-78-8648&#39;, {&#39;weight&#39;: 0.885760147175422}), (&#39;TCGA-38-7271&#39;, &#39;TCGA-86-8671&#39;, {&#39;weight&#39;: 0.8825367028721114}), (&#39;TCGA-38-7271&#39;, &#39;TCGA-50-5941&#39;, {&#39;weight&#39;: 0.8814255405956034}), (&#39;TCGA-38-7271&#39;, &#39;TCGA-55-7574&#39;, {&#39;weight&#39;: 0.8799541588637929}), (&#39;TCGA-38-7271&#39;, &#39;TCGA-97-7553&#39;, {&#39;weight&#39;: 0.8775024097687647}), (&#39;TCGA-38-7271&#39;, &#39;TCGA-50-5055&#39;, {&#39;weight&#39;: 0.8726819735362156}), (&#39;TCGA-38-7271&#39;, &#39;TCGA-50-5045&#39;, {&#39;weight&#39;: 0.8723464616125998}), (&#39;TCGA-38-7271&#39;, &#39;TCGA-73-4658&#39;, {&#39;weight&#39;: 0.8696511707884843})]
+Sample edges: [(&#39;TCGA-38-7271&#39;, &#39;TCGA-53-7626&#39;, {&#39;weight&#39;: 0.8932510135537189}), (&#39;TCGA-38-7271&#39;, &#39;TCGA-49-6744&#39;, {&#39;weight&#39;: 0.8919809060862212}), (&#39;TCGA-38-7271&#39;, &#39;TCGA-78-8648&#39;, {&#39;weight&#39;: 0.8857601471754217}), (&#39;TCGA-38-7271&#39;, &#39;TCGA-86-8671&#39;, {&#39;weight&#39;: 0.8825367028721114}), (&#39;TCGA-38-7271&#39;, &#39;TCGA-50-5941&#39;, {&#39;weight&#39;: 0.8814255405956031}), (&#39;TCGA-38-7271&#39;, &#39;TCGA-55-7574&#39;, {&#39;weight&#39;: 0.8799541588637929}), (&#39;TCGA-38-7271&#39;, &#39;TCGA-97-7553&#39;, {&#39;weight&#39;: 0.8775024097687647}), (&#39;TCGA-38-7271&#39;, &#39;TCGA-50-5055&#39;, {&#39;weight&#39;: 0.8726819735362153}), (&#39;TCGA-38-7271&#39;, &#39;TCGA-50-5045&#39;, {&#39;weight&#39;: 0.8723464616125998}), (&#39;TCGA-38-7271&#39;, &#39;TCGA-73-4658&#39;, {&#39;weight&#39;: 0.8696511707884843})]
 No self-loops in the graph.
 </pre></div>
 </div>
@@ -3714,7 +3972,7 @@ No self-loops in the graph.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/42b48b25c1803c7d80587fadc4d888d7db4d96ae07f5c170196cb7089c275b12.png" src="../_images/42b48b25c1803c7d80587fadc4d888d7db4d96ae07f5c170196cb7089c275b12.png" />
+<img alt="../_images/a31c90769b5f745cd8f3a2725aa466383582baccccc34dab762d10b98c50a01c.png" src="../_images/a31c90769b5f745cd8f3a2725aa466383582baccccc34dab762d10b98c50a01c.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -3735,8 +3993,324 @@ No self-loops in the graph.
 
 <span class="n">meth_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;datExpr&quot;</span><span class="p">]</span>
 <span class="n">meth_data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-<span class="n">smoking_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="s2">&quot;smoking.tsv&quot;</span><span class="p">)</span> <span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span> <span class="c1">#Tab seperated document from EWAS</span>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>cg23057992</th>
+      <th>cg16602369</th>
+      <th>cg20545544</th>
+      <th>cg04571941</th>
+      <th>cg23091104</th>
+      <th>cg11738485</th>
+      <th>cg17735539</th>
+      <th>cg12662576</th>
+      <th>cg10554839</th>
+      <th>cg08866780</th>
+      <th>...</th>
+      <th>cg04339424</th>
+      <th>cg01318691</th>
+      <th>cg27068965</th>
+      <th>cg23028848</th>
+      <th>cg21122529</th>
+      <th>cg22254072</th>
+      <th>cg10237911</th>
+      <th>cg09874052</th>
+      <th>cg27624178</th>
+      <th>cg02857943</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>TCGA-55-7914</th>
+      <td>0.039144</td>
+      <td>0.078881</td>
+      <td>0.032201</td>
+      <td>0.098520</td>
+      <td>0.971626</td>
+      <td>0.020020</td>
+      <td>0.929670</td>
+      <td>0.033325</td>
+      <td>0.043767</td>
+      <td>0.028051</td>
+      <td>...</td>
+      <td>0.053027</td>
+      <td>0.046047</td>
+      <td>0.951328</td>
+      <td>0.045767</td>
+      <td>0.048185</td>
+      <td>0.014262</td>
+      <td>0.034541</td>
+      <td>0.034967</td>
+      <td>0.041538</td>
+      <td>0.053116</td>
+    </tr>
+    <tr>
+      <th>TCGA-38-4631</th>
+      <td>0.954805</td>
+      <td>0.047287</td>
+      <td>0.027976</td>
+      <td>0.925794</td>
+      <td>0.144636</td>
+      <td>0.365842</td>
+      <td>0.156414</td>
+      <td>0.027917</td>
+      <td>0.047609</td>
+      <td>0.049901</td>
+      <td>...</td>
+      <td>0.048398</td>
+      <td>0.047221</td>
+      <td>0.939891</td>
+      <td>0.056141</td>
+      <td>0.047459</td>
+      <td>0.014548</td>
+      <td>0.056591</td>
+      <td>0.039086</td>
+      <td>0.044946</td>
+      <td>0.055473</td>
+    </tr>
+    <tr>
+      <th>TCGA-73-4658</th>
+      <td>0.966071</td>
+      <td>0.126549</td>
+      <td>0.030316</td>
+      <td>0.945166</td>
+      <td>0.976080</td>
+      <td>0.975638</td>
+      <td>0.942018</td>
+      <td>0.066659</td>
+      <td>0.052100</td>
+      <td>0.047054</td>
+      <td>...</td>
+      <td>0.040815</td>
+      <td>0.042040</td>
+      <td>0.951235</td>
+      <td>0.045477</td>
+      <td>0.074037</td>
+      <td>0.019053</td>
+      <td>0.029978</td>
+      <td>0.039345</td>
+      <td>0.060650</td>
+      <td>0.041385</td>
+    </tr>
+    <tr>
+      <th>TCGA-50-5932</th>
+      <td>0.965140</td>
+      <td>0.061194</td>
+      <td>0.935457</td>
+      <td>0.923421</td>
+      <td>0.965443</td>
+      <td>0.027598</td>
+      <td>0.040885</td>
+      <td>0.036178</td>
+      <td>0.045745</td>
+      <td>0.046439</td>
+      <td>...</td>
+      <td>0.057840</td>
+      <td>0.045106</td>
+      <td>0.948255</td>
+      <td>0.044558</td>
+      <td>0.039484</td>
+      <td>0.013837</td>
+      <td>0.037048</td>
+      <td>0.032503</td>
+      <td>0.058576</td>
+      <td>0.037666</td>
+    </tr>
+    <tr>
+      <th>TCGA-55-7576</th>
+      <td>0.958612</td>
+      <td>0.071607</td>
+      <td>0.027077</td>
+      <td>0.940574</td>
+      <td>0.976870</td>
+      <td>0.785073</td>
+      <td>0.953674</td>
+      <td>0.945107</td>
+      <td>0.056088</td>
+      <td>0.955472</td>
+      <td>...</td>
+      <td>0.046921</td>
+      <td>0.051442</td>
+      <td>0.954000</td>
+      <td>0.034352</td>
+      <td>0.031497</td>
+      <td>0.014924</td>
+      <td>0.035520</td>
+      <td>0.043547</td>
+      <td>0.056388</td>
+      <td>0.052208</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>TCGA-50-8457</th>
+      <td>0.960316</td>
+      <td>0.940219</td>
+      <td>0.046927</td>
+      <td>0.942980</td>
+      <td>0.977751</td>
+      <td>0.633731</td>
+      <td>0.940723</td>
+      <td>0.053398</td>
+      <td>0.059292</td>
+      <td>0.968875</td>
+      <td>...</td>
+      <td>0.047640</td>
+      <td>0.062680</td>
+      <td>0.954824</td>
+      <td>0.043137</td>
+      <td>0.048599</td>
+      <td>0.014066</td>
+      <td>0.031109</td>
+      <td>0.039247</td>
+      <td>0.035110</td>
+      <td>0.054273</td>
+    </tr>
+    <tr>
+      <th>TCGA-91-6840</th>
+      <td>0.964250</td>
+      <td>0.921250</td>
+      <td>0.957943</td>
+      <td>0.958416</td>
+      <td>0.981439</td>
+      <td>0.278432</td>
+      <td>0.968525</td>
+      <td>0.032143</td>
+      <td>0.083996</td>
+      <td>0.037912</td>
+      <td>...</td>
+      <td>0.045197</td>
+      <td>0.066271</td>
+      <td>0.963420</td>
+      <td>0.047621</td>
+      <td>0.060854</td>
+      <td>0.015823</td>
+      <td>0.045674</td>
+      <td>0.040006</td>
+      <td>0.052008</td>
+      <td>0.040826</td>
+    </tr>
+    <tr>
+      <th>TCGA-86-8280</th>
+      <td>0.948855</td>
+      <td>0.942925</td>
+      <td>0.958506</td>
+      <td>0.945667</td>
+      <td>0.970511</td>
+      <td>0.544447</td>
+      <td>0.921924</td>
+      <td>0.939427</td>
+      <td>0.082121</td>
+      <td>0.045036</td>
+      <td>...</td>
+      <td>0.062367</td>
+      <td>0.058898</td>
+      <td>0.954355</td>
+      <td>0.045702</td>
+      <td>0.048930</td>
+      <td>0.019321</td>
+      <td>0.039341</td>
+      <td>0.036627</td>
+      <td>0.054269</td>
+      <td>0.056795</td>
+    </tr>
+    <tr>
+      <th>TCGA-95-A4VK</th>
+      <td>0.037255</td>
+      <td>0.050940</td>
+      <td>0.036565</td>
+      <td>0.098237</td>
+      <td>0.976780</td>
+      <td>0.683394</td>
+      <td>0.960073</td>
+      <td>0.025232</td>
+      <td>0.062487</td>
+      <td>0.026908</td>
+      <td>...</td>
+      <td>0.056248</td>
+      <td>0.053591</td>
+      <td>0.947020</td>
+      <td>0.035344</td>
+      <td>0.057783</td>
+      <td>0.010943</td>
+      <td>0.051868</td>
+      <td>0.035566</td>
+      <td>0.044910</td>
+      <td>0.042269</td>
+    </tr>
+    <tr>
+      <th>TCGA-55-6969</th>
+      <td>0.945954</td>
+      <td>0.068404</td>
+      <td>0.923325</td>
+      <td>0.930684</td>
+      <td>0.962295</td>
+      <td>0.037952</td>
+      <td>0.153943</td>
+      <td>0.033980</td>
+      <td>0.056811</td>
+      <td>0.050211</td>
+      <td>...</td>
+      <td>0.048765</td>
+      <td>0.061228</td>
+      <td>0.930596</td>
+      <td>0.056050</td>
+      <td>0.061802</td>
+      <td>0.017861</td>
+      <td>0.044229</td>
+      <td>0.054682</td>
+      <td>0.045090</td>
+      <td>0.064186</td>
+    </tr>
+  </tbody>
+</table>
+<p>459 rows × 300000 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">smoking_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="s2">&quot;smoking.tsv&quot;</span><span class="p">)</span> <span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span> <span class="c1">#Tab seperated document from EWAS</span>
 <span class="n">common_annotated_cpgs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">smoking_df</span><span class="p">[</span><span class="s1">&#39;cpg&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[</span><span class="n">smoking_df</span><span class="p">[</span><span class="s1">&#39;cpg&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">)</span> 
 <span class="n">cpgs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">common_annotated_cpgs</span><span class="p">)</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">meth_data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
 
@@ -3760,6 +4334,317 @@ No self-loops in the graph.
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>cg14712058</th>
+      <th>cg07123182</th>
+      <th>cg21913886</th>
+      <th>cg08149865</th>
+      <th>cg19717773</th>
+      <th>cg01731783</th>
+      <th>cg26718213</th>
+      <th>cg17287155</th>
+      <th>cg11660018</th>
+      <th>cg00501876</th>
+      <th>...</th>
+      <th>cg23079012</th>
+      <th>cg12876356</th>
+      <th>cg01899089</th>
+      <th>cg19089201</th>
+      <th>cg02583484</th>
+      <th>cg12806681</th>
+      <th>cg17372101</th>
+      <th>cg07251887</th>
+      <th>cg06235438</th>
+      <th>cg11902777</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>TCGA-53-7813</th>
+      <td>0.674583</td>
+      <td>0.698905</td>
+      <td>0.576494</td>
+      <td>0.795106</td>
+      <td>0.812521</td>
+      <td>0.445949</td>
+      <td>0.307335</td>
+      <td>0.934581</td>
+      <td>0.439352</td>
+      <td>0.230338</td>
+      <td>...</td>
+      <td>0.967584</td>
+      <td>0.402212</td>
+      <td>0.378213</td>
+      <td>0.825657</td>
+      <td>0.218691</td>
+      <td>0.895352</td>
+      <td>0.327018</td>
+      <td>0.411920</td>
+      <td>0.771466</td>
+      <td>0.147499</td>
+    </tr>
+    <tr>
+      <th>TCGA-44-A479</th>
+      <td>0.733725</td>
+      <td>0.737029</td>
+      <td>0.645343</td>
+      <td>0.768585</td>
+      <td>0.879891</td>
+      <td>0.504076</td>
+      <td>0.330575</td>
+      <td>0.765683</td>
+      <td>0.497904</td>
+      <td>0.356694</td>
+      <td>...</td>
+      <td>0.966014</td>
+      <td>0.542518</td>
+      <td>0.482956</td>
+      <td>0.863318</td>
+      <td>0.277797</td>
+      <td>0.856748</td>
+      <td>0.341018</td>
+      <td>0.612926</td>
+      <td>0.603552</td>
+      <td>0.251977</td>
+    </tr>
+    <tr>
+      <th>TCGA-55-7911</th>
+      <td>0.785928</td>
+      <td>0.915015</td>
+      <td>0.525344</td>
+      <td>0.804578</td>
+      <td>0.756804</td>
+      <td>0.406378</td>
+      <td>0.527881</td>
+      <td>0.934787</td>
+      <td>0.729670</td>
+      <td>0.329801</td>
+      <td>...</td>
+      <td>0.972162</td>
+      <td>0.640486</td>
+      <td>0.406611</td>
+      <td>0.814884</td>
+      <td>0.253345</td>
+      <td>0.910143</td>
+      <td>0.286922</td>
+      <td>0.392996</td>
+      <td>0.626979</td>
+      <td>0.149220</td>
+    </tr>
+    <tr>
+      <th>TCGA-49-6761</th>
+      <td>0.724054</td>
+      <td>0.786670</td>
+      <td>0.499649</td>
+      <td>0.796624</td>
+      <td>0.854948</td>
+      <td>0.475507</td>
+      <td>0.630280</td>
+      <td>0.962896</td>
+      <td>0.561377</td>
+      <td>0.306555</td>
+      <td>...</td>
+      <td>0.959675</td>
+      <td>0.390715</td>
+      <td>0.578740</td>
+      <td>0.862246</td>
+      <td>0.294194</td>
+      <td>0.915717</td>
+      <td>0.358318</td>
+      <td>0.407083</td>
+      <td>0.779001</td>
+      <td>0.452867</td>
+    </tr>
+    <tr>
+      <th>TCGA-97-7547</th>
+      <td>0.862960</td>
+      <td>0.680225</td>
+      <td>0.491567</td>
+      <td>0.897165</td>
+      <td>0.891053</td>
+      <td>0.396081</td>
+      <td>0.302026</td>
+      <td>0.967135</td>
+      <td>0.539988</td>
+      <td>0.236335</td>
+      <td>...</td>
+      <td>0.971201</td>
+      <td>0.307213</td>
+      <td>0.457228</td>
+      <td>0.823568</td>
+      <td>0.293453</td>
+      <td>0.927632</td>
+      <td>0.729051</td>
+      <td>0.405593</td>
+      <td>0.835712</td>
+      <td>0.652962</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>TCGA-64-5779</th>
+      <td>0.774646</td>
+      <td>0.621952</td>
+      <td>0.647204</td>
+      <td>0.810046</td>
+      <td>0.798557</td>
+      <td>0.518443</td>
+      <td>0.302897</td>
+      <td>0.942683</td>
+      <td>0.360692</td>
+      <td>0.273212</td>
+      <td>...</td>
+      <td>0.981816</td>
+      <td>0.416046</td>
+      <td>0.537424</td>
+      <td>0.850061</td>
+      <td>0.574614</td>
+      <td>0.946129</td>
+      <td>0.251461</td>
+      <td>0.403382</td>
+      <td>0.826132</td>
+      <td>0.304593</td>
+    </tr>
+    <tr>
+      <th>TCGA-97-8552</th>
+      <td>0.813098</td>
+      <td>0.847171</td>
+      <td>0.430333</td>
+      <td>0.897129</td>
+      <td>0.832132</td>
+      <td>0.436413</td>
+      <td>0.333738</td>
+      <td>0.965335</td>
+      <td>0.605481</td>
+      <td>0.284973</td>
+      <td>...</td>
+      <td>0.968935</td>
+      <td>0.366322</td>
+      <td>0.490677</td>
+      <td>0.714217</td>
+      <td>0.546280</td>
+      <td>0.933957</td>
+      <td>0.757759</td>
+      <td>0.426996</td>
+      <td>0.799862</td>
+      <td>0.411487</td>
+    </tr>
+    <tr>
+      <th>TCGA-71-6725</th>
+      <td>0.716992</td>
+      <td>0.718337</td>
+      <td>0.271827</td>
+      <td>0.821352</td>
+      <td>0.918169</td>
+      <td>0.417347</td>
+      <td>0.278869</td>
+      <td>0.665987</td>
+      <td>0.288103</td>
+      <td>0.298375</td>
+      <td>...</td>
+      <td>0.967062</td>
+      <td>0.271342</td>
+      <td>0.266997</td>
+      <td>0.370942</td>
+      <td>0.316028</td>
+      <td>0.882963</td>
+      <td>0.435445</td>
+      <td>0.272366</td>
+      <td>0.693021</td>
+      <td>0.105007</td>
+    </tr>
+    <tr>
+      <th>TCGA-91-A4BC</th>
+      <td>0.735027</td>
+      <td>0.725628</td>
+      <td>0.538211</td>
+      <td>0.793583</td>
+      <td>0.518587</td>
+      <td>0.526517</td>
+      <td>0.422005</td>
+      <td>0.920201</td>
+      <td>0.493812</td>
+      <td>0.377786</td>
+      <td>...</td>
+      <td>0.961240</td>
+      <td>0.533733</td>
+      <td>0.495279</td>
+      <td>0.809056</td>
+      <td>0.263272</td>
+      <td>0.933790</td>
+      <td>0.296476</td>
+      <td>0.553004</td>
+      <td>0.654253</td>
+      <td>0.306767</td>
+    </tr>
+    <tr>
+      <th>TCGA-55-8615</th>
+      <td>0.895974</td>
+      <td>0.589359</td>
+      <td>0.352932</td>
+      <td>0.878058</td>
+      <td>0.753100</td>
+      <td>0.357509</td>
+      <td>0.244239</td>
+      <td>0.928896</td>
+      <td>0.411669</td>
+      <td>0.242435</td>
+      <td>...</td>
+      <td>0.973788</td>
+      <td>0.302342</td>
+      <td>0.298462</td>
+      <td>0.879213</td>
+      <td>0.177547</td>
+      <td>0.910429</td>
+      <td>0.185487</td>
+      <td>0.256841</td>
+      <td>0.845977</td>
+      <td>0.141203</td>
+    </tr>
+  </tbody>
+</table>
+<p>385 rows × 112 columns</p>
+</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -3785,11 +4670,23 @@ No self-loops in the graph.
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../_images/1f3dc4d62a43490cbaac093a8fca1e18f8bc37f69e72f8396ac1f770f7aec8b9.png" src="../_images/1f3dc4d62a43490cbaac093a8fca1e18f8bc37f69e72f8396ac1f770f7aec8b9.png" />
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p_meth_pearson_graph_pruned_knn</span> <span class="o">=</span> <span class="n">knn_sparsification</span><span class="p">(</span><span class="n">p_meth_pearson_graph_pruned</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">print_graph_info</span><span class="p">(</span><span class="n">p_meth_pearson_graph_pruned_knn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of nodes: 381
+Number of edges: 3135
+Sample nodes: [&#39;TCGA-53-7813&#39;, &#39;TCGA-44-A479&#39;, &#39;TCGA-55-7911&#39;, &#39;TCGA-49-6761&#39;, &#39;TCGA-97-7547&#39;, &#39;TCGA-50-5044&#39;, &#39;TCGA-64-5815&#39;, &#39;TCGA-64-5774&#39;, &#39;TCGA-97-A4LX&#39;, &#39;TCGA-44-A47B&#39;]
+Sample edges: [(&#39;TCGA-53-7813&#39;, &#39;TCGA-80-5608&#39;, {&#39;weight&#39;: 0.8771039200330979}), (&#39;TCGA-53-7813&#39;, &#39;TCGA-55-8615&#39;, {&#39;weight&#39;: 0.8753812806142516}), (&#39;TCGA-53-7813&#39;, &#39;TCGA-78-7159&#39;, {&#39;weight&#39;: 0.8660791358358113}), (&#39;TCGA-53-7813&#39;, &#39;TCGA-05-4390&#39;, {&#39;weight&#39;: 0.862051412239931}), (&#39;TCGA-53-7813&#39;, &#39;TCGA-62-A46S&#39;, {&#39;weight&#39;: 0.8619682737544224}), (&#39;TCGA-53-7813&#39;, &#39;TCGA-69-7973&#39;, {&#39;weight&#39;: 0.861408811484938}), (&#39;TCGA-53-7813&#39;, &#39;TCGA-95-A4VP&#39;, {&#39;weight&#39;: 0.8606918998935026}), (&#39;TCGA-53-7813&#39;, &#39;TCGA-50-7109&#39;, {&#39;weight&#39;: 0.8544255697033839}), (&#39;TCGA-53-7813&#39;, &#39;TCGA-44-A479&#39;, {&#39;weight&#39;: 0.8521551540449519}), (&#39;TCGA-53-7813&#39;, &#39;TCGA-MP-A4TD&#39;, {&#39;weight&#39;: 0.8474804112652542})]
+No self-loops in the graph.
 </pre></div>
 </div>
 </div>
@@ -3799,6 +4696,9 @@ No self-loops in the graph.
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visualize_graph</span><span class="p">(</span><span class="n">p_meth_pearson_graph_pruned_knn</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Pearson Correlation Network (Threshold = 0.8)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/c537ea57170a4616622b7af01daa8081eed4e9a38e3957caf8df60c39c42d670.png" src="../_images/c537ea57170a4616622b7af01daa8081eed4e9a38e3957caf8df60c39c42d670.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -3902,11 +4802,11 @@ No self-loops in the graph.
       </div>
     </a>
     <a class="right-next"
-       href="../Section2_intro.html"
+       href="Section1-PSN.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Section 2: Network Analysis</p>
+        <p class="prev-next-title">Patient similarity network</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -3929,17 +4829,17 @@ No self-loops in the graph.
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Section 1</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#structuring-biomedical-data-using-networks-workshop-network-generation">Structuring Biomedical Data Using Networks  workshop - Network Generation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-of-contents">Table of Contents</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#libraries">Libraries</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tcga-luad-project">TCGA-LUAD Project</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#biomedical-networks">1. Biomedical Networks</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#libraries">1.1 Libraries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tcga-luad-project">1.2 TCGA-LUAD Project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metadata-analysis">1.3 Metadata Analysis</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#metadata-analysis">Metadata analysis</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#expression-data-analysis">Expression data analysis</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-filtering-and-preprocessing">Data Filtering and Preprocessing</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analyse-gene-expression-levels">Analyse Gene Expression Levels</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-filtering-and-preprocessing">2. Data Filtering and Preprocessing</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analysing-gene-expression-levels">2.1 Analysing Gene Expression Levels</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#thresholding-based-on-gene-expression-variance">Thresholding Based on Gene Expression Variance</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instead-of-gene-expression">instead of Gene Expression</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#task-1-variance-based-gene-filtering">Task 1: Variance-Based Gene Filtering</a><ul class="nav section-nav flex-column">
@@ -3963,8 +4863,9 @@ No self-loops in the graph.
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#todo-check-grouping-ordering">TODO: check grouping, ordering ?</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-construction-from-correlation-matrices">Graph Construction from Correlation Matrices</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-construction-from-correlation-matrices">5. Graph Construction from Correlation Matrices</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#todo-list-comprehension-for-graph-generation">TODO: list comprehension for Graph generation ??</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#todo-remove-isolates">TODO: remove isolates ?</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#show-densities-what-treshold-is-useful-to-get-rid-of-the-fully-connected-network">show densities, what treshold is useful to get rid of the fully connected network</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#network-cleaning">Network Cleaning</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sparsification-methods">Sparsification methods</a></li>

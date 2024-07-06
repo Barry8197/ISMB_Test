@@ -8,6 +8,7 @@ chapters:
 - file: Section1_intro
   sections:
   - file: Section1/Section1
+  - file: Section1/Section1-PSN
 - file: Section2_intro
   sections: 
   - file: Section2/Part1
