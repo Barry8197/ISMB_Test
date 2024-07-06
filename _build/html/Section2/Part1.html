@@ -527,7 +527,7 @@ document.write(`
 
 <span class="c1"># Extract metadata from the gene expression dataset</span>
 <span class="c1"># Metadata might include information such as patient IDs, sample conditions, etc.</span>
-<span class="n">tcqa_gxp_meta</span> <span class="o">=</span> <span class="n">tcga_gxp</span><span class="p">[</span><span class="s1">&#39;datMeta&#39;</span><span class="p">]</span>
+<span class="n">tcga_gxp_meta</span> <span class="o">=</span> <span class="n">tcga_gxp</span><span class="p">[</span><span class="s1">&#39;datMeta&#39;</span><span class="p">]</span>
 
 <span class="c1"># Print the number of nodes in each network</span>
 <span class="c1"># This provides a quick overview of the size of each network</span>
@@ -541,6 +541,96 @@ document.write(`
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of nodes in gene correlation network: 300
 Number of nodes in patient gene expression network: 434
 Number of nodes in patient DNA methylation network: 381
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Patch</span>
+<span class="kn">from</span> <span class="nn">matplotlib.lines</span> <span class="kn">import</span> <span class="n">Line2D</span>
+
+<span class="k">def</span> <span class="nf">draw_network_with_node_attrs</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">node_attributes</span><span class="p">,</span> <span class="n">communities</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Network Visualization&#39;</span><span class="p">,</span> <span class="n">color_attr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shape_attr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">layout</span><span class="o">=</span><span class="s1">&#39;spring&#39;</span><span class="p">,</span> <span class="n">cmap_name</span><span class="o">=</span><span class="s1">&#39;tab20&#39;</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Draws a graph with nodes colored by their community memberships and includes a legend indicating the community index.</span>
+<span class="sd">    Nodes can also be colored and shaped based on additional attributes.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        G (networkx.Graph): The graph to be drawn.</span>
+<span class="sd">        communities (list of lists): A list where each sublist contains the nodes belonging to a community.</span>
+<span class="sd">        node_attributes (dict): A dictionary where keys are node names and values are dictionaries of attributes.</span>
+<span class="sd">        color_attr (str, optional): Node attribute to color by.</span>
+<span class="sd">        shape_attr (str, optional): Node attribute to shape by.</span>
+<span class="sd">        figsize (tuple, optional): The size of the figure. Default is (10, 10).</span>
+<span class="sd">        layout (str, optional): The layout algorithm for positioning nodes (e.g., &#39;spring&#39;, &#39;circular&#39;). Default is &#39;spring&#39;.</span>
+<span class="sd">        cmap_name (str, optional): The name of the colormap to use for coloring communities. Default is &#39;tab20&#39;.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If the graph G is empty or not defined.</span>
+<span class="sd">        ValueError: If the communities list is empty or not defined.</span>
+<span class="sd">        ValueError: If node_attributes is empty or not defined.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">G</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The graph is empty or not defined.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">node_attributes</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Node attributes are empty or not defined.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">communities</span><span class="p">:</span>
+        <span class="n">community_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="p">:</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">community</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">communities</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">community</span><span class="p">}</span>
+        <span class="n">node_attributes</span><span class="p">[</span><span class="s1">&#39;community&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">community_dict</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;node_attributes: </span><span class="si">{</span><span class="n">node_attributes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="n">shapes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="s1">&#39;^&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;P&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">]</span>
+    <span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="n">cmap_name</span><span class="p">)</span>
+    
+    <span class="n">unique_attr_vals_color</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">node_attributes</span><span class="p">[</span><span class="n">color_attr</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span> <span class="k">if</span> <span class="n">color_attr</span> <span class="k">else</span> <span class="p">[]</span>
+    <span class="n">color_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">val</span><span class="p">:</span> <span class="n">cmap</span><span class="p">(</span><span class="n">i</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_attr_vals_color</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">unique_attr_vals_color</span><span class="p">)}</span>
+    
+    <span class="n">node_colors_from_attribute</span> <span class="o">=</span> <span class="p">[</span><span class="n">color_map</span><span class="p">[</span><span class="n">node_attributes</span><span class="p">[</span><span class="n">color_attr</span><span class="p">][</span><span class="n">node</span><span class="p">]]</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()]</span> <span class="k">if</span> <span class="n">color_attr</span> <span class="k">else</span> <span class="p">[</span><span class="s1">&#39;blue&#39;</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()))</span>
+    
+    <span class="n">unique_attr_vals_shape</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">node_attributes</span><span class="p">[</span><span class="n">shape_attr</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span> <span class="k">if</span> <span class="n">shape_attr</span> <span class="k">else</span> <span class="p">[]</span>
+    <span class="n">shape_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">val</span><span class="p">:</span> <span class="n">shapes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">unique_attr_vals_shape</span><span class="p">)}</span>
+    <span class="n">node_shapes_from_attribute</span> <span class="o">=</span> <span class="p">[</span><span class="n">shape_map</span><span class="p">[</span><span class="n">node_attributes</span><span class="p">[</span><span class="n">shape_attr</span><span class="p">][</span><span class="n">node</span><span class="p">]]</span> <span class="k">if</span> <span class="n">shape_attr</span> <span class="k">else</span> <span class="s1">&#39;o&#39;</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()]</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+    <span class="n">pos</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">layout</span><span class="si">}</span><span class="s1">_layout&#39;</span><span class="p">)(</span><span class="n">G</span><span class="p">)</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">layout</span><span class="si">}</span><span class="s1">_layout&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="n">nx</span><span class="o">.</span><span class="n">spring_layout</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+    
+    <span class="n">node_list_by_shape</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">node_idx_list_by_shape</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">shape_marker</span> <span class="ow">in</span> <span class="n">shapes</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">unique_attr_vals_shape</span><span class="p">)]:</span>
+        <span class="n">node_list_by_shape</span><span class="p">[</span><span class="n">shape_marker</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">node</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">())</span> <span class="k">if</span> <span class="n">shape_map</span><span class="p">[</span><span class="n">node_attributes</span><span class="p">[</span><span class="n">shape_attr</span><span class="p">][</span><span class="n">node</span><span class="p">]]</span> <span class="o">==</span> <span class="n">shape_marker</span><span class="p">]</span>
+        <span class="n">node_idx_list_by_shape</span><span class="p">[</span><span class="n">shape_marker</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">node_idx</span> <span class="k">for</span> <span class="n">node_idx</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()))</span> <span class="k">if</span> <span class="n">shape_map</span><span class="p">[</span><span class="n">node_attributes</span><span class="p">[</span><span class="n">shape_attr</span><span class="p">][</span><span class="n">node</span><span class="p">]]</span> <span class="o">==</span> <span class="n">shape_marker</span><span class="p">]</span>
+    
+    <span class="k">for</span> <span class="n">shape_marker</span><span class="p">,</span> <span class="n">node_list</span> <span class="ow">in</span> <span class="n">node_list_by_shape</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">nx</span><span class="o">.</span><span class="n">draw_networkx_nodes</span><span class="p">(</span>
+            <span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span>
+            <span class="n">nodelist</span><span class="o">=</span><span class="n">node_list_by_shape</span><span class="p">[</span><span class="n">shape_marker</span><span class="p">],</span>
+            <span class="n">node_color</span><span class="o">=</span><span class="p">[</span><span class="n">node_colors_from_attribute</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">node_idx_list_by_shape</span><span class="p">[</span><span class="n">shape_marker</span><span class="p">]],</span>
+            <span class="n">node_shape</span><span class="o">=</span><span class="n">shape_marker</span><span class="p">,</span>
+            <span class="n">node_size</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span>
+            <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;yellow&#39;</span>
+        <span class="p">)</span>
+
+    <span class="n">nx</span><span class="o">.</span><span class="n">draw_networkx_edges</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">with_labels</span><span class="p">:</span>
+        <span class="n">nx</span><span class="o">.</span><span class="n">draw_networkx_labels</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+    <span class="n">legend_fontsize</span> <span class="o">=</span> <span class="mi">14</span>
+    <span class="c1"># leg1=None</span>
+    <span class="k">if</span> <span class="n">shape_attr</span><span class="p">:</span>
+        <span class="n">shape_legend_handles</span> <span class="o">=</span> <span class="p">[</span><span class="n">Line2D</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="n">shape_map</span><span class="p">[</span><span class="n">val</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">markerfacecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">unique_attr_vals_shape</span><span class="p">]</span>
+        <span class="n">leg1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="o">=</span><span class="n">shape_legend_handles</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">shape_attr</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s2"> (Shape)&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">legend_fontsize</span><span class="p">,</span> <span class="n">title_fontsize</span><span class="o">=</span><span class="n">legend_fontsize</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">color_attr</span><span class="p">:</span>
+        <span class="n">color_legend_handles</span> <span class="o">=</span> <span class="p">[</span><span class="n">Patch</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="n">color_map</span><span class="p">[</span><span class="n">val</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">color_attr</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">unique_attr_vals_color</span><span class="p">]</span>
+        <span class="n">leg2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="o">=</span><span class="n">color_legend_handles</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">color_attr</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s2"> (Color)&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">legend_fontsize</span><span class="p">,</span> <span class="n">title_fontsize</span><span class="o">=</span><span class="n">legend_fontsize</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">shape_attr</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span><span class="n">leg1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -576,3645 +666,336 @@ Index([&#39;TCGA-38-7271&#39;, &#39;TCGA-55-7914&#39;, &#39;TCGA-95-7043&#39;, &
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tcga_gxp_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cancer_genes_path</span> <span class="o">=</span> <span class="s1">&#39;section2_data/Census_allFri Jul  5 14_32_40 2024.csv&#39;</span>
+<span class="n">cancer_genes_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">cancer_genes_path</span><span class="p">)</span>
+
+<span class="n">cancer_genes</span> <span class="o">=</span> <span class="n">cancer_genes_df</span><span class="p">[</span><span class="s1">&#39;Gene Symbol&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+<span class="c1"># Create the dictionary with node labels as keys and boolean as values</span>
+<span class="n">found_in_cancer_genes</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="n">node</span> <span class="ow">in</span> <span class="n">cancer_genes</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">G_gxp</span><span class="o">.</span><span class="n">nodes</span><span class="p">())}</span>
+<span class="c1"># true_nodes = [node for node, is_present in found_in_cancer_genes.items() if is_present]</span>
+
+<span class="c1"># # Print the resulting dictionary</span>
+<span class="c1"># print(found_in_cancer_genes)</span>
+<span class="c1"># print(true_nodes)</span>
+<span class="c1"># print(len(true_nodes))</span>
+<span class="c1"># print(len(list(G_gxp.nodes())))</span>
+<span class="n">node_attributes</span><span class="o">=</span><span class="p">{}</span>
+<span class="n">node_attributes</span><span class="p">[</span><span class="s1">&#39;cancer_gene&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">found_in_cancer_genes</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>TCGA-38-7271</th>
-      <th>TCGA-55-7914</th>
-      <th>TCGA-95-7043</th>
-      <th>TCGA-73-4658</th>
-      <th>TCGA-86-8076</th>
-      <th>TCGA-55-7726</th>
-      <th>TCGA-44-6147</th>
-      <th>TCGA-50-5932</th>
-      <th>TCGA-44-2661</th>
-      <th>TCGA-86-7954</th>
-      <th>TCGA-73-4662</th>
-      <th>TCGA-44-7671</th>
-      <th>TCGA-78-8660</th>
-      <th>TCGA-62-A46P</th>
-      <th>TCGA-55-6978</th>
-      <th>TCGA-50-6592</th>
-      <th>TCGA-38-4625</th>
-      <th>TCGA-80-5611</th>
-      <th>TCGA-86-8054</th>
-      <th>TCGA-55-6986</th>
-      <th>TCGA-L9-A5IP</th>
-      <th>TCGA-69-7764</th>
-      <th>TCGA-49-6744</th>
-      <th>TCGA-75-5125</th>
-      <th>TCGA-38-4626</th>
-      <th>TCGA-69-7763</th>
-      <th>TCGA-86-8279</th>
-      <th>TCGA-93-8067</th>
-      <th>TCGA-97-8179</th>
-      <th>TCGA-55-A48Y</th>
-      <th>TCGA-86-8055</th>
-      <th>TCGA-91-6835</th>
-      <th>TCGA-55-6982</th>
-      <th>TCGA-55-A4DF</th>
-      <th>TCGA-44-6774</th>
-      <th>TCGA-50-5066</th>
-      <th>TCGA-05-5423</th>
-      <th>TCGA-67-3774</th>
-      <th>TCGA-97-A4M2</th>
-      <th>TCGA-95-7567</th>
-      <th>TCGA-49-AAR0</th>
-      <th>TCGA-44-2656</th>
-      <th>TCGA-53-7813</th>
-      <th>TCGA-O1-A52J</th>
-      <th>TCGA-35-4122</th>
-      <th>TCGA-55-8092</th>
-      <th>TCGA-49-6761</th>
-      <th>TCGA-49-4507</th>
-      <th>TCGA-55-7816</th>
-      <th>TCGA-78-7145</th>
-      <th>TCGA-55-6983</th>
-      <th>TCGA-53-7624</th>
-      <th>TCGA-97-A4M3</th>
-      <th>TCGA-50-5068</th>
-      <th>TCGA-78-8648</th>
-      <th>TCGA-44-6778</th>
-      <th>TCGA-80-5608</th>
-      <th>TCGA-86-8281</th>
-      <th>TCGA-MP-A4T6</th>
-      <th>TCGA-55-8085</th>
-      <th>TCGA-62-8399</th>
-      <th>TCGA-97-A4M5</th>
-      <th>TCGA-97-7547</th>
-      <th>TCGA-05-5429</th>
-      <th>TCGA-55-7994</th>
-      <th>TCGA-55-8094</th>
-      <th>TCGA-05-4425</th>
-      <th>TCGA-44-4112</th>
-      <th>TCGA-49-6767</th>
-      <th>TCGA-49-4490</th>
-      <th>TCGA-MP-A4T9</th>
-      <th>TCGA-50-5942</th>
-      <th>TCGA-MP-A4SV</th>
-      <th>TCGA-49-AAR4</th>
-      <th>TCGA-05-4397</th>
-      <th>TCGA-44-A47A</th>
-      <th>TCGA-86-8359</th>
-      <th>TCGA-78-7539</th>
-      <th>TCGA-MP-A4T8</th>
-      <th>TCGA-99-8032</th>
-      <th>TCGA-50-6595</th>
-      <th>TCGA-55-6968</th>
-      <th>TCGA-44-8120</th>
-      <th>TCGA-55-8302</th>
-      <th>TCGA-99-8025</th>
-      <th>TCGA-64-1679</th>
-      <th>TCGA-95-8039</th>
-      <th>TCGA-44-A479</th>
-      <th>TCGA-44-6148</th>
-      <th>TCGA-NJ-A55O</th>
-      <th>TCGA-MP-A5C7</th>
-      <th>TCGA-64-5778</th>
-      <th>TCGA-55-6971</th>
-      <th>TCGA-49-AARN</th>
-      <th>TCGA-44-A47B</th>
-      <th>TCGA-55-5899</th>
-      <th>TCGA-49-AAQV</th>
-      <th>TCGA-99-8028</th>
-      <th>TCGA-75-6205</th>
-      <th>TCGA-97-8552</th>
-      <th>TCGA-50-8459</th>
-      <th>TCGA-05-5425</th>
-      <th>TCGA-78-7150</th>
-      <th>TCGA-86-A4P7</th>
-      <th>TCGA-49-4512</th>
-      <th>TCGA-55-8206</th>
-      <th>TCGA-55-8614</th>
-      <th>TCGA-64-5815</th>
-      <th>TCGA-L9-A50W</th>
-      <th>TCGA-73-4675</th>
-      <th>TCGA-55-7995</th>
-      <th>TCGA-05-4433</th>
-      <th>TCGA-55-7727</th>
-      <th>TCGA-44-2668</th>
-      <th>TCGA-44-A4SU</th>
-      <th>TCGA-55-7907</th>
-      <th>TCGA-69-7765</th>
-      <th>TCGA-49-4487</th>
-      <th>TCGA-44-2662</th>
-      <th>TCGA-67-6216</th>
-      <th>TCGA-55-7283</th>
-      <th>TCGA-86-8280</th>
-      <th>TCGA-91-6840</th>
-      <th>TCGA-78-7154</th>
-      <th>TCGA-49-4488</th>
-      <th>TCGA-93-7348</th>
-      <th>TCGA-62-A470</th>
-      <th>TCGA-78-7147</th>
-      <th>TCGA-50-5936</th>
-      <th>TCGA-55-6984</th>
-      <th>TCGA-50-5941</th>
-      <th>TCGA-69-7978</th>
-      <th>TCGA-78-7220</th>
-      <th>TCGA-55-8616</th>
-      <th>TCGA-44-A4SS</th>
-      <th>TCGA-55-7570</th>
-      <th>TCGA-78-7146</th>
-      <th>TCGA-44-3398</th>
-      <th>TCGA-05-5420</th>
-      <th>TCGA-50-5072</th>
-      <th>TCGA-05-4396</th>
-      <th>TCGA-05-4405</th>
-      <th>TCGA-50-5935</th>
-      <th>TCGA-38-4629</th>
-      <th>TCGA-55-8619</th>
-      <th>TCGA-05-4410</th>
-      <th>TCGA-73-4676</th>
-      <th>TCGA-97-8172</th>
-      <th>TCGA-44-7661</th>
-      <th>TCGA-05-4384</th>
-      <th>TCGA-44-2655</th>
-      <th>TCGA-80-5607</th>
-      <th>TCGA-67-3770</th>
-      <th>TCGA-91-6836</th>
-      <th>TCGA-95-7562</th>
-      <th>TCGA-55-8511</th>
-      <th>TCGA-44-6776</th>
-      <th>TCGA-95-7948</th>
-      <th>TCGA-91-7771</th>
-      <th>TCGA-50-5944</th>
-      <th>TCGA-MN-A4N5</th>
-      <th>TCGA-73-4677</th>
-      <th>TCGA-78-7540</th>
-      <th>TCGA-91-6829</th>
-      <th>TCGA-78-8640</th>
-      <th>TCGA-62-8398</th>
-      <th>TCGA-55-8512</th>
-      <th>TCGA-83-5908</th>
-      <th>TCGA-55-6987</th>
-      <th>TCGA-93-A4JP</th>
-      <th>TCGA-73-A9RS</th>
-      <th>TCGA-L4-A4E5</th>
-      <th>TCGA-86-8074</th>
-      <th>TCGA-86-8358</th>
-      <th>TCGA-78-7158</th>
-      <th>TCGA-91-8497</th>
-      <th>TCGA-49-AARO</th>
-      <th>TCGA-78-7159</th>
-      <th>TCGA-55-7227</th>
-      <th>TCGA-86-7714</th>
-      <th>TCGA-L9-A7SV</th>
-      <th>TCGA-78-7143</th>
-      <th>TCGA-91-8499</th>
-      <th>TCGA-49-AAR3</th>
-      <th>TCGA-55-8620</th>
-      <th>TCGA-69-8255</th>
-      <th>TCGA-75-6207</th>
-      <th>TCGA-62-A46Y</th>
-      <th>TCGA-NJ-A4YF</th>
-      <th>TCGA-91-6830</th>
-      <th>TCGA-62-8395</th>
-      <th>TCGA-49-4486</th>
-      <th>TCGA-44-6145</th>
-      <th>TCGA-86-A4P8</th>
-      <th>TCGA-78-7537</th>
-      <th>TCGA-44-3919</th>
-      <th>TCGA-35-4123</th>
-      <th>TCGA-62-8394</th>
-      <th>TCGA-69-7761</th>
-      <th>TCGA-62-A46U</th>
-      <th>TCGA-97-8547</th>
-      <th>TCGA-97-7554</th>
-      <th>TCGA-50-6673</th>
-      <th>TCGA-95-7039</th>
-      <th>TCGA-95-7944</th>
-      <th>TCGA-55-8301</th>
-      <th>TCGA-78-7152</th>
-      <th>TCGA-05-4390</th>
-      <th>TCGA-44-7659</th>
-      <th>TCGA-97-7941</th>
-      <th>TCGA-49-4514</th>
-      <th>TCGA-55-A490</th>
-      <th>TCGA-55-8508</th>
-      <th>TCGA-MP-A4TE</th>
-      <th>TCGA-97-A4M1</th>
-      <th>TCGA-75-6206</th>
-      <th>TCGA-86-8671</th>
-      <th>TCGA-78-7160</th>
-      <th>TCGA-64-1681</th>
-      <th>TCGA-49-4494</th>
-      <th>TCGA-50-5946</th>
-      <th>TCGA-55-7913</th>
-      <th>TCGA-44-6779</th>
-      <th>TCGA-49-AARE</th>
-      <th>TCGA-05-4403</th>
-      <th>TCGA-99-AA5R</th>
-      <th>TCGA-73-4659</th>
-      <th>TCGA-50-8457</th>
-      <th>TCGA-75-5147</th>
-      <th>TCGA-55-8507</th>
-      <th>TCGA-78-7536</th>
-      <th>TCGA-95-A4VK</th>
-      <th>TCGA-38-4627</th>
-      <th>TCGA-67-6215</th>
-      <th>TCGA-69-7973</th>
-      <th>TCGA-05-5715</th>
-      <th>TCGA-75-7030</th>
-      <th>TCGA-44-2666</th>
-      <th>TCGA-62-A472</th>
-      <th>TCGA-55-6985</th>
-      <th>TCGA-J2-A4AG</th>
-      <th>TCGA-97-A4LX</th>
-      <th>TCGA-55-6543</th>
-      <th>TCGA-97-7938</th>
-      <th>TCGA-35-3615</th>
-      <th>TCGA-44-2657</th>
-      <th>TCGA-55-8505</th>
-      <th>TCGA-97-8175</th>
-      <th>TCGA-49-4510</th>
-      <th>TCGA-MP-A4TK</th>
-      <th>TCGA-50-5044</th>
-      <th>TCGA-49-AAR2</th>
-      <th>TCGA-05-4250</th>
-      <th>TCGA-97-7937</th>
-      <th>TCGA-64-5774</th>
-      <th>TCGA-86-8674</th>
-      <th>TCGA-50-6590</th>
-      <th>TCGA-64-5779</th>
-      <th>TCGA-75-5146</th>
-      <th>TCGA-44-6144</th>
-      <th>TCGA-78-8662</th>
-      <th>TCGA-55-7911</th>
-      <th>TCGA-86-8585</th>
-      <th>TCGA-38-A44F</th>
-      <th>TCGA-64-1680</th>
-      <th>TCGA-97-A4M6</th>
-      <th>TCGA-75-6214</th>
-      <th>TCGA-55-6980</th>
-      <th>TCGA-97-7553</th>
-      <th>TCGA-55-A48X</th>
-      <th>TCGA-64-1677</th>
-      <th>TCGA-73-7498</th>
-      <th>TCGA-38-6178</th>
-      <th>TCGA-44-7670</th>
-      <th>TCGA-62-A471</th>
-      <th>TCGA-49-4505</th>
-      <th>TCGA-NJ-A7XG</th>
-      <th>TCGA-55-6981</th>
-      <th>TCGA-91-6848</th>
-      <th>TCGA-55-8090</th>
-      <th>TCGA-55-7725</th>
-      <th>TCGA-55-8207</th>
-      <th>TCGA-44-6146</th>
-      <th>TCGA-05-4434</th>
-      <th>TCGA-55-6979</th>
-      <th>TCGA-05-4427</th>
-      <th>TCGA-55-8615</th>
-      <th>TCGA-50-5939</th>
-      <th>TCGA-05-4418</th>
-      <th>TCGA-67-6217</th>
-      <th>TCGA-49-6745</th>
-      <th>TCGA-55-1595</th>
-      <th>TCGA-49-6742</th>
-      <th>TCGA-05-4402</th>
-      <th>TCGA-05-4382</th>
-      <th>TCGA-55-7576</th>
-      <th>TCGA-67-3773</th>
-      <th>TCGA-78-7633</th>
-      <th>TCGA-50-6597</th>
-      <th>TCGA-44-2659</th>
-      <th>TCGA-95-7947</th>
-      <th>TCGA-55-7724</th>
-      <th>TCGA-J2-A4AD</th>
-      <th>TCGA-55-8091</th>
-      <th>TCGA-55-1592</th>
-      <th>TCGA-73-4670</th>
-      <th>TCGA-55-1594</th>
-      <th>TCGA-55-8621</th>
-      <th>TCGA-50-5051</th>
-      <th>TCGA-49-4501</th>
-      <th>TCGA-J2-8194</th>
-      <th>TCGA-44-8119</th>
-      <th>TCGA-55-8203</th>
-      <th>TCGA-97-8177</th>
-      <th>TCGA-55-7573</th>
-      <th>TCGA-55-8089</th>
-      <th>TCGA-38-4630</th>
-      <th>TCGA-78-7166</th>
-      <th>TCGA-38-4631</th>
-      <th>TCGA-55-1596</th>
-      <th>TCGA-91-A4BD</th>
-      <th>TCGA-67-3771</th>
-      <th>TCGA-J2-8192</th>
-      <th>TCGA-55-A48Z</th>
-      <th>TCGA-97-8176</th>
-      <th>TCGA-86-6851</th>
-      <th>TCGA-50-5931</th>
-      <th>TCGA-NJ-A4YI</th>
-      <th>TCGA-97-7552</th>
-      <th>TCGA-MP-A4T4</th>
-      <th>TCGA-L4-A4E6</th>
-      <th>TCGA-44-5643</th>
-      <th>TCGA-MP-A4TD</th>
-      <th>TCGA-05-4244</th>
-      <th>TCGA-50-5930</th>
-      <th>TCGA-44-6777</th>
-      <th>TCGA-05-4430</th>
-      <th>TCGA-05-4426</th>
-      <th>TCGA-44-6775</th>
-      <th>TCGA-05-4420</th>
-      <th>TCGA-55-8506</th>
-      <th>TCGA-44-7672</th>
-      <th>TCGA-62-8402</th>
-      <th>TCGA-86-8056</th>
-      <th>TCGA-05-4422</th>
-      <th>TCGA-75-7027</th>
-      <th>TCGA-78-7535</th>
-      <th>TCGA-50-8460</th>
-      <th>TCGA-75-7031</th>
-      <th>TCGA-L9-A444</th>
-      <th>TCGA-73-4666</th>
-      <th>TCGA-86-7953</th>
-      <th>TCGA-86-A4D0</th>
-      <th>TCGA-NJ-A4YQ</th>
-      <th>TCGA-91-8496</th>
-      <th>TCGA-67-3772</th>
-      <th>TCGA-55-7281</th>
-      <th>TCGA-05-4424</th>
-      <th>TCGA-69-A59K</th>
-      <th>TCGA-75-7025</th>
-      <th>TCGA-55-8514</th>
-      <th>TCGA-95-8494</th>
-      <th>TCGA-05-4395</th>
-      <th>TCGA-93-A4JQ</th>
-      <th>TCGA-44-8117</th>
-      <th>TCGA-55-8204</th>
-      <th>TCGA-50-5933</th>
-      <th>TCGA-MN-A4N1</th>
-      <th>TCGA-55-7903</th>
-      <th>TCGA-86-8669</th>
-      <th>TCGA-55-6970</th>
-      <th>TCGA-50-6594</th>
-      <th>TCGA-86-8075</th>
-      <th>TCGA-MP-A4TF</th>
-      <th>TCGA-69-7760</th>
-      <th>TCGA-78-7161</th>
-      <th>TCGA-91-6849</th>
-      <th>TCGA-99-8033</th>
-      <th>TCGA-55-8205</th>
-      <th>TCGA-55-8510</th>
-      <th>TCGA-91-6828</th>
-      <th>TCGA-50-5049</th>
-      <th>TCGA-99-7458</th>
-      <th>TCGA-49-AARR</th>
-      <th>TCGA-MP-A4TC</th>
-      <th>TCGA-49-AARQ</th>
-      <th>TCGA-93-A4JN</th>
-      <th>TCGA-95-A4VP</th>
-      <th>TCGA-69-8453</th>
-      <th>TCGA-55-8513</th>
-      <th>TCGA-55-6975</th>
-      <th>TCGA-86-8278</th>
-      <th>TCGA-75-6203</th>
-      <th>TCGA-49-6743</th>
-      <th>TCGA-55-7574</th>
-      <th>TCGA-78-8655</th>
-      <th>TCGA-05-4389</th>
-      <th>TCGA-86-7701</th>
-      <th>TCGA-91-6831</th>
-      <th>TCGA-55-7728</th>
-      <th>TCGA-97-A4M0</th>
-      <th>TCGA-50-6593</th>
-      <th>TCGA-86-6562</th>
-      <th>TCGA-62-A46S</th>
-      <th>TCGA-86-A4JF</th>
-      <th>TCGA-J2-A4AE</th>
-      <th>TCGA-55-8087</th>
-      <th>TCGA-78-7542</th>
-      <th>TCGA-78-7148</th>
-      <th>TCGA-55-A493</th>
-      <th>TCGA-91-A4BC</th>
-      <th>TCGA-05-4432</th>
-      <th>TCGA-55-6712</th>
-      <th>TCGA-4B-A93V</th>
-      <th>TCGA-93-7347</th>
-      <th>TCGA-86-8668</th>
-      <th>TCGA-MP-A4TI</th>
-      <th>TCGA-69-8254</th>
-      <th>TCGA-64-1676</th>
-      <th>TCGA-62-A46V</th>
-      <th>TCGA-78-7167</th>
-      <th>TCGA-55-7284</th>
-      <th>TCGA-78-7162</th>
-      <th>TCGA-75-6212</th>
-      <th>TCGA-97-7546</th>
-      <th>TCGA-44-5644</th>
-      <th>TCGA-55-8299</th>
-      <th>TCGA-75-6211</th>
-      <th>TCGA-MP-A4SW</th>
-      <th>TCGA-78-7149</th>
-      <th>TCGA-S2-AA1A</th>
-      <th>TCGA-95-A4VN</th>
-      <th>TCGA-55-8096</th>
-      <th>TCGA-05-4398</th>
-      <th>TCGA-97-8171</th>
-      <th>TCGA-55-A492</th>
-      <th>TCGA-71-8520</th>
-      <th>TCGA-44-3396</th>
-      <th>TCGA-55-A57B</th>
-      <th>TCGA-L9-A443</th>
-      <th>TCGA-55-A4DG</th>
-      <th>TCGA-67-4679</th>
-      <th>TCGA-64-5781</th>
-      <th>TCGA-93-A4JO</th>
-      <th>TCGA-NJ-A4YP</th>
-      <th>TCGA-69-7974</th>
-      <th>TCGA-MP-A4T7</th>
-      <th>TCGA-55-6642</th>
-      <th>TCGA-49-AAR9</th>
-      <th>TCGA-69-8253</th>
-      <th>TCGA-05-4249</th>
-      <th>TCGA-44-7669</th>
-      <th>TCGA-71-6725</th>
-      <th>TCGA-73-7499</th>
-      <th>TCGA-MP-A4TH</th>
-      <th>TCGA-55-8208</th>
-      <th>TCGA-78-7156</th>
-      <th>TCGA-75-5122</th>
-      <th>TCGA-50-7109</th>
-      <th>TCGA-NJ-A55R</th>
-      <th>TCGA-53-A4EZ</th>
-      <th>TCGA-NJ-A4YG</th>
-      <th>TCGA-86-A456</th>
-      <th>TCGA-38-4632</th>
-      <th>TCGA-MP-A4TJ</th>
-      <th>TCGA-97-8174</th>
-      <th>TCGA-MP-A4SY</th>
-      <th>TCGA-62-8397</th>
-      <th>TCGA-L9-A8F4</th>
-      <th>TCGA-75-5126</th>
-      <th>TCGA-MP-A4TA</th>
-      <th>TCGA-86-7711</th>
-      <th>TCGA-50-5045</th>
-      <th>TCGA-05-4417</th>
-      <th>TCGA-44-7660</th>
-      <th>TCGA-69-7979</th>
-      <th>TCGA-55-A491</th>
-      <th>TCGA-L9-A743</th>
-      <th>TCGA-55-A494</th>
-      <th>TCGA-44-7662</th>
-      <th>TCGA-55-7910</th>
-      <th>TCGA-69-7980</th>
-      <th>TCGA-55-8097</th>
-      <th>TCGA-73-4668</th>
-      <th>TCGA-NJ-A55A</th>
-      <th>TCGA-86-8672</th>
-      <th>TCGA-86-8673</th>
-      <th>TCGA-78-7153</th>
-      <th>TCGA-97-A4M7</th>
-      <th>TCGA-62-A46R</th>
-      <th>TCGA-50-5055</th>
-      <th>TCGA-38-4628</th>
-      <th>TCGA-86-7713</th>
-      <th>TCGA-86-8073</th>
-      <th>TCGA-MN-A4N4</th>
-      <th>TCGA-53-7626</th>
-      <th>TCGA-44-A47G</th>
-      <th>TCGA-55-6969</th>
-    </tr>
-    <tr>
-      <th>GENES</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>TSPAN6</th>
-      <td>11.3668</td>
-      <td>11.5434</td>
-      <td>11.4110</td>
-      <td>12.2149</td>
-      <td>11.2882</td>
-      <td>11.2084</td>
-      <td>11.1717</td>
-      <td>12.1281</td>
-      <td>11.9908</td>
-      <td>12.2601</td>
-      <td>11.6963</td>
-      <td>11.4364</td>
-      <td>10.8184</td>
-      <td>11.5513</td>
-      <td>11.2016</td>
-      <td>11.5201</td>
-      <td>12.3420</td>
-      <td>11.9378</td>
-      <td>12.6268</td>
-      <td>12.3495</td>
-      <td>10.0858</td>
-      <td>10.1934</td>
-      <td>11.4793</td>
-      <td>11.8151</td>
-      <td>10.9083</td>
-      <td>10.9789</td>
-      <td>12.3310</td>
-      <td>11.0959</td>
-      <td>12.2844</td>
-      <td>12.2692</td>
-      <td>12.4793</td>
-      <td>11.6572</td>
-      <td>10.4046</td>
-      <td>11.7654</td>
-      <td>11.5185</td>
-      <td>12.6804</td>
-      <td>12.6905</td>
-      <td>11.6912</td>
-      <td>10.3112</td>
-      <td>10.6976</td>
-      <td>10.3748</td>
-      <td>11.7572</td>
-      <td>11.9412</td>
-      <td>11.4387</td>
-      <td>13.5286</td>
-      <td>11.3330</td>
-      <td>10.4583</td>
-      <td>10.6897</td>
-      <td>9.8078</td>
-      <td>12.0396</td>
-      <td>10.7139</td>
-      <td>10.9416</td>
-      <td>10.6148</td>
-      <td>12.3594</td>
-      <td>10.2641</td>
-      <td>10.3341</td>
-      <td>12.1122</td>
-      <td>12.6116</td>
-      <td>11.6780</td>
-      <td>11.3810</td>
-      <td>11.2908</td>
-      <td>11.6346</td>
-      <td>12.7436</td>
-      <td>12.0022</td>
-      <td>11.3310</td>
-      <td>12.1321</td>
-      <td>10.9049</td>
-      <td>10.8718</td>
-      <td>13.6990</td>
-      <td>11.2008</td>
-      <td>12.5260</td>
-      <td>11.3536</td>
-      <td>10.9310</td>
-      <td>11.1425</td>
-      <td>11.6935</td>
-      <td>10.7492</td>
-      <td>11.5179</td>
-      <td>11.4193</td>
-      <td>12.0642</td>
-      <td>10.9989</td>
-      <td>10.1955</td>
-      <td>9.8547</td>
-      <td>12.1975</td>
-      <td>11.8144</td>
-      <td>11.3360</td>
-      <td>11.8734</td>
-      <td>11.6592</td>
-      <td>10.9656</td>
-      <td>11.3940</td>
-      <td>10.0536</td>
-      <td>11.2797</td>
-      <td>12.5194</td>
-      <td>11.1115</td>
-      <td>11.3718</td>
-      <td>11.0992</td>
-      <td>10.5568</td>
-      <td>12.4242</td>
-      <td>10.8483</td>
-      <td>10.2531</td>
-      <td>12.1970</td>
-      <td>11.0435</td>
-      <td>11.5506</td>
-      <td>11.8431</td>
-      <td>10.0167</td>
-      <td>11.1656</td>
-      <td>11.6305</td>
-      <td>12.1896</td>
-      <td>11.0415</td>
-      <td>11.2189</td>
-      <td>11.8492</td>
-      <td>11.3662</td>
-      <td>10.4561</td>
-      <td>11.6218</td>
-      <td>10.8172</td>
-      <td>12.8664</td>
-      <td>11.5225</td>
-      <td>11.3115</td>
-      <td>11.5578</td>
-      <td>10.2480</td>
-      <td>12.5978</td>
-      <td>11.3813</td>
-      <td>12.2305</td>
-      <td>12.8613</td>
-      <td>12.2530</td>
-      <td>11.6121</td>
-      <td>11.4228</td>
-      <td>10.9524</td>
-      <td>12.5578</td>
-      <td>10.0787</td>
-      <td>10.5769</td>
-      <td>12.1344</td>
-      <td>11.0673</td>
-      <td>11.5503</td>
-      <td>11.5436</td>
-      <td>11.9898</td>
-      <td>11.0150</td>
-      <td>11.7263</td>
-      <td>12.6511</td>
-      <td>12.7900</td>
-      <td>11.3529</td>
-      <td>10.8869</td>
-      <td>11.7057</td>
-      <td>10.8965</td>
-      <td>12.3545</td>
-      <td>10.2583</td>
-      <td>11.3722</td>
-      <td>10.6833</td>
-      <td>10.0881</td>
-      <td>10.4599</td>
-      <td>10.7081</td>
-      <td>12.0397</td>
-      <td>11.7018</td>
-      <td>12.8565</td>
-      <td>10.2880</td>
-      <td>12.7978</td>
-      <td>11.4706</td>
-      <td>10.8476</td>
-      <td>11.0805</td>
-      <td>11.9734</td>
-      <td>12.0851</td>
-      <td>12.1795</td>
-      <td>11.5371</td>
-      <td>10.6095</td>
-      <td>11.0963</td>
-      <td>10.3040</td>
-      <td>11.8762</td>
-      <td>11.8054</td>
-      <td>11.2086</td>
-      <td>11.3926</td>
-      <td>11.8264</td>
-      <td>10.1947</td>
-      <td>10.4312</td>
-      <td>12.0766</td>
-      <td>9.8166</td>
-      <td>11.1579</td>
-      <td>9.9593</td>
-      <td>11.9509</td>
-      <td>12.1032</td>
-      <td>11.3955</td>
-      <td>12.1417</td>
-      <td>10.2608</td>
-      <td>11.8510</td>
-      <td>14.0084</td>
-      <td>10.9162</td>
-      <td>10.3611</td>
-      <td>11.0810</td>
-      <td>11.3337</td>
-      <td>12.2993</td>
-      <td>10.7740</td>
-      <td>11.7357</td>
-      <td>10.5070</td>
-      <td>11.8349</td>
-      <td>10.1911</td>
-      <td>9.9479</td>
-      <td>11.2712</td>
-      <td>12.0021</td>
-      <td>12.6501</td>
-      <td>12.4788</td>
-      <td>10.4014</td>
-      <td>9.9802</td>
-      <td>11.2009</td>
-      <td>11.4114</td>
-      <td>11.7631</td>
-      <td>11.2826</td>
-      <td>10.2483</td>
-      <td>10.8454</td>
-      <td>11.3710</td>
-      <td>11.8123</td>
-      <td>10.4946</td>
-      <td>12.8853</td>
-      <td>12.0419</td>
-      <td>9.7825</td>
-      <td>11.3508</td>
-      <td>12.2113</td>
-      <td>11.2109</td>
-      <td>10.7897</td>
-      <td>10.9245</td>
-      <td>11.1760</td>
-      <td>12.6706</td>
-      <td>12.6263</td>
-      <td>11.1184</td>
-      <td>12.0847</td>
-      <td>12.0260</td>
-      <td>12.1872</td>
-      <td>11.1890</td>
-      <td>10.5380</td>
-      <td>11.1885</td>
-      <td>10.6572</td>
-      <td>13.0727</td>
-      <td>11.4913</td>
-      <td>11.3143</td>
-      <td>11.0925</td>
-      <td>13.0532</td>
-      <td>10.3230</td>
-      <td>11.2059</td>
-      <td>12.4663</td>
-      <td>11.5834</td>
-      <td>10.9066</td>
-      <td>10.7345</td>
-      <td>12.4693</td>
-      <td>11.5575</td>
-      <td>10.9213</td>
-      <td>12.4820</td>
-      <td>11.2840</td>
-      <td>11.5141</td>
-      <td>10.0187</td>
-      <td>10.8694</td>
-      <td>12.1195</td>
-      <td>11.9295</td>
-      <td>11.0260</td>
-      <td>10.9569</td>
-      <td>11.7140</td>
-      <td>11.9341</td>
-      <td>11.8186</td>
-      <td>12.2848</td>
-      <td>11.6558</td>
-      <td>9.3353</td>
-      <td>11.0606</td>
-      <td>12.0642</td>
-      <td>9.8124</td>
-      <td>11.7632</td>
-      <td>10.2884</td>
-      <td>12.5910</td>
-      <td>11.3659</td>
-      <td>12.7780</td>
-      <td>12.6628</td>
-      <td>11.5601</td>
-      <td>10.2000</td>
-      <td>12.0653</td>
-      <td>11.7465</td>
-      <td>12.3923</td>
-      <td>11.4238</td>
-      <td>11.8239</td>
-      <td>11.9585</td>
-      <td>12.2011</td>
-      <td>12.1427</td>
-      <td>12.2740</td>
-      <td>10.5354</td>
-      <td>10.6766</td>
-      <td>11.2521</td>
-      <td>10.8593</td>
-      <td>11.5535</td>
-      <td>10.6908</td>
-      <td>10.5088</td>
-      <td>12.1103</td>
-      <td>10.6678</td>
-      <td>11.3580</td>
-      <td>11.2907</td>
-      <td>12.4034</td>
-      <td>11.2444</td>
-      <td>11.5573</td>
-      <td>10.6814</td>
-      <td>11.1324</td>
-      <td>12.5396</td>
-      <td>10.8427</td>
-      <td>11.0895</td>
-      <td>10.6759</td>
-      <td>11.6387</td>
-      <td>11.7932</td>
-      <td>10.2316</td>
-      <td>11.7782</td>
-      <td>11.6473</td>
-      <td>11.4396</td>
-      <td>11.4026</td>
-      <td>12.0780</td>
-      <td>11.4128</td>
-      <td>13.0523</td>
-      <td>10.6577</td>
-      <td>11.9695</td>
-      <td>12.1888</td>
-      <td>12.0151</td>
-      <td>11.7835</td>
-      <td>11.2857</td>
-      <td>11.6833</td>
-      <td>11.8953</td>
-      <td>11.2430</td>
-      <td>12.4815</td>
-      <td>11.4569</td>
-      <td>12.1892</td>
-      <td>12.9238</td>
-      <td>11.3341</td>
-      <td>10.4122</td>
-      <td>12.3289</td>
-      <td>12.5716</td>
-      <td>11.8607</td>
-      <td>10.6942</td>
-      <td>9.9505</td>
-      <td>9.8565</td>
-      <td>11.1532</td>
-      <td>11.0083</td>
-      <td>9.7749</td>
-      <td>11.8172</td>
-      <td>11.5265</td>
-      <td>11.7539</td>
-      <td>9.6730</td>
-      <td>11.0506</td>
-      <td>12.0793</td>
-      <td>12.3549</td>
-      <td>11.7789</td>
-      <td>12.2414</td>
-      <td>11.0330</td>
-      <td>11.7827</td>
-      <td>12.6700</td>
-      <td>10.3898</td>
-      <td>11.4081</td>
-      <td>11.9690</td>
-      <td>11.8487</td>
-      <td>11.3940</td>
-      <td>11.7816</td>
-      <td>10.4786</td>
-      <td>11.3588</td>
-      <td>11.5056</td>
-      <td>11.5659</td>
-      <td>10.9077</td>
-      <td>12.8481</td>
-      <td>13.2597</td>
-      <td>12.1043</td>
-      <td>11.8132</td>
-      <td>10.1705</td>
-      <td>12.6113</td>
-      <td>12.7393</td>
-      <td>10.8212</td>
-      <td>11.0022</td>
-      <td>9.9679</td>
-      <td>10.4334</td>
-      <td>12.5928</td>
-      <td>10.5347</td>
-      <td>11.5644</td>
-      <td>11.3865</td>
-      <td>11.6430</td>
-      <td>11.5043</td>
-      <td>12.6001</td>
-      <td>12.6972</td>
-      <td>11.6720</td>
-      <td>13.9840</td>
-      <td>12.3083</td>
-      <td>11.9275</td>
-      <td>10.5632</td>
-      <td>10.5139</td>
-      <td>11.6059</td>
-      <td>11.0129</td>
-      <td>10.9546</td>
-      <td>11.0942</td>
-      <td>11.9468</td>
-      <td>11.2219</td>
-      <td>11.4285</td>
-      <td>11.4685</td>
-      <td>11.9371</td>
-      <td>10.7517</td>
-      <td>11.0095</td>
-      <td>9.9635</td>
-      <td>12.0445</td>
-      <td>11.4242</td>
-      <td>10.2734</td>
-      <td>10.5699</td>
-      <td>12.1478</td>
-      <td>12.6972</td>
-      <td>11.1324</td>
-      <td>9.7751</td>
-      <td>10.5446</td>
-      <td>9.7483</td>
-      <td>12.8170</td>
-      <td>11.8853</td>
-      <td>12.4547</td>
-      <td>10.2181</td>
-      <td>11.4485</td>
-      <td>11.1449</td>
-      <td>10.6456</td>
-      <td>11.8871</td>
-      <td>10.8452</td>
-      <td>10.8434</td>
-      <td>11.1721</td>
-      <td>11.5949</td>
-      <td>12.3783</td>
-      <td>10.1246</td>
-      <td>11.0102</td>
-      <td>10.7886</td>
-      <td>12.4142</td>
-      <td>13.2311</td>
-      <td>11.3050</td>
-      <td>11.1573</td>
-      <td>10.8217</td>
-      <td>11.2405</td>
-      <td>12.1907</td>
-      <td>11.6480</td>
-      <td>10.7273</td>
-      <td>10.8609</td>
-      <td>12.3249</td>
-      <td>11.5895</td>
-      <td>11.3989</td>
-      <td>12.5339</td>
-      <td>10.8605</td>
-      <td>12.1548</td>
-      <td>11.3018</td>
-      <td>11.1675</td>
-      <td>11.8632</td>
-      <td>11.6934</td>
-      <td>11.9824</td>
-      <td>11.7301</td>
-      <td>11.1696</td>
-      <td>9.6553</td>
-      <td>10.9355</td>
-      <td>11.4443</td>
-      <td>11.6764</td>
-      <td>10.8236</td>
-      <td>10.9707</td>
-      <td>10.3842</td>
-      <td>11.2515</td>
-      <td>11.6288</td>
-      <td>10.6570</td>
-      <td>11.5372</td>
-      <td>11.0214</td>
-      <td>11.6107</td>
-      <td>12.2799</td>
-      <td>9.9885</td>
-      <td>10.8204</td>
-      <td>11.5185</td>
-      <td>11.2179</td>
-      <td>11.4793</td>
-      <td>10.5852</td>
-      <td>11.8688</td>
-      <td>10.9679</td>
-      <td>11.1557</td>
-      <td>12.5560</td>
-      <td>11.0278</td>
-      <td>11.2249</td>
-      <td>11.7138</td>
-      <td>12.0610</td>
-      <td>11.0386</td>
-      <td>11.7022</td>
-      <td>10.7661</td>
-      <td>11.5559</td>
-      <td>12.3662</td>
-      <td>11.6695</td>
-      <td>12.3629</td>
-      <td>10.0493</td>
-      <td>12.6781</td>
-      <td>11.1947</td>
-      <td>10.2288</td>
-      <td>11.1006</td>
-      <td>10.7090</td>
-      <td>11.5433</td>
-      <td>10.6578</td>
-      <td>12.2400</td>
-      <td>12.2886</td>
-      <td>11.0114</td>
-      <td>11.1331</td>
-      <td>12.7791</td>
-      <td>11.4336</td>
-      <td>11.4533</td>
-      <td>11.8079</td>
-      <td>11.3954</td>
-      <td>12.2414</td>
-      <td>10.7676</td>
-      <td>11.6560</td>
-      <td>10.8912</td>
-      <td>11.3200</td>
-      <td>10.5764</td>
-    </tr>
-    <tr>
-      <th>DPM1</th>
-      <td>10.3673</td>
-      <td>10.5282</td>
-      <td>11.2018</td>
-      <td>10.3249</td>
-      <td>10.2095</td>
-      <td>11.6034</td>
-      <td>10.5684</td>
-      <td>10.5895</td>
-      <td>10.8699</td>
-      <td>10.8979</td>
-      <td>10.2597</td>
-      <td>10.2811</td>
-      <td>10.5428</td>
-      <td>11.4632</td>
-      <td>10.4191</td>
-      <td>11.1089</td>
-      <td>11.7516</td>
-      <td>11.0717</td>
-      <td>11.3598</td>
-      <td>10.5437</td>
-      <td>10.1693</td>
-      <td>10.4140</td>
-      <td>10.5354</td>
-      <td>10.7697</td>
-      <td>11.1321</td>
-      <td>10.9468</td>
-      <td>11.0926</td>
-      <td>10.7382</td>
-      <td>10.8152</td>
-      <td>10.3957</td>
-      <td>10.4709</td>
-      <td>10.1559</td>
-      <td>9.9805</td>
-      <td>11.4481</td>
-      <td>10.4410</td>
-      <td>12.3449</td>
-      <td>12.0215</td>
-      <td>9.8339</td>
-      <td>9.8155</td>
-      <td>11.1057</td>
-      <td>10.6229</td>
-      <td>10.3072</td>
-      <td>10.9156</td>
-      <td>10.6567</td>
-      <td>11.9269</td>
-      <td>11.2991</td>
-      <td>10.1423</td>
-      <td>10.3601</td>
-      <td>10.1592</td>
-      <td>10.7380</td>
-      <td>10.4286</td>
-      <td>10.4356</td>
-      <td>10.3590</td>
-      <td>12.4895</td>
-      <td>10.1547</td>
-      <td>10.5626</td>
-      <td>10.0477</td>
-      <td>10.5382</td>
-      <td>9.9913</td>
-      <td>10.2894</td>
-      <td>10.8054</td>
-      <td>10.1605</td>
-      <td>10.0190</td>
-      <td>11.5081</td>
-      <td>10.0984</td>
-      <td>11.3601</td>
-      <td>10.6430</td>
-      <td>10.6521</td>
-      <td>11.1387</td>
-      <td>11.3382</td>
-      <td>10.2255</td>
-      <td>10.0836</td>
-      <td>10.4917</td>
-      <td>10.0090</td>
-      <td>11.9545</td>
-      <td>10.0906</td>
-      <td>11.3592</td>
-      <td>9.9883</td>
-      <td>10.3982</td>
-      <td>10.5526</td>
-      <td>10.2111</td>
-      <td>10.2224</td>
-      <td>10.3080</td>
-      <td>10.4408</td>
-      <td>10.1729</td>
-      <td>10.0785</td>
-      <td>10.3417</td>
-      <td>11.0045</td>
-      <td>9.9599</td>
-      <td>10.3394</td>
-      <td>10.2760</td>
-      <td>11.3405</td>
-      <td>10.1568</td>
-      <td>10.4120</td>
-      <td>10.2278</td>
-      <td>10.8406</td>
-      <td>10.5518</td>
-      <td>10.6743</td>
-      <td>10.1342</td>
-      <td>10.6351</td>
-      <td>10.0925</td>
-      <td>11.4544</td>
-      <td>10.6302</td>
-      <td>10.0922</td>
-      <td>10.3143</td>
-      <td>10.0360</td>
-      <td>10.5034</td>
-      <td>10.0045</td>
-      <td>10.0630</td>
-      <td>9.8141</td>
-      <td>10.3974</td>
-      <td>10.2130</td>
-      <td>10.9346</td>
-      <td>10.9549</td>
-      <td>10.2702</td>
-      <td>10.4995</td>
-      <td>10.5450</td>
-      <td>11.4992</td>
-      <td>10.0573</td>
-      <td>9.6467</td>
-      <td>10.1493</td>
-      <td>10.0933</td>
-      <td>11.0881</td>
-      <td>12.0558</td>
-      <td>11.0665</td>
-      <td>10.3363</td>
-      <td>10.5444</td>
-      <td>10.3785</td>
-      <td>10.1670</td>
-      <td>10.3885</td>
-      <td>10.8217</td>
-      <td>10.4592</td>
-      <td>11.4573</td>
-      <td>10.3285</td>
-      <td>10.6120</td>
-      <td>11.0075</td>
-      <td>10.4944</td>
-      <td>11.1837</td>
-      <td>11.7792</td>
-      <td>10.1174</td>
-      <td>10.3780</td>
-      <td>9.6809</td>
-      <td>10.1563</td>
-      <td>11.0345</td>
-      <td>9.9656</td>
-      <td>9.6733</td>
-      <td>10.8477</td>
-      <td>9.6414</td>
-      <td>10.4871</td>
-      <td>10.1464</td>
-      <td>10.5615</td>
-      <td>10.7224</td>
-      <td>10.3989</td>
-      <td>10.2802</td>
-      <td>10.9204</td>
-      <td>10.2679</td>
-      <td>10.4497</td>
-      <td>10.7129</td>
-      <td>11.1628</td>
-      <td>10.4072</td>
-      <td>11.0103</td>
-      <td>10.5530</td>
-      <td>10.7263</td>
-      <td>10.4121</td>
-      <td>10.6011</td>
-      <td>10.4475</td>
-      <td>10.4723</td>
-      <td>11.0430</td>
-      <td>10.3518</td>
-      <td>10.2918</td>
-      <td>11.4870</td>
-      <td>10.6665</td>
-      <td>10.6233</td>
-      <td>10.2224</td>
-      <td>9.8892</td>
-      <td>9.8752</td>
-      <td>10.2606</td>
-      <td>10.4278</td>
-      <td>10.1204</td>
-      <td>10.5046</td>
-      <td>10.5811</td>
-      <td>9.9467</td>
-      <td>11.3648</td>
-      <td>10.6513</td>
-      <td>10.7957</td>
-      <td>11.3752</td>
-      <td>10.8785</td>
-      <td>10.6078</td>
-      <td>12.4100</td>
-      <td>10.6967</td>
-      <td>10.1885</td>
-      <td>11.0354</td>
-      <td>10.5423</td>
-      <td>10.0410</td>
-      <td>9.7252</td>
-      <td>10.0059</td>
-      <td>11.3611</td>
-      <td>10.4094</td>
-      <td>10.7109</td>
-      <td>10.2990</td>
-      <td>9.6637</td>
-      <td>10.2146</td>
-      <td>10.3319</td>
-      <td>10.9650</td>
-      <td>11.0105</td>
-      <td>10.4496</td>
-      <td>9.5375</td>
-      <td>11.0195</td>
-      <td>10.4263</td>
-      <td>10.0014</td>
-      <td>11.7075</td>
-      <td>9.7232</td>
-      <td>10.4508</td>
-      <td>10.6472</td>
-      <td>10.4813</td>
-      <td>10.2382</td>
-      <td>9.8675</td>
-      <td>9.7808</td>
-      <td>10.7801</td>
-      <td>10.9638</td>
-      <td>10.7165</td>
-      <td>10.8844</td>
-      <td>9.6931</td>
-      <td>10.1148</td>
-      <td>10.5937</td>
-      <td>10.0443</td>
-      <td>10.1051</td>
-      <td>9.8038</td>
-      <td>10.9006</td>
-      <td>10.7497</td>
-      <td>11.1005</td>
-      <td>9.6334</td>
-      <td>10.6470</td>
-      <td>9.6086</td>
-      <td>10.4662</td>
-      <td>9.7965</td>
-      <td>9.6259</td>
-      <td>10.6728</td>
-      <td>10.4062</td>
-      <td>10.4734</td>
-      <td>10.2548</td>
-      <td>10.3992</td>
-      <td>10.7673</td>
-      <td>10.5584</td>
-      <td>10.6872</td>
-      <td>10.1128</td>
-      <td>10.5001</td>
-      <td>10.7337</td>
-      <td>10.6823</td>
-      <td>10.3774</td>
-      <td>10.5507</td>
-      <td>9.5723</td>
-      <td>11.0563</td>
-      <td>11.3820</td>
-      <td>10.7984</td>
-      <td>10.2953</td>
-      <td>10.4317</td>
-      <td>10.9132</td>
-      <td>10.7706</td>
-      <td>10.3170</td>
-      <td>9.8159</td>
-      <td>10.7112</td>
-      <td>10.5911</td>
-      <td>10.5216</td>
-      <td>11.0934</td>
-      <td>10.1872</td>
-      <td>11.4650</td>
-      <td>10.0845</td>
-      <td>10.6251</td>
-      <td>10.2238</td>
-      <td>11.8974</td>
-      <td>10.0741</td>
-      <td>10.2667</td>
-      <td>11.4990</td>
-      <td>10.2143</td>
-      <td>10.7719</td>
-      <td>10.4364</td>
-      <td>9.9946</td>
-      <td>10.6327</td>
-      <td>9.9117</td>
-      <td>10.7585</td>
-      <td>10.6781</td>
-      <td>10.8452</td>
-      <td>10.2105</td>
-      <td>10.5266</td>
-      <td>10.7068</td>
-      <td>9.5639</td>
-      <td>10.3362</td>
-      <td>10.1308</td>
-      <td>10.2051</td>
-      <td>10.3487</td>
-      <td>10.4209</td>
-      <td>10.3560</td>
-      <td>9.9935</td>
-      <td>10.3846</td>
-      <td>10.2926</td>
-      <td>10.5870</td>
-      <td>10.2013</td>
-      <td>10.1682</td>
-      <td>10.0883</td>
-      <td>11.1945</td>
-      <td>10.6828</td>
-      <td>10.6559</td>
-      <td>10.3926</td>
-      <td>10.7314</td>
-      <td>11.3593</td>
-      <td>12.3765</td>
-      <td>10.0253</td>
-      <td>9.8573</td>
-      <td>10.7042</td>
-      <td>9.9889</td>
-      <td>10.8183</td>
-      <td>10.5255</td>
-      <td>10.8122</td>
-      <td>9.9752</td>
-      <td>10.8340</td>
-      <td>10.7147</td>
-      <td>10.3240</td>
-      <td>11.6552</td>
-      <td>11.4148</td>
-      <td>11.1563</td>
-      <td>11.1943</td>
-      <td>10.2782</td>
-      <td>10.4931</td>
-      <td>10.3662</td>
-      <td>10.2788</td>
-      <td>10.6498</td>
-      <td>10.3249</td>
-      <td>10.2040</td>
-      <td>10.5631</td>
-      <td>10.0752</td>
-      <td>11.5878</td>
-      <td>10.1247</td>
-      <td>9.9811</td>
-      <td>10.3253</td>
-      <td>9.9141</td>
-      <td>10.6591</td>
-      <td>10.3958</td>
-      <td>10.5550</td>
-      <td>11.0409</td>
-      <td>10.5295</td>
-      <td>10.5735</td>
-      <td>11.0035</td>
-      <td>10.3892</td>
-      <td>9.4086</td>
-      <td>10.6769</td>
-      <td>10.6982</td>
-      <td>10.5302</td>
-      <td>10.5096</td>
-      <td>10.2051</td>
-      <td>10.4566</td>
-      <td>9.7456</td>
-      <td>10.7550</td>
-      <td>10.3593</td>
-      <td>10.7888</td>
-      <td>11.0977</td>
-      <td>10.4838</td>
-      <td>10.1326</td>
-      <td>10.8935</td>
-      <td>10.1556</td>
-      <td>10.2567</td>
-      <td>10.6765</td>
-      <td>11.0303</td>
-      <td>10.0184</td>
-      <td>11.2173</td>
-      <td>11.0190</td>
-      <td>10.6367</td>
-      <td>10.4657</td>
-      <td>10.7996</td>
-      <td>10.3412</td>
-      <td>10.5155</td>
-      <td>10.9056</td>
-      <td>10.4717</td>
-      <td>11.0922</td>
-      <td>10.7262</td>
-      <td>10.4186</td>
-      <td>10.4778</td>
-      <td>10.8818</td>
-      <td>10.6244</td>
-      <td>9.9601</td>
-      <td>10.3842</td>
-      <td>10.8874</td>
-      <td>9.8919</td>
-      <td>10.2086</td>
-      <td>10.3251</td>
-      <td>10.6865</td>
-      <td>10.7666</td>
-      <td>10.0151</td>
-      <td>10.1534</td>
-      <td>9.8252</td>
-      <td>10.3318</td>
-      <td>10.4129</td>
-      <td>10.1555</td>
-      <td>10.6197</td>
-      <td>10.1391</td>
-      <td>10.2610</td>
-      <td>10.6608</td>
-      <td>10.4759</td>
-      <td>10.8768</td>
-      <td>9.4212</td>
-      <td>10.1342</td>
-      <td>9.6859</td>
-      <td>10.7873</td>
-      <td>9.9960</td>
-      <td>10.3806</td>
-      <td>10.5536</td>
-      <td>9.9261</td>
-      <td>11.0626</td>
-      <td>10.3189</td>
-      <td>10.3556</td>
-      <td>10.8261</td>
-      <td>10.7788</td>
-      <td>10.4143</td>
-      <td>10.6831</td>
-      <td>9.6615</td>
-      <td>9.8619</td>
-      <td>9.6148</td>
-      <td>10.3166</td>
-      <td>12.1833</td>
-      <td>10.8128</td>
-      <td>10.2940</td>
-      <td>10.3546</td>
-      <td>10.1513</td>
-      <td>9.9935</td>
-      <td>10.6634</td>
-      <td>10.6151</td>
-      <td>10.3034</td>
-      <td>11.0388</td>
-      <td>9.6084</td>
-      <td>10.1049</td>
-      <td>10.3442</td>
-      <td>10.0398</td>
-      <td>10.2584</td>
-      <td>10.6060</td>
-      <td>9.9462</td>
-      <td>10.6935</td>
-      <td>10.1466</td>
-      <td>10.9851</td>
-      <td>9.7722</td>
-      <td>10.2135</td>
-      <td>10.4614</td>
-      <td>10.0556</td>
-      <td>10.9664</td>
-      <td>10.8430</td>
-      <td>10.4458</td>
-      <td>10.4976</td>
-      <td>10.7279</td>
-      <td>10.0624</td>
-      <td>11.0496</td>
-      <td>11.2922</td>
-      <td>10.4160</td>
-      <td>10.8245</td>
-      <td>10.8518</td>
-      <td>11.4070</td>
-      <td>9.4562</td>
-      <td>10.7687</td>
-      <td>10.2546</td>
-      <td>10.4619</td>
-      <td>11.0633</td>
-      <td>10.1659</td>
-      <td>10.0678</td>
-      <td>10.2079</td>
-      <td>10.5422</td>
-      <td>11.4943</td>
-      <td>10.3799</td>
-      <td>9.8810</td>
-      <td>10.8335</td>
-      <td>10.4836</td>
-      <td>10.4381</td>
-      <td>11.1644</td>
-      <td>10.8843</td>
-      <td>10.8769</td>
-      <td>10.9079</td>
-      <td>9.8726</td>
-      <td>10.8641</td>
-      <td>10.8005</td>
-      <td>10.4343</td>
-      <td>10.3455</td>
-      <td>9.4051</td>
-      <td>10.9179</td>
-      <td>11.6558</td>
-      <td>10.2703</td>
-      <td>9.5834</td>
-      <td>11.0609</td>
-      <td>10.2996</td>
-      <td>10.9338</td>
-      <td>10.2698</td>
-      <td>10.3567</td>
-      <td>9.8932</td>
-      <td>10.7229</td>
-      <td>10.7633</td>
-      <td>11.0195</td>
-      <td>10.5073</td>
-      <td>10.5503</td>
-      <td>11.0739</td>
-      <td>10.1742</td>
-      <td>9.9137</td>
-      <td>10.9022</td>
-    </tr>
-    <tr>
-      <th>SCYL3</th>
-      <td>9.7884</td>
-      <td>9.7292</td>
-      <td>9.4449</td>
-      <td>9.2340</td>
-      <td>9.8186</td>
-      <td>9.0884</td>
-      <td>10.2428</td>
-      <td>10.1989</td>
-      <td>9.8516</td>
-      <td>9.7973</td>
-      <td>10.4597</td>
-      <td>9.5387</td>
-      <td>9.1616</td>
-      <td>9.6713</td>
-      <td>9.1914</td>
-      <td>9.1989</td>
-      <td>9.0392</td>
-      <td>9.7859</td>
-      <td>9.5704</td>
-      <td>9.3099</td>
-      <td>9.9071</td>
-      <td>10.2033</td>
-      <td>9.4620</td>
-      <td>8.8882</td>
-      <td>8.9993</td>
-      <td>9.2914</td>
-      <td>10.1648</td>
-      <td>9.6722</td>
-      <td>9.8902</td>
-      <td>9.5831</td>
-      <td>9.6185</td>
-      <td>9.3662</td>
-      <td>9.4164</td>
-      <td>9.3445</td>
-      <td>9.0884</td>
-      <td>9.9466</td>
-      <td>10.5563</td>
-      <td>9.5650</td>
-      <td>9.5591</td>
-      <td>9.8518</td>
-      <td>9.2797</td>
-      <td>9.9954</td>
-      <td>10.1827</td>
-      <td>9.6889</td>
-      <td>9.2378</td>
-      <td>10.1650</td>
-      <td>9.2111</td>
-      <td>8.3509</td>
-      <td>9.3441</td>
-      <td>9.2187</td>
-      <td>9.2483</td>
-      <td>9.7711</td>
-      <td>9.4156</td>
-      <td>10.4581</td>
-      <td>8.9691</td>
-      <td>9.2670</td>
-      <td>9.5723</td>
-      <td>10.6370</td>
-      <td>10.3945</td>
-      <td>10.0023</td>
-      <td>9.4692</td>
-      <td>9.3656</td>
-      <td>10.1750</td>
-      <td>10.6553</td>
-      <td>9.5655</td>
-      <td>9.6904</td>
-      <td>9.1352</td>
-      <td>10.5748</td>
-      <td>9.0598</td>
-      <td>9.3388</td>
-      <td>9.0138</td>
-      <td>10.1941</td>
-      <td>9.7808</td>
-      <td>9.2933</td>
-      <td>9.5845</td>
-      <td>10.2226</td>
-      <td>9.7462</td>
-      <td>9.5927</td>
-      <td>9.3558</td>
-      <td>9.2934</td>
-      <td>9.5384</td>
-      <td>9.4034</td>
-      <td>9.1338</td>
-      <td>9.0750</td>
-      <td>9.5706</td>
-      <td>8.9542</td>
-      <td>9.3475</td>
-      <td>9.1997</td>
-      <td>9.3012</td>
-      <td>10.0962</td>
-      <td>10.6254</td>
-      <td>9.6891</td>
-      <td>9.6099</td>
-      <td>9.7300</td>
-      <td>9.3831</td>
-      <td>8.8079</td>
-      <td>9.7910</td>
-      <td>8.8135</td>
-      <td>9.0254</td>
-      <td>9.3585</td>
-      <td>8.9728</td>
-      <td>9.6625</td>
-      <td>9.4022</td>
-      <td>9.1939</td>
-      <td>8.8231</td>
-      <td>10.0313</td>
-      <td>9.0316</td>
-      <td>8.7873</td>
-      <td>9.5787</td>
-      <td>9.4269</td>
-      <td>9.5178</td>
-      <td>10.0869</td>
-      <td>9.9300</td>
-      <td>9.7401</td>
-      <td>9.8480</td>
-      <td>9.3712</td>
-      <td>9.7986</td>
-      <td>9.4122</td>
-      <td>8.5703</td>
-      <td>9.3572</td>
-      <td>9.4105</td>
-      <td>9.8800</td>
-      <td>9.4892</td>
-      <td>9.5534</td>
-      <td>9.9758</td>
-      <td>9.7279</td>
-      <td>9.8356</td>
-      <td>9.5767</td>
-      <td>9.4541</td>
-      <td>10.2115</td>
-      <td>9.6805</td>
-      <td>8.8872</td>
-      <td>9.8853</td>
-      <td>9.4723</td>
-      <td>9.6099</td>
-      <td>9.4472</td>
-      <td>8.9678</td>
-      <td>9.5603</td>
-      <td>10.3938</td>
-      <td>10.0234</td>
-      <td>9.7362</td>
-      <td>9.9193</td>
-      <td>9.1959</td>
-      <td>8.6483</td>
-      <td>9.2934</td>
-      <td>9.9753</td>
-      <td>8.8689</td>
-      <td>10.2857</td>
-      <td>9.1127</td>
-      <td>10.0076</td>
-      <td>10.2159</td>
-      <td>8.6584</td>
-      <td>9.8026</td>
-      <td>9.4232</td>
-      <td>10.0368</td>
-      <td>9.4994</td>
-      <td>9.1809</td>
-      <td>9.6941</td>
-      <td>9.4753</td>
-      <td>9.7173</td>
-      <td>9.6417</td>
-      <td>9.9378</td>
-      <td>9.5271</td>
-      <td>9.2557</td>
-      <td>10.0794</td>
-      <td>9.6618</td>
-      <td>9.4519</td>
-      <td>9.9135</td>
-      <td>9.8384</td>
-      <td>9.5287</td>
-      <td>9.9231</td>
-      <td>9.5156</td>
-      <td>9.7516</td>
-      <td>9.2277</td>
-      <td>11.8243</td>
-      <td>9.4455</td>
-      <td>9.2924</td>
-      <td>9.3730</td>
-      <td>9.2214</td>
-      <td>9.6726</td>
-      <td>9.1222</td>
-      <td>9.8190</td>
-      <td>9.1053</td>
-      <td>9.3210</td>
-      <td>7.9588</td>
-      <td>9.3426</td>
-      <td>9.7862</td>
-      <td>9.6415</td>
-      <td>8.9893</td>
-      <td>9.3399</td>
-      <td>9.3363</td>
-      <td>10.2430</td>
-      <td>8.8740</td>
-      <td>9.4316</td>
-      <td>9.7870</td>
-      <td>9.2739</td>
-      <td>9.8320</td>
-      <td>9.0703</td>
-      <td>10.4094</td>
-      <td>9.2132</td>
-      <td>8.9828</td>
-      <td>9.2478</td>
-      <td>9.0566</td>
-      <td>9.0567</td>
-      <td>9.1049</td>
-      <td>10.0076</td>
-      <td>9.5664</td>
-      <td>9.2488</td>
-      <td>10.0838</td>
-      <td>9.7055</td>
-      <td>8.8724</td>
-      <td>9.1715</td>
-      <td>9.8818</td>
-      <td>9.5381</td>
-      <td>9.6877</td>
-      <td>9.9796</td>
-      <td>9.7347</td>
-      <td>9.7612</td>
-      <td>9.4238</td>
-      <td>9.0414</td>
-      <td>9.6469</td>
-      <td>10.0605</td>
-      <td>9.5776</td>
-      <td>9.2431</td>
-      <td>9.6940</td>
-      <td>9.5104</td>
-      <td>8.7772</td>
-      <td>9.6834</td>
-      <td>9.7049</td>
-      <td>9.5464</td>
-      <td>10.1800</td>
-      <td>10.1731</td>
-      <td>8.9434</td>
-      <td>10.1129</td>
-      <td>9.5120</td>
-      <td>9.9568</td>
-      <td>9.3915</td>
-      <td>9.6556</td>
-      <td>9.6057</td>
-      <td>9.2214</td>
-      <td>9.3705</td>
-      <td>9.4333</td>
-      <td>9.4012</td>
-      <td>9.7564</td>
-      <td>9.8985</td>
-      <td>9.3117</td>
-      <td>9.2219</td>
-      <td>9.1313</td>
-      <td>9.1250</td>
-      <td>9.3155</td>
-      <td>8.5723</td>
-      <td>8.9149</td>
-      <td>8.8896</td>
-      <td>10.1626</td>
-      <td>9.3895</td>
-      <td>10.0364</td>
-      <td>8.5380</td>
-      <td>9.5676</td>
-      <td>10.0258</td>
-      <td>9.3249</td>
-      <td>9.4584</td>
-      <td>9.4167</td>
-      <td>9.1765</td>
-      <td>9.3333</td>
-      <td>9.9249</td>
-      <td>10.2258</td>
-      <td>9.3517</td>
-      <td>9.3738</td>
-      <td>9.4879</td>
-      <td>9.8991</td>
-      <td>9.2620</td>
-      <td>10.0403</td>
-      <td>9.3082</td>
-      <td>8.6391</td>
-      <td>9.4582</td>
-      <td>9.2066</td>
-      <td>9.6627</td>
-      <td>8.9497</td>
-      <td>8.4621</td>
-      <td>8.9667</td>
-      <td>10.2945</td>
-      <td>9.5630</td>
-      <td>10.3852</td>
-      <td>9.7173</td>
-      <td>9.4638</td>
-      <td>8.7810</td>
-      <td>9.3086</td>
-      <td>9.1673</td>
-      <td>9.4087</td>
-      <td>9.7618</td>
-      <td>8.9834</td>
-      <td>9.8248</td>
-      <td>9.1231</td>
-      <td>9.4784</td>
-      <td>8.9424</td>
-      <td>10.0797</td>
-      <td>9.7576</td>
-      <td>10.4031</td>
-      <td>9.3747</td>
-      <td>9.6217</td>
-      <td>10.1896</td>
-      <td>9.4505</td>
-      <td>9.9546</td>
-      <td>9.1939</td>
-      <td>9.7137</td>
-      <td>9.3683</td>
-      <td>9.1750</td>
-      <td>9.1421</td>
-      <td>9.4496</td>
-      <td>9.7904</td>
-      <td>9.9654</td>
-      <td>9.4372</td>
-      <td>9.9617</td>
-      <td>9.2584</td>
-      <td>9.9010</td>
-      <td>9.5597</td>
-      <td>9.9597</td>
-      <td>9.9692</td>
-      <td>9.3522</td>
-      <td>9.7765</td>
-      <td>8.7170</td>
-      <td>9.6048</td>
-      <td>9.5941</td>
-      <td>9.7829</td>
-      <td>9.4945</td>
-      <td>9.8494</td>
-      <td>8.8990</td>
-      <td>9.6106</td>
-      <td>10.0654</td>
-      <td>9.4878</td>
-      <td>9.3299</td>
-      <td>8.8287</td>
-      <td>9.3280</td>
-      <td>9.8321</td>
-      <td>9.3744</td>
-      <td>9.2514</td>
-      <td>9.0631</td>
-      <td>9.2725</td>
-      <td>9.5093</td>
-      <td>9.1426</td>
-      <td>9.4783</td>
-      <td>9.1251</td>
-      <td>9.4141</td>
-      <td>8.7055</td>
-      <td>10.5948</td>
-      <td>9.4177</td>
-      <td>9.2547</td>
-      <td>9.1221</td>
-      <td>9.8962</td>
-      <td>9.6861</td>
-      <td>9.6418</td>
-      <td>9.2168</td>
-      <td>9.5201</td>
-      <td>10.1573</td>
-      <td>11.0186</td>
-      <td>9.9912</td>
-      <td>8.6901</td>
-      <td>9.4823</td>
-      <td>9.8922</td>
-      <td>9.7491</td>
-      <td>9.9393</td>
-      <td>8.9300</td>
-      <td>9.7732</td>
-      <td>9.4625</td>
-      <td>10.4722</td>
-      <td>9.2756</td>
-      <td>8.5539</td>
-      <td>9.4335</td>
-      <td>9.9991</td>
-      <td>9.6167</td>
-      <td>9.9887</td>
-      <td>9.3647</td>
-      <td>9.5085</td>
-      <td>10.1092</td>
-      <td>9.5667</td>
-      <td>9.4444</td>
-      <td>9.7623</td>
-      <td>10.0350</td>
-      <td>8.7668</td>
-      <td>9.2513</td>
-      <td>8.9995</td>
-      <td>9.6443</td>
-      <td>9.7327</td>
-      <td>9.2836</td>
-      <td>9.1662</td>
-      <td>9.4191</td>
-      <td>9.7447</td>
-      <td>9.1672</td>
-      <td>9.4019</td>
-      <td>9.4430</td>
-      <td>9.4113</td>
-      <td>9.4753</td>
-      <td>9.4045</td>
-      <td>9.4526</td>
-      <td>9.5222</td>
-      <td>10.1365</td>
-      <td>9.6688</td>
-      <td>9.3138</td>
-      <td>9.0650</td>
-      <td>9.9093</td>
-      <td>10.1098</td>
-      <td>9.0354</td>
-      <td>10.1722</td>
-      <td>9.8626</td>
-      <td>9.6334</td>
-      <td>9.4093</td>
-      <td>10.5626</td>
-      <td>9.3962</td>
-      <td>9.6598</td>
-      <td>8.8236</td>
-      <td>8.8226</td>
-      <td>9.9742</td>
-      <td>9.4260</td>
-      <td>9.4048</td>
-      <td>9.1882</td>
-      <td>9.2809</td>
-      <td>9.3073</td>
-      <td>10.7647</td>
-      <td>9.6210</td>
-      <td>9.8062</td>
-      <td>10.4229</td>
-      <td>10.1405</td>
-      <td>9.7423</td>
-      <td>9.3376</td>
-      <td>9.6765</td>
-      <td>9.5753</td>
-      <td>9.3374</td>
-      <td>9.5080</td>
-      <td>9.3468</td>
-      <td>9.6630</td>
-      <td>9.9180</td>
-      <td>9.6452</td>
-      <td>9.6021</td>
-      <td>9.1445</td>
-      <td>10.7054</td>
-      <td>10.3428</td>
-      <td>9.5334</td>
-      <td>8.8020</td>
-      <td>9.4802</td>
-      <td>9.6960</td>
-      <td>10.3752</td>
-      <td>10.3503</td>
-      <td>9.6493</td>
-      <td>9.6399</td>
-      <td>9.8303</td>
-      <td>9.2408</td>
-      <td>9.2355</td>
-      <td>9.4554</td>
-      <td>9.8303</td>
-      <td>9.4898</td>
-      <td>10.1210</td>
-      <td>9.4890</td>
-      <td>9.5164</td>
-      <td>9.9131</td>
-      <td>10.0144</td>
-      <td>9.3105</td>
-      <td>10.5826</td>
-      <td>8.8982</td>
-      <td>8.9016</td>
-      <td>9.7922</td>
-      <td>9.1497</td>
-      <td>9.8255</td>
-      <td>9.0385</td>
-      <td>9.5056</td>
-      <td>9.3626</td>
-      <td>10.0143</td>
-      <td>9.2308</td>
-      <td>9.8938</td>
-      <td>9.1274</td>
-      <td>8.7230</td>
-      <td>9.3022</td>
-      <td>9.4158</td>
-      <td>9.0778</td>
-      <td>9.3721</td>
-      <td>9.6511</td>
-      <td>9.2463</td>
-      <td>9.7447</td>
-      <td>9.0294</td>
-      <td>9.7439</td>
-      <td>9.6689</td>
-      <td>9.4864</td>
-      <td>9.4727</td>
-      <td>9.5110</td>
-      <td>8.8101</td>
-      <td>9.7125</td>
-      <td>8.7629</td>
-      <td>8.2262</td>
-      <td>9.4804</td>
-      <td>9.2713</td>
-      <td>9.7087</td>
-      <td>9.3311</td>
-      <td>9.7850</td>
-      <td>10.4121</td>
-      <td>9.0277</td>
-      <td>9.5578</td>
-      <td>9.6307</td>
-      <td>9.3312</td>
-      <td>9.3425</td>
-    </tr>
-    <tr>
-      <th>FIRRM</th>
-      <td>8.2552</td>
-      <td>7.9951</td>
-      <td>8.3546</td>
-      <td>7.7537</td>
-      <td>7.9844</td>
-      <td>8.7984</td>
-      <td>8.8721</td>
-      <td>8.3550</td>
-      <td>8.1877</td>
-      <td>9.2347</td>
-      <td>9.8346</td>
-      <td>7.8180</td>
-      <td>9.0867</td>
-      <td>7.4249</td>
-      <td>7.2293</td>
-      <td>9.1192</td>
-      <td>10.0768</td>
-      <td>9.4085</td>
-      <td>10.0984</td>
-      <td>7.4506</td>
-      <td>9.3028</td>
-      <td>8.9049</td>
-      <td>8.0116</td>
-      <td>8.5089</td>
-      <td>7.1778</td>
-      <td>7.2466</td>
-      <td>9.0061</td>
-      <td>8.9549</td>
-      <td>9.0305</td>
-      <td>8.8959</td>
-      <td>8.5437</td>
-      <td>7.0665</td>
-      <td>7.0667</td>
-      <td>9.0817</td>
-      <td>8.4102</td>
-      <td>9.6505</td>
-      <td>9.6165</td>
-      <td>8.0169</td>
-      <td>7.4297</td>
-      <td>9.2275</td>
-      <td>8.1630</td>
-      <td>8.6609</td>
-      <td>8.6540</td>
-      <td>8.5377</td>
-      <td>10.2647</td>
-      <td>9.1622</td>
-      <td>6.8973</td>
-      <td>7.7967</td>
-      <td>7.6247</td>
-      <td>9.1262</td>
-      <td>6.8227</td>
-      <td>9.6407</td>
-      <td>7.7675</td>
-      <td>8.8511</td>
-      <td>7.9248</td>
-      <td>7.1463</td>
-      <td>8.5977</td>
-      <td>8.7141</td>
-      <td>8.4354</td>
-      <td>9.3176</td>
-      <td>9.1287</td>
-      <td>7.7488</td>
-      <td>7.4630</td>
-      <td>9.1531</td>
-      <td>9.0223</td>
-      <td>8.8943</td>
-      <td>8.0016</td>
-      <td>8.9260</td>
-      <td>9.3683</td>
-      <td>7.3502</td>
-      <td>7.9927</td>
-      <td>7.5116</td>
-      <td>9.1125</td>
-      <td>8.6168</td>
-      <td>10.1938</td>
-      <td>8.4295</td>
-      <td>8.3625</td>
-      <td>8.2439</td>
-      <td>8.6173</td>
-      <td>8.4754</td>
-      <td>6.9050</td>
-      <td>7.3625</td>
-      <td>7.4183</td>
-      <td>8.6270</td>
-      <td>8.2785</td>
-      <td>8.6444</td>
-      <td>8.0100</td>
-      <td>8.3573</td>
-      <td>7.2562</td>
-      <td>8.2185</td>
-      <td>8.4154</td>
-      <td>9.1849</td>
-      <td>7.8837</td>
-      <td>8.2931</td>
-      <td>8.8700</td>
-      <td>8.8411</td>
-      <td>8.7850</td>
-      <td>7.2378</td>
-      <td>8.3485</td>
-      <td>7.1572</td>
-      <td>6.9420</td>
-      <td>9.2182</td>
-      <td>9.6594</td>
-      <td>7.7147</td>
-      <td>7.1512</td>
-      <td>7.6799</td>
-      <td>8.5778</td>
-      <td>7.9356</td>
-      <td>7.2182</td>
-      <td>7.3954</td>
-      <td>8.9182</td>
-      <td>8.2565</td>
-      <td>8.4605</td>
-      <td>9.2185</td>
-      <td>8.1700</td>
-      <td>8.8033</td>
-      <td>8.3172</td>
-      <td>9.7413</td>
-      <td>6.4640</td>
-      <td>8.4542</td>
-      <td>8.4359</td>
-      <td>8.2728</td>
-      <td>9.2869</td>
-      <td>9.2661</td>
-      <td>8.2354</td>
-      <td>8.4339</td>
-      <td>8.5297</td>
-      <td>8.7293</td>
-      <td>6.9337</td>
-      <td>8.1152</td>
-      <td>8.3272</td>
-      <td>8.0495</td>
-      <td>9.6303</td>
-      <td>8.3736</td>
-      <td>9.0144</td>
-      <td>9.8250</td>
-      <td>9.5564</td>
-      <td>8.4491</td>
-      <td>9.3827</td>
-      <td>9.7339</td>
-      <td>7.6906</td>
-      <td>8.7026</td>
-      <td>6.5987</td>
-      <td>8.8552</td>
-      <td>7.3927</td>
-      <td>8.3048</td>
-      <td>7.3380</td>
-      <td>7.7705</td>
-      <td>8.6787</td>
-      <td>7.9360</td>
-      <td>8.1440</td>
-      <td>8.2584</td>
-      <td>7.6809</td>
-      <td>6.7938</td>
-      <td>10.2544</td>
-      <td>8.6699</td>
-      <td>6.8795</td>
-      <td>7.6993</td>
-      <td>8.0260</td>
-      <td>7.6870</td>
-      <td>9.1015</td>
-      <td>7.9151</td>
-      <td>7.7997</td>
-      <td>8.4602</td>
-      <td>9.3955</td>
-      <td>9.3654</td>
-      <td>7.1228</td>
-      <td>10.1851</td>
-      <td>8.9583</td>
-      <td>8.6005</td>
-      <td>9.1412</td>
-      <td>8.2863</td>
-      <td>9.0798</td>
-      <td>9.8016</td>
-      <td>8.4744</td>
-      <td>7.2335</td>
-      <td>8.1654</td>
-      <td>9.1363</td>
-      <td>7.8797</td>
-      <td>8.3459</td>
-      <td>8.1668</td>
-      <td>8.8832</td>
-      <td>9.6468</td>
-      <td>9.1314</td>
-      <td>8.0587</td>
-      <td>8.6297</td>
-      <td>8.7160</td>
-      <td>7.9313</td>
-      <td>8.2261</td>
-      <td>8.4090</td>
-      <td>7.5129</td>
-      <td>8.0114</td>
-      <td>6.7926</td>
-      <td>7.5435</td>
-      <td>7.5338</td>
-      <td>8.4134</td>
-      <td>9.6792</td>
-      <td>9.4323</td>
-      <td>9.0489</td>
-      <td>8.3288</td>
-      <td>7.7048</td>
-      <td>8.5637</td>
-      <td>8.3277</td>
-      <td>8.5330</td>
-      <td>8.9807</td>
-      <td>8.9977</td>
-      <td>8.2473</td>
-      <td>9.6170</td>
-      <td>7.6683</td>
-      <td>7.3489</td>
-      <td>7.9927</td>
-      <td>7.1645</td>
-      <td>8.9068</td>
-      <td>8.3126</td>
-      <td>7.8546</td>
-      <td>7.8164</td>
-      <td>7.7755</td>
-      <td>9.0864</td>
-      <td>8.3691</td>
-      <td>7.6968</td>
-      <td>9.3912</td>
-      <td>9.6854</td>
-      <td>9.1414</td>
-      <td>8.3699</td>
-      <td>7.2528</td>
-      <td>7.3840</td>
-      <td>8.3109</td>
-      <td>7.9273</td>
-      <td>8.9461</td>
-      <td>9.0077</td>
-      <td>9.9350</td>
-      <td>8.1543</td>
-      <td>8.1164</td>
-      <td>8.5358</td>
-      <td>9.3662</td>
-      <td>8.7857</td>
-      <td>7.2239</td>
-      <td>8.3636</td>
-      <td>7.7923</td>
-      <td>8.2715</td>
-      <td>8.4018</td>
-      <td>8.0629</td>
-      <td>7.7019</td>
-      <td>8.0887</td>
-      <td>8.0258</td>
-      <td>7.4817</td>
-      <td>8.4937</td>
-      <td>8.3959</td>
-      <td>7.6639</td>
-      <td>8.4993</td>
-      <td>8.4815</td>
-      <td>7.8020</td>
-      <td>9.0679</td>
-      <td>9.0500</td>
-      <td>9.1413</td>
-      <td>8.1932</td>
-      <td>8.8357</td>
-      <td>8.7674</td>
-      <td>8.1115</td>
-      <td>7.1208</td>
-      <td>8.8311</td>
-      <td>8.8040</td>
-      <td>8.6506</td>
-      <td>7.1148</td>
-      <td>7.9377</td>
-      <td>8.2413</td>
-      <td>8.8884</td>
-      <td>7.3040</td>
-      <td>8.5518</td>
-      <td>8.7430</td>
-      <td>8.8249</td>
-      <td>7.8675</td>
-      <td>7.9440</td>
-      <td>8.9658</td>
-      <td>9.2448</td>
-      <td>6.9924</td>
-      <td>7.9411</td>
-      <td>7.4517</td>
-      <td>8.9327</td>
-      <td>7.2081</td>
-      <td>8.2532</td>
-      <td>8.2563</td>
-      <td>7.7443</td>
-      <td>8.7259</td>
-      <td>9.3832</td>
-      <td>8.8253</td>
-      <td>8.0031</td>
-      <td>8.2955</td>
-      <td>8.2765</td>
-      <td>7.8229</td>
-      <td>8.6316</td>
-      <td>8.5860</td>
-      <td>6.9472</td>
-      <td>8.3785</td>
-      <td>8.4556</td>
-      <td>9.1862</td>
-      <td>7.5927</td>
-      <td>8.6970</td>
-      <td>5.8352</td>
-      <td>7.6451</td>
-      <td>9.2664</td>
-      <td>8.0690</td>
-      <td>8.7478</td>
-      <td>7.4938</td>
-      <td>8.7066</td>
-      <td>9.4710</td>
-      <td>9.3642</td>
-      <td>7.7739</td>
-      <td>8.0841</td>
-      <td>8.1780</td>
-      <td>7.4742</td>
-      <td>8.6408</td>
-      <td>8.6898</td>
-      <td>7.7883</td>
-      <td>8.4558</td>
-      <td>9.1530</td>
-      <td>10.1528</td>
-      <td>8.5159</td>
-      <td>9.8086</td>
-      <td>9.7207</td>
-      <td>7.6168</td>
-      <td>8.8016</td>
-      <td>7.8785</td>
-      <td>8.5502</td>
-      <td>8.8609</td>
-      <td>8.8188</td>
-      <td>6.1655</td>
-      <td>8.1194</td>
-      <td>7.5525</td>
-      <td>8.4967</td>
-      <td>7.3293</td>
-      <td>8.9952</td>
-      <td>8.4818</td>
-      <td>9.1144</td>
-      <td>7.1372</td>
-      <td>8.1151</td>
-      <td>8.3783</td>
-      <td>7.9145</td>
-      <td>8.7581</td>
-      <td>8.7234</td>
-      <td>8.6154</td>
-      <td>8.4363</td>
-      <td>8.5036</td>
-      <td>6.9473</td>
-      <td>8.7350</td>
-      <td>9.5664</td>
-      <td>7.9311</td>
-      <td>7.4117</td>
-      <td>8.5619</td>
-      <td>7.7587</td>
-      <td>9.8614</td>
-      <td>9.5839</td>
-      <td>9.6539</td>
-      <td>8.6016</td>
-      <td>8.4839</td>
-      <td>8.4853</td>
-      <td>7.8965</td>
-      <td>8.7199</td>
-      <td>9.0767</td>
-      <td>7.6906</td>
-      <td>7.8826</td>
-      <td>8.7882</td>
-      <td>8.3477</td>
-      <td>8.9140</td>
-      <td>9.6005</td>
-      <td>8.8265</td>
-      <td>6.7687</td>
-      <td>8.6109</td>
-      <td>9.0711</td>
-      <td>8.1448</td>
-      <td>9.3025</td>
-      <td>9.5287</td>
-      <td>9.0400</td>
-      <td>9.1511</td>
-      <td>8.6888</td>
-      <td>7.5787</td>
-      <td>7.6862</td>
-      <td>9.4371</td>
-      <td>8.6166</td>
-      <td>8.6654</td>
-      <td>7.1258</td>
-      <td>8.8318</td>
-      <td>7.7291</td>
-      <td>7.0919</td>
-      <td>8.4898</td>
-      <td>8.6201</td>
-      <td>9.6507</td>
-      <td>8.3449</td>
-      <td>7.9233</td>
-      <td>7.3756</td>
-      <td>7.0956</td>
-      <td>8.0906</td>
-      <td>7.5837</td>
-      <td>9.4268</td>
-      <td>8.7405</td>
-      <td>8.4197</td>
-      <td>9.1549</td>
-      <td>8.5749</td>
-      <td>6.7188</td>
-      <td>7.2544</td>
-      <td>8.5006</td>
-      <td>8.2515</td>
-      <td>9.3439</td>
-      <td>7.7788</td>
-      <td>9.3662</td>
-      <td>7.7287</td>
-      <td>7.9233</td>
-      <td>9.7096</td>
-      <td>8.2986</td>
-      <td>8.7221</td>
-      <td>8.4881</td>
-      <td>9.5706</td>
-      <td>8.3269</td>
-      <td>9.1220</td>
-      <td>7.3841</td>
-      <td>7.6842</td>
-      <td>8.9006</td>
-      <td>8.1361</td>
-      <td>8.7213</td>
-      <td>8.9814</td>
-      <td>8.3672</td>
-      <td>7.7418</td>
-      <td>7.4675</td>
-      <td>8.0250</td>
-      <td>8.5535</td>
-      <td>8.8129</td>
-      <td>8.5775</td>
-      <td>9.0771</td>
-      <td>7.9622</td>
-      <td>7.5304</td>
-      <td>7.6512</td>
-      <td>8.9814</td>
-      <td>8.5059</td>
-      <td>9.0425</td>
-      <td>8.6382</td>
-      <td>7.6665</td>
-      <td>9.1114</td>
-      <td>8.6390</td>
-      <td>7.8171</td>
-      <td>8.0749</td>
-      <td>7.9138</td>
-      <td>7.9378</td>
-      <td>8.5424</td>
-      <td>8.6728</td>
-      <td>8.9180</td>
-      <td>8.5680</td>
-      <td>8.4723</td>
-      <td>8.2765</td>
-      <td>9.7289</td>
-      <td>7.1520</td>
-      <td>8.3952</td>
-      <td>9.6248</td>
-      <td>7.8581</td>
-      <td>9.5527</td>
-      <td>7.6923</td>
-      <td>9.2327</td>
-      <td>7.5736</td>
-      <td>8.4610</td>
-      <td>7.8178</td>
-      <td>7.9795</td>
-      <td>8.2111</td>
-      <td>8.0822</td>
-      <td>7.2275</td>
-      <td>9.7294</td>
-      <td>8.3773</td>
-      <td>7.8637</td>
-      <td>8.7273</td>
-      <td>7.0051</td>
-      <td>8.8181</td>
-      <td>8.4091</td>
-      <td>9.6044</td>
-      <td>9.5028</td>
-      <td>7.9725</td>
-      <td>7.9351</td>
-      <td>8.9627</td>
-      <td>9.6060</td>
-      <td>9.2114</td>
-      <td>8.3101</td>
-      <td>8.3419</td>
-      <td>10.1380</td>
-      <td>9.0545</td>
-      <td>8.7019</td>
-      <td>7.3637</td>
-      <td>9.0045</td>
-      <td>7.8968</td>
-      <td>8.2508</td>
-      <td>8.2384</td>
-      <td>8.0894</td>
-      <td>8.1065</td>
-      <td>8.5633</td>
-      <td>7.7298</td>
-      <td>9.3048</td>
-      <td>10.0026</td>
-      <td>8.2811</td>
-      <td>8.7883</td>
-      <td>8.0179</td>
-      <td>7.8703</td>
-      <td>8.8147</td>
-    </tr>
-    <tr>
-      <th>FGR</th>
-      <td>10.6173</td>
-      <td>8.4858</td>
-      <td>7.3211</td>
-      <td>11.0656</td>
-      <td>10.5213</td>
-      <td>9.3386</td>
-      <td>9.3440</td>
-      <td>8.7403</td>
-      <td>10.6243</td>
-      <td>9.8945</td>
-      <td>10.1067</td>
-      <td>8.2663</td>
-      <td>10.5393</td>
-      <td>9.3087</td>
-      <td>11.7055</td>
-      <td>10.1633</td>
-      <td>9.9218</td>
-      <td>10.7935</td>
-      <td>8.6680</td>
-      <td>9.3646</td>
-      <td>8.4917</td>
-      <td>8.3683</td>
-      <td>10.5502</td>
-      <td>10.4143</td>
-      <td>13.7653</td>
-      <td>9.8602</td>
-      <td>8.9363</td>
-      <td>9.0198</td>
-      <td>9.2149</td>
-      <td>9.1690</td>
-      <td>9.9654</td>
-      <td>10.4230</td>
-      <td>11.6101</td>
-      <td>10.4511</td>
-      <td>9.6184</td>
-      <td>9.9466</td>
-      <td>10.1096</td>
-      <td>10.0554</td>
-      <td>12.5322</td>
-      <td>9.0607</td>
-      <td>11.0522</td>
-      <td>10.5198</td>
-      <td>8.5024</td>
-      <td>11.5016</td>
-      <td>10.8670</td>
-      <td>8.8416</td>
-      <td>12.2780</td>
-      <td>8.8244</td>
-      <td>11.6315</td>
-      <td>9.7211</td>
-      <td>11.8538</td>
-      <td>8.3346</td>
-      <td>8.5788</td>
-      <td>9.9279</td>
-      <td>12.0813</td>
-      <td>12.3180</td>
-      <td>9.6880</td>
-      <td>8.6507</td>
-      <td>10.0116</td>
-      <td>9.9325</td>
-      <td>9.8269</td>
-      <td>10.7108</td>
-      <td>9.0030</td>
-      <td>7.6588</td>
-      <td>10.6705</td>
-      <td>7.2463</td>
-      <td>10.0586</td>
-      <td>8.2823</td>
-      <td>9.8099</td>
-      <td>11.0707</td>
-      <td>10.4863</td>
-      <td>8.3067</td>
-      <td>9.7500</td>
-      <td>10.6279</td>
-      <td>9.5733</td>
-      <td>10.6769</td>
-      <td>9.8680</td>
-      <td>10.4574</td>
-      <td>8.1190</td>
-      <td>8.9752</td>
-      <td>11.6027</td>
-      <td>12.6021</td>
-      <td>9.4494</td>
-      <td>10.2858</td>
-      <td>8.6901</td>
-      <td>9.5814</td>
-      <td>9.9495</td>
-      <td>9.8711</td>
-      <td>11.3526</td>
-      <td>11.0880</td>
-      <td>7.6519</td>
-      <td>9.8892</td>
-      <td>10.6668</td>
-      <td>8.6482</td>
-      <td>9.6278</td>
-      <td>9.3992</td>
-      <td>8.9880</td>
-      <td>11.3194</td>
-      <td>10.8624</td>
-      <td>10.9816</td>
-      <td>11.6053</td>
-      <td>10.5979</td>
-      <td>7.9816</td>
-      <td>10.6734</td>
-      <td>10.0487</td>
-      <td>11.1478</td>
-      <td>8.7977</td>
-      <td>10.6032</td>
-      <td>9.0852</td>
-      <td>9.8649</td>
-      <td>10.7973</td>
-      <td>11.6060</td>
-      <td>8.7619</td>
-      <td>10.3262</td>
-      <td>8.5420</td>
-      <td>9.4730</td>
-      <td>9.5663</td>
-      <td>10.6520</td>
-      <td>12.2258</td>
-      <td>9.6665</td>
-      <td>9.4678</td>
-      <td>10.2449</td>
-      <td>9.3221</td>
-      <td>8.5334</td>
-      <td>9.9490</td>
-      <td>8.9464</td>
-      <td>10.0200</td>
-      <td>8.6182</td>
-      <td>12.3758</td>
-      <td>9.1607</td>
-      <td>10.6504</td>
-      <td>10.8448</td>
-      <td>8.2533</td>
-      <td>9.1937</td>
-      <td>10.5314</td>
-      <td>8.0932</td>
-      <td>9.0344</td>
-      <td>10.3383</td>
-      <td>11.5452</td>
-      <td>9.3794</td>
-      <td>7.9106</td>
-      <td>9.2890</td>
-      <td>11.5038</td>
-      <td>10.5689</td>
-      <td>11.5897</td>
-      <td>9.9777</td>
-      <td>12.7109</td>
-      <td>9.8607</td>
-      <td>10.6532</td>
-      <td>10.3516</td>
-      <td>9.3908</td>
-      <td>9.6290</td>
-      <td>9.9126</td>
-      <td>12.3441</td>
-      <td>9.3238</td>
-      <td>9.7591</td>
-      <td>11.6668</td>
-      <td>7.4797</td>
-      <td>10.3716</td>
-      <td>9.5435</td>
-      <td>9.3356</td>
-      <td>9.5930</td>
-      <td>10.9491</td>
-      <td>8.8594</td>
-      <td>10.3561</td>
-      <td>9.6110</td>
-      <td>10.3872</td>
-      <td>9.7308</td>
-      <td>11.2202</td>
-      <td>10.9032</td>
-      <td>8.9799</td>
-      <td>8.3602</td>
-      <td>9.2764</td>
-      <td>8.4090</td>
-      <td>8.3675</td>
-      <td>10.6002</td>
-      <td>10.9577</td>
-      <td>9.2030</td>
-      <td>10.3880</td>
-      <td>9.4056</td>
-      <td>8.3870</td>
-      <td>9.6441</td>
-      <td>9.7136</td>
-      <td>10.5115</td>
-      <td>9.5767</td>
-      <td>9.7196</td>
-      <td>9.4578</td>
-      <td>10.1899</td>
-      <td>9.4236</td>
-      <td>9.9364</td>
-      <td>8.9602</td>
-      <td>7.7962</td>
-      <td>12.3873</td>
-      <td>11.9105</td>
-      <td>8.7270</td>
-      <td>9.9545</td>
-      <td>9.8101</td>
-      <td>8.9173</td>
-      <td>10.3324</td>
-      <td>12.3838</td>
-      <td>9.6721</td>
-      <td>9.5631</td>
-      <td>9.7512</td>
-      <td>8.7838</td>
-      <td>10.0118</td>
-      <td>10.7761</td>
-      <td>9.7616</td>
-      <td>9.7293</td>
-      <td>9.5544</td>
-      <td>9.9237</td>
-      <td>9.0296</td>
-      <td>10.8014</td>
-      <td>10.3112</td>
-      <td>8.6518</td>
-      <td>10.3076</td>
-      <td>10.6595</td>
-      <td>11.3323</td>
-      <td>9.8601</td>
-      <td>9.7748</td>
-      <td>9.4944</td>
-      <td>7.5205</td>
-      <td>8.9309</td>
-      <td>9.4078</td>
-      <td>9.6848</td>
-      <td>11.1939</td>
-      <td>11.7875</td>
-      <td>10.2860</td>
-      <td>9.8802</td>
-      <td>9.7145</td>
-      <td>9.9715</td>
-      <td>9.3146</td>
-      <td>9.1964</td>
-      <td>9.8973</td>
-      <td>10.0729</td>
-      <td>8.3242</td>
-      <td>10.7904</td>
-      <td>9.7788</td>
-      <td>8.8759</td>
-      <td>9.5566</td>
-      <td>9.6591</td>
-      <td>9.9914</td>
-      <td>10.9376</td>
-      <td>10.5745</td>
-      <td>9.0358</td>
-      <td>8.9110</td>
-      <td>11.7532</td>
-      <td>8.7806</td>
-      <td>10.1075</td>
-      <td>9.3523</td>
-      <td>10.6877</td>
-      <td>9.4762</td>
-      <td>9.5429</td>
-      <td>10.0884</td>
-      <td>8.0550</td>
-      <td>8.0269</td>
-      <td>7.6216</td>
-      <td>10.2748</td>
-      <td>8.8910</td>
-      <td>9.2807</td>
-      <td>12.6989</td>
-      <td>8.5133</td>
-      <td>9.2839</td>
-      <td>11.4400</td>
-      <td>10.9657</td>
-      <td>8.1342</td>
-      <td>10.1091</td>
-      <td>8.2446</td>
-      <td>11.4480</td>
-      <td>11.8178</td>
-      <td>9.6027</td>
-      <td>9.3934</td>
-      <td>9.5944</td>
-      <td>9.3491</td>
-      <td>8.3665</td>
-      <td>8.7138</td>
-      <td>10.0874</td>
-      <td>7.3313</td>
-      <td>11.4358</td>
-      <td>10.6241</td>
-      <td>9.8658</td>
-      <td>10.1871</td>
-      <td>10.5421</td>
-      <td>7.4162</td>
-      <td>10.8045</td>
-      <td>10.7947</td>
-      <td>10.0003</td>
-      <td>9.5008</td>
-      <td>10.2772</td>
-      <td>9.7556</td>
-      <td>9.2886</td>
-      <td>10.2222</td>
-      <td>9.3398</td>
-      <td>11.4583</td>
-      <td>9.4793</td>
-      <td>11.1001</td>
-      <td>9.5743</td>
-      <td>9.4919</td>
-      <td>8.2160</td>
-      <td>9.1174</td>
-      <td>9.3648</td>
-      <td>9.3430</td>
-      <td>10.2621</td>
-      <td>8.1118</td>
-      <td>9.7819</td>
-      <td>10.5958</td>
-      <td>9.1164</td>
-      <td>9.0904</td>
-      <td>11.5633</td>
-      <td>8.7876</td>
-      <td>9.4450</td>
-      <td>9.5219</td>
-      <td>9.4730</td>
-      <td>9.6956</td>
-      <td>10.5655</td>
-      <td>9.3805</td>
-      <td>11.0442</td>
-      <td>8.2006</td>
-      <td>8.7170</td>
-      <td>9.3075</td>
-      <td>8.8891</td>
-      <td>10.7038</td>
-      <td>10.1909</td>
-      <td>10.0962</td>
-      <td>9.5766</td>
-      <td>9.6280</td>
-      <td>10.2669</td>
-      <td>12.1436</td>
-      <td>10.2015</td>
-      <td>10.4543</td>
-      <td>10.6049</td>
-      <td>12.8714</td>
-      <td>9.2953</td>
-      <td>9.3366</td>
-      <td>10.4120</td>
-      <td>13.2448</td>
-      <td>11.4904</td>
-      <td>10.0490</td>
-      <td>9.7272</td>
-      <td>10.4148</td>
-      <td>9.0093</td>
-      <td>9.4597</td>
-      <td>11.0705</td>
-      <td>10.3704</td>
-      <td>10.0069</td>
-      <td>8.9187</td>
-      <td>8.5024</td>
-      <td>11.1808</td>
-      <td>10.2892</td>
-      <td>10.0072</td>
-      <td>10.2733</td>
-      <td>10.1902</td>
-      <td>10.1827</td>
-      <td>8.2901</td>
-      <td>10.3673</td>
-      <td>11.2238</td>
-      <td>9.7679</td>
-      <td>11.1662</td>
-      <td>10.1624</td>
-      <td>10.4986</td>
-      <td>9.4949</td>
-      <td>9.8046</td>
-      <td>10.5421</td>
-      <td>8.6035</td>
-      <td>10.0874</td>
-      <td>8.8794</td>
-      <td>9.3127</td>
-      <td>12.1308</td>
-      <td>8.7331</td>
-      <td>9.3541</td>
-      <td>9.8539</td>
-      <td>9.6341</td>
-      <td>9.2426</td>
-      <td>9.6600</td>
-      <td>9.0266</td>
-      <td>7.6209</td>
-      <td>7.7846</td>
-      <td>11.4869</td>
-      <td>9.6619</td>
-      <td>11.0722</td>
-      <td>11.3274</td>
-      <td>11.8255</td>
-      <td>11.0363</td>
-      <td>9.7664</td>
-      <td>10.6127</td>
-      <td>9.8380</td>
-      <td>9.8804</td>
-      <td>9.4436</td>
-      <td>10.2768</td>
-      <td>12.4871</td>
-      <td>12.3841</td>
-      <td>11.3146</td>
-      <td>9.2367</td>
-      <td>12.1103</td>
-      <td>9.2876</td>
-      <td>10.3038</td>
-      <td>10.1554</td>
-      <td>10.1882</td>
-      <td>9.1459</td>
-      <td>11.8745</td>
-      <td>13.0418</td>
-      <td>10.0448</td>
-      <td>10.4839</td>
-      <td>9.4837</td>
-      <td>9.6713</td>
-      <td>10.2333</td>
-      <td>10.7622</td>
-      <td>9.1548</td>
-      <td>8.0891</td>
-      <td>8.7510</td>
-      <td>10.8129</td>
-      <td>9.4356</td>
-      <td>10.0938</td>
-      <td>9.8184</td>
-      <td>9.2556</td>
-      <td>10.0784</td>
-      <td>9.5976</td>
-      <td>11.5936</td>
-      <td>9.9069</td>
-      <td>10.2541</td>
-      <td>8.7086</td>
-      <td>7.8255</td>
-      <td>11.3981</td>
-      <td>9.5923</td>
-      <td>9.6872</td>
-      <td>9.5713</td>
-      <td>8.1365</td>
-      <td>10.1498</td>
-      <td>7.9491</td>
-      <td>10.4613</td>
-      <td>8.3216</td>
-      <td>9.9512</td>
-      <td>10.6102</td>
-      <td>10.5580</td>
-      <td>10.5036</td>
-      <td>8.2208</td>
-      <td>8.9027</td>
-      <td>8.7322</td>
-      <td>11.0152</td>
-      <td>9.7544</td>
-      <td>9.0746</td>
-      <td>8.9877</td>
-      <td>9.9202</td>
-      <td>8.5830</td>
-      <td>10.6752</td>
-      <td>8.9076</td>
-      <td>10.7197</td>
-      <td>10.5941</td>
-      <td>8.6956</td>
-      <td>6.9987</td>
-      <td>9.4047</td>
-      <td>9.6932</td>
-      <td>9.7027</td>
-      <td>9.7226</td>
-      <td>10.1130</td>
-      <td>10.0054</td>
-      <td>11.5320</td>
-      <td>8.2472</td>
-      <td>11.6150</td>
-      <td>9.4476</td>
-      <td>8.2822</td>
-      <td>9.3303</td>
-      <td>10.4898</td>
-      <td>10.7294</td>
-      <td>10.2548</td>
-      <td>10.8896</td>
-      <td>9.7065</td>
-      <td>9.3320</td>
-      <td>9.9604</td>
-      <td>10.3624</td>
-      <td>11.3919</td>
-      <td>9.2426</td>
-      <td>10.1716</td>
-      <td>11.0515</td>
-      <td>9.8812</td>
-      <td>9.2150</td>
-      <td>9.3057</td>
-      <td>10.0473</td>
-      <td>10.6724</td>
-      <td>7.2922</td>
-      <td>9.7134</td>
-      <td>9.0199</td>
-      <td>9.8077</td>
-      <td>9.4394</td>
-      <td>9.4059</td>
-      <td>9.3254</td>
-      <td>10.4796</td>
-      <td>9.4242</td>
-      <td>8.0340</td>
-      <td>10.4030</td>
-      <td>10.2213</td>
-      <td>10.3702</td>
-      <td>8.7169</td>
-      <td>8.1769</td>
-      <td>9.9471</td>
-      <td>8.9532</td>
-      <td>10.6328</td>
-      <td>11.3029</td>
-      <td>9.6115</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tcqa_gxp_meta</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">node_attributes</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>patient</th>
-      <th>race</th>
-      <th>gender</th>
-      <th>sample_type</th>
-      <th>cigarettes_per_day</th>
-      <th>Smoked</th>
-      <th>sizeFactor</th>
-      <th>replaceable</th>
-    </tr>
-    <tr>
-      <th>_row</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>TCGA-38-7271</th>
-      <td>TCGA-38-7271</td>
-      <td>white</td>
-      <td>female</td>
-      <td>Primary Tumor</td>
-      <td>1.3699</td>
-      <td>Smoker</td>
-      <td>0.5841</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>TCGA-55-7914</th>
-      <td>TCGA-55-7914</td>
-      <td>white</td>
-      <td>female</td>
-      <td>Primary Tumor</td>
-      <td>0.274</td>
-      <td>Smoker</td>
-      <td>0.9873</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>TCGA-95-7043</th>
-      <td>TCGA-95-7043</td>
-      <td>white</td>
-      <td>female</td>
-      <td>Primary Tumor</td>
-      <td>2.1918</td>
-      <td>Smoker</td>
-      <td>0.5439</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>TCGA-73-4658</th>
-      <td>TCGA-73-4658</td>
-      <td>white</td>
-      <td>female</td>
-      <td>Primary Tumor</td>
-      <td>1.3699</td>
-      <td>Smoker</td>
-      <td>0.7715</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>TCGA-86-8076</th>
-      <td>TCGA-86-8076</td>
-      <td>white</td>
-      <td>male</td>
-      <td>Primary Tumor</td>
-      <td>0</td>
-      <td>Never</td>
-      <td>1.313</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;cancer_gene&#39;: {&#39;A2M&#39;: False,
+  &#39;ABI3BP&#39;: False,
+  &#39;ACAP1&#39;: False,
+  &#39;ACP5&#39;: False,
+  &#39;ACTA2&#39;: False,
+  &#39;ACTG2&#39;: False,
+  &#39;ACVRL1&#39;: False,
+  &#39;ADAM12&#39;: False,
+  &#39;ADAMTS12&#39;: False,
+  &#39;ADAMTS2&#39;: False,
+  &#39;ADGRA2&#39;: False,
+  &#39;ADH1B&#39;: False,
+  &#39;AEBP1&#39;: False,
+  &#39;AIF1&#39;: False,
+  &#39;ALOX5&#39;: False,
+  &#39;ALOX5AP&#39;: False,
+  &#39;ANGPTL2&#39;: False,
+  &#39;ANTXR1&#39;: False,
+  &#39;AOC3&#39;: False,
+  &#39;APBB1IP&#39;: False,
+  &#39;APOC1&#39;: False,
+  &#39;APOL3&#39;: False,
+  &#39;ARHGAP30&#39;: False,
+  &#39;ARHGAP9&#39;: False,
+  &#39;ARHGEF6&#39;: False,
+  &#39;BCL6B&#39;: False,
+  &#39;BGN&#39;: False,
+  &#39;BIN2&#39;: False,
+  &#39;BTK&#39;: True,
+  &#39;C1QA&#39;: False,
+  &#39;C1QB&#39;: False,
+  &#39;C1QC&#39;: False,
+  &#39;C1orf162&#39;: False,
+  &#39;C3AR1&#39;: False,
+  &#39;C5AR1&#39;: False,
+  &#39;C7&#39;: False,
+  &#39;CALCRL&#39;: False,
+  &#39;CASP1&#39;: False,
+  &#39;CCDC80&#39;: False,
+  &#39;CCL5&#39;: False,
+  &#39;CCN4&#39;: False,
+  &#39;CCR1&#39;: False,
+  &#39;CCR5&#39;: False,
+  &#39;CD14&#39;: False,
+  &#39;CD163&#39;: False,
+  &#39;CD2&#39;: False,
+  &#39;CD300A&#39;: False,
+  &#39;CD34&#39;: False,
+  &#39;CD37&#39;: False,
+  &#39;CD3E&#39;: False,
+  &#39;CD4&#39;: False,
+  &#39;CD52&#39;: False,
+  &#39;CD53&#39;: False,
+  &#39;CD6&#39;: False,
+  &#39;CD74&#39;: True,
+  &#39;CD84&#39;: False,
+  &#39;CD86&#39;: False,
+  &#39;CD8A&#39;: False,
+  &#39;CD93&#39;: False,
+  &#39;CDH5&#39;: False,
+  &#39;CHRDL1&#39;: False,
+  &#39;CLEC14A&#39;: False,
+  &#39;CMKLR1&#39;: False,
+  &#39;COL10A1&#39;: False,
+  &#39;COL11A1&#39;: False,
+  &#39;COL15A1&#39;: False,
+  &#39;COL1A1&#39;: True,
+  &#39;COL1A2&#39;: False,
+  &#39;COL3A1&#39;: True,
+  &#39;COL4A1&#39;: False,
+  &#39;COL4A2&#39;: False,
+  &#39;COL5A1&#39;: False,
+  &#39;COL5A2&#39;: False,
+  &#39;COL6A3&#39;: False,
+  &#39;CORO1A&#39;: False,
+  &#39;CSF1R&#39;: True,
+  &#39;CSF2RB&#39;: False,
+  &#39;CTHRC1&#39;: False,
+  &#39;CXCL10&#39;: False,
+  &#39;CXCL9&#39;: False,
+  &#39;CYBB&#39;: False,
+  &#39;CYTH4&#39;: False,
+  &#39;CYTIP&#39;: False,
+  &#39;CYYR1&#39;: False,
+  &#39;DAB2&#39;: False,
+  &#39;DCHS1&#39;: False,
+  &#39;DCN&#39;: False,
+  &#39;DIPK2B&#39;: False,
+  &#39;DOCK2&#39;: False,
+  &#39;DOCK8&#39;: False,
+  &#39;DOK2&#39;: False,
+  &#39;DOK3&#39;: False,
+  &#39;EDNRB&#39;: False,
+  &#39;EMILIN1&#39;: False,
+  &#39;EMILIN2&#39;: False,
+  &#39;EPB41L2&#39;: False,
+  &#39;ERG&#39;: True,
+  &#39;EVI2B&#39;: False,
+  &#39;F13A1&#39;: False,
+  &#39;FAM78A&#39;: False,
+  &#39;FAP&#39;: False,
+  &#39;FBN1&#39;: False,
+  &#39;FCER1G&#39;: False,
+  &#39;FCGR2A&#39;: False,
+  &#39;FCGR3A&#39;: False,
+  &#39;FERMT3&#39;: False,
+  &#39;FGD2&#39;: False,
+  &#39;FGD5&#39;: False,
+  &#39;FGL2&#39;: False,
+  &#39;FGR&#39;: False,
+  &#39;FHL1&#39;: False,
+  &#39;FLI1&#39;: True,
+  &#39;FLT4&#39;: True,
+  &#39;FMO2&#39;: False,
+  &#39;FNDC1&#39;: False,
+  &#39;FOLR2&#39;: False,
+  &#39;FPR1&#39;: False,
+  &#39;FPR3&#39;: False,
+  &#39;FSTL1&#39;: False,
+  &#39;FYB1&#39;: False,
+  &#39;GAS7&#39;: True,
+  &#39;GBP1&#39;: False,
+  &#39;GBP4&#39;: False,
+  &#39;GBP5&#39;: False,
+  &#39;GIMAP4&#39;: False,
+  &#39;GIMAP6&#39;: False,
+  &#39;GIMAP7&#39;: False,
+  &#39;GIMAP8&#39;: False,
+  &#39;GLIPR2&#39;: False,
+  &#39;GMFG&#39;: False,
+  &#39;GREM1&#39;: False,
+  &#39;GYPC&#39;: False,
+  &#39;HAVCR2&#39;: False,
+  &#39;HCK&#39;: False,
+  &#39;HCP5&#39;: False,
+  &#39;HEG1&#39;: False,
+  &#39;HK3&#39;: False,
+  &#39;HLA-A&#39;: True,
+  &#39;HLA-B&#39;: False,
+  &#39;HLA-C&#39;: False,
+  &#39;HLA-DMA&#39;: False,
+  &#39;HLA-DMB&#39;: False,
+  &#39;HLA-DOA&#39;: False,
+  &#39;HLA-DPA1&#39;: False,
+  &#39;HLA-DPB1&#39;: False,
+  &#39;HLA-DQA1&#39;: False,
+  &#39;HLA-DQB1&#39;: False,
+  &#39;HLA-DRA&#39;: False,
+  &#39;HLA-DRB1&#39;: False,
+  &#39;HLA-DRB5&#39;: False,
+  &#39;HLA-F&#39;: False,
+  &#39;HTRA3&#39;: False,
+  &#39;IGSF6&#39;: False,
+  &#39;IKZF1&#39;: True,
+  &#39;IL10RA&#39;: False,
+  &#39;IL16&#39;: False,
+  &#39;IL2RB&#39;: False,
+  &#39;IL2RG&#39;: False,
+  &#39;IL33&#39;: False,
+  &#39;IL7R&#39;: True,
+  &#39;INMT&#39;: False,
+  &#39;IRAG1&#39;: False,
+  &#39;IRF8&#39;: False,
+  &#39;ISLR&#39;: False,
+  &#39;ITGA11&#39;: False,
+  &#39;ITGA4&#39;: False,
+  &#39;ITGA8&#39;: False,
+  &#39;ITGAL&#39;: False,
+  &#39;ITGAM&#39;: False,
+  &#39;ITGAX&#39;: False,
+  &#39;ITGB2&#39;: False,
+  &#39;JAML&#39;: False,
+  &#39;KCNAB2&#39;: False,
+  &#39;KLHL6&#39;: False,
+  &#39;LAIR1&#39;: False,
+  &#39;LAMA2&#39;: False,
+  &#39;LAMA4&#39;: False,
+  &#39;LAPTM5&#39;: False,
+  &#39;LCK&#39;: True,
+  &#39;LCP1&#39;: True,
+  &#39;LCP2&#39;: False,
+  &#39;LDB2&#39;: False,
+  &#39;LHFPL6&#39;: True,
+  &#39;LILRB2&#39;: False,
+  &#39;LILRB4&#39;: False,
+  &#39;LIPA&#39;: False,
+  &#39;LMCD1&#39;: False,
+  &#39;LMOD1&#39;: False,
+  &#39;LRRC15&#39;: False,
+  &#39;LRRC32&#39;: False,
+  &#39;LSP1&#39;: False,
+  &#39;LST1&#39;: False,
+  &#39;LTBP2&#39;: False,
+  &#39;LUM&#39;: False,
+  &#39;MARCO&#39;: False,
+  &#39;MFAP4&#39;: False,
+  &#39;MMP11&#39;: False,
+  &#39;MMP2&#39;: False,
+  &#39;MMRN2&#39;: False,
+  &#39;MNDA&#39;: False,
+  &#39;MPEG1&#39;: False,
+  &#39;MRC1&#39;: False,
+  &#39;MS4A4A&#39;: False,
+  &#39;MS4A6A&#39;: False,
+  &#39;MS4A7&#39;: False,
+  &#39;MSR1&#39;: False,
+  &#39;MSRB3&#39;: False,
+  &#39;MXRA5&#39;: False,
+  &#39;MYH11&#39;: True,
+  &#39;MYLK&#39;: False,
+  &#39;MYO1F&#39;: False,
+  &#39;NCF2&#39;: False,
+  &#39;NCF4&#39;: False,
+  &#39;NCKAP1L&#39;: False,
+  &#39;NFAM1&#39;: False,
+  &#39;NOTCH4&#39;: False,
+  &#39;OLFML2B&#39;: False,
+  &#39;PARVG&#39;: False,
+  &#39;PCDH12&#39;: False,
+  &#39;PCDH17&#39;: False,
+  &#39;PDGFRA&#39;: True,
+  &#39;PDGFRB&#39;: True,
+  &#39;PECAM1&#39;: False,
+  &#39;PIK3AP1&#39;: False,
+  &#39;PIK3CG&#39;: False,
+  &#39;PIK3R5&#39;: False,
+  &#39;PLEK&#39;: False,
+  &#39;PLXDC2&#39;: False,
+  &#39;PLXNC1&#39;: False,
+  &#39;PODN&#39;: False,
+  &#39;POSTN&#39;: False,
+  &#39;PPP1R16B&#39;: False,
+  &#39;PRELP&#39;: False,
+  &#39;PREX1&#39;: False,
+  &#39;PRKCB&#39;: True,
+  &#39;PRRX1&#39;: True,
+  &#39;PSMB9&#39;: False,
+  &#39;PTAFR&#39;: False,
+  &#39;PTGER4&#39;: False,
+  &#39;PTPN7&#39;: False,
+  &#39;PTPRB&#39;: True,
+  &#39;PTPRC&#39;: True,
+  &#39;RAMP2&#39;: False,
+  &#39;RAMP3&#39;: False,
+  &#39;RASAL3&#39;: False,
+  &#39;RASSF2&#39;: False,
+  &#39;RCSD1&#39;: False,
+  &#39;RNASE6&#39;: False,
+  &#39;ROBO4&#39;: False,
+  &#39;S1PR1&#39;: False,
+  &#39;SAMHD1&#39;: False,
+  &#39;SAMSN1&#39;: False,
+  &#39;SASH3&#39;: False,
+  &#39;SCN7A&#39;: False,
+  &#39;SELPLG&#39;: False,
+  &#39;SH2D3C&#39;: False,
+  &#39;SHANK3&#39;: False,
+  &#39;SIGLEC1&#39;: False,
+  &#39;SIRPA&#39;: True,
+  &#39;SLA&#39;: False,
+  &#39;SLC15A3&#39;: False,
+  &#39;SLC1A3&#39;: False,
+  &#39;SLC7A7&#39;: False,
+  &#39;SLCO2B1&#39;: False,
+  &#39;SLIT2&#39;: False,
+  &#39;SLIT3&#39;: False,
+  &#39;SPARC&#39;: False,
+  &#39;SPARCL1&#39;: False,
+  &#39;SPI1&#39;: False,
+  &#39;SPN&#39;: False,
+  &#39;SPON1&#39;: False,
+  &#39;SSC5D&#39;: False,
+  &#39;STARD8&#39;: False,
+  &#39;STAT1&#39;: False,
+  &#39;SULF1&#39;: False,
+  &#39;SVEP1&#39;: False,
+  &#39;SYNPO2&#39;: False,
+  &#39;TAGLN&#39;: False,
+  &#39;TAP1&#39;: False,
+  &#39;TBC1D10C&#39;: False,
+  &#39;TCF4&#39;: False,
+  &#39;THBS2&#39;: False,
+  &#39;THY1&#39;: False,
+  &#39;TIE1&#39;: False,
+  &#39;TLR4&#39;: False,
+  &#39;TNFSF13B&#39;: False,
+  &#39;TRAC&#39;: False,
+  &#39;TRBC1&#39;: False,
+  &#39;TRBC2&#39;: False,
+  &#39;TREM2&#39;: False,
+  &#39;TRPV2&#39;: False,
+  &#39;TYROBP&#39;: False,
+  &#39;UBE2L6&#39;: False,
+  &#39;UNC5B&#39;: False,
+  &#39;VCAN&#39;: False,
+  &#39;VSIG4&#39;: False,
+  &#39;VWF&#39;: False,
+  &#39;WAS&#39;: True,
+  &#39;ZEB1&#39;: True,
+  &#39;ZEB2&#39;: False}}
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -4484,65 +1265,17 @@ Community 6 has 2 nodes.
 <h3>Visualising the Communities<a class="headerlink" href="#visualising-the-communities" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Patch class is used to create shapes and patches that can be added to plots in matplotlib</span>
-<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Patch</span>
-
-<span class="k">def</span> <span class="nf">draw_communities</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">communities</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">layout</span><span class="o">=</span><span class="s1">&#39;spring&#39;</span><span class="p">,</span> <span class="n">cmap_name</span><span class="o">=</span><span class="s1">&#39;tab20&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Draws a graph with nodes colored by their community memberships and includes a legend indicating the community index.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        G (networkx.Graph): The graph to be drawn.</span>
-<span class="sd">        communities (list of lists): A list where each sublist contains the nodes belonging to a community.</span>
-<span class="sd">        figsize (tuple, optional): The size of the figure. Default is (10, 10).</span>
-<span class="sd">        layout (str, optional): The layout algorithm for positioning nodes (e.g., &#39;spring&#39;, &#39;circular&#39;). Default is &#39;spring&#39;.</span>
-<span class="sd">        cmap_name (str, optional): The name of the colormap to use for coloring communities. Default is &#39;tab20&#39;.</span>
-
-<span class="sd">    Raises:</span>
-<span class="sd">        ValueError: If the graph G is empty or not defined.</span>
-<span class="sd">        ValueError: If the communities list is empty or not defined.</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">G</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The graph is empty or not defined.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">communities</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Communities list is empty or not defined.&quot;</span><span class="p">)</span>
-
-    <span class="c1"># Create a dictionary called `community_dict` where the keys are nodes and the values are the index of the community to which each node belongs.</span>
-    <span class="n">community_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="p">:</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">community</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">communities</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">community</span><span class="p">}</span> 
-
-    <span class="c1"># Determine number of communities and set up colours</span>
-    <span class="n">num_communities</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">communities</span><span class="p">)</span>
-    <span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="n">cmap_name</span><span class="p">)</span>
-    <span class="n">community_colors</span> <span class="o">=</span> <span class="p">[</span><span class="n">cmap</span><span class="p">(</span><span class="n">i</span> <span class="o">/</span> <span class="n">num_communities</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_communities</span><span class="p">)]</span>
-    <span class="n">node_colors</span> <span class="o">=</span> <span class="p">[</span><span class="n">community_colors</span><span class="p">[</span><span class="n">community_dict</span><span class="p">[</span><span class="n">node</span><span class="p">]]</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()]</span>
-
-    <span class="c1"># Set up the figure</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
-    <span class="n">pos</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">layout</span><span class="si">}</span><span class="s1">_layout&#39;</span><span class="p">)(</span><span class="n">G</span><span class="p">)</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">layout</span><span class="si">}</span><span class="s1">_layout&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="n">nx</span><span class="o">.</span><span class="n">spring_layout</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
-
-    <span class="c1"># Draw the graph</span>
-    <span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="n">node_colors</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">node_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-
-    <span class="c1"># Create a legend</span>
-    <span class="n">legend_handles</span> <span class="o">=</span> <span class="p">[</span><span class="n">Patch</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="n">community_colors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Community </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_communities</span><span class="p">)]</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="o">=</span><span class="n">legend_handles</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Communities&quot;</span><span class="p">)</span>
-
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualize the gene correlation network with community memberships</span>
 <span class="c1">### YOUR CODE HERE ###</span>
-<span class="n">draw_communities</span><span class="p">(</span><span class="n">G_gxp</span><span class="p">,</span> <span class="n">communities</span><span class="p">)</span>
+<span class="n">draw_network_with_node_attrs</span><span class="p">(</span><span class="n">G_gxp</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Gene Network&#39;</span><span class="p">,</span> <span class="n">node_attributes</span><span class="o">=</span><span class="n">node_attributes</span><span class="p">,</span> <span class="n">communities</span><span class="o">=</span><span class="n">communities</span><span class="p">,</span> <span class="n">color_attr</span><span class="o">=</span><span class="s1">&#39;community&#39;</span><span class="p">,</span> <span class="n">shape_attr</span><span class="o">=</span><span class="s1">&#39;cancer_gene&#39;</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/97b85a4863d09e6ebac49365209eb73119ad3897d75c80df586164b2398e7f56.png" src="../_images/97b85a4863d09e6ebac49365209eb73119ad3897d75c80df586164b2398e7f56.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>node_attributes: {&#39;cancer_gene&#39;: {&#39;A2M&#39;: False, &#39;ABI3BP&#39;: False, &#39;ACAP1&#39;: False, &#39;ACP5&#39;: False, &#39;ACTA2&#39;: False, &#39;ACTG2&#39;: False, &#39;ACVRL1&#39;: False, &#39;ADAM12&#39;: False, &#39;ADAMTS12&#39;: False, &#39;ADAMTS2&#39;: False, &#39;ADGRA2&#39;: False, &#39;ADH1B&#39;: False, &#39;AEBP1&#39;: False, &#39;AIF1&#39;: False, &#39;ALOX5&#39;: False, &#39;ALOX5AP&#39;: False, &#39;ANGPTL2&#39;: False, &#39;ANTXR1&#39;: False, &#39;AOC3&#39;: False, &#39;APBB1IP&#39;: False, &#39;APOC1&#39;: False, &#39;APOL3&#39;: False, &#39;ARHGAP30&#39;: False, &#39;ARHGAP9&#39;: False, &#39;ARHGEF6&#39;: False, &#39;BCL6B&#39;: False, &#39;BGN&#39;: False, &#39;BIN2&#39;: False, &#39;BTK&#39;: True, &#39;C1QA&#39;: False, &#39;C1QB&#39;: False, &#39;C1QC&#39;: False, &#39;C1orf162&#39;: False, &#39;C3AR1&#39;: False, &#39;C5AR1&#39;: False, &#39;C7&#39;: False, &#39;CALCRL&#39;: False, &#39;CASP1&#39;: False, &#39;CCDC80&#39;: False, &#39;CCL5&#39;: False, &#39;CCN4&#39;: False, &#39;CCR1&#39;: False, &#39;CCR5&#39;: False, &#39;CD14&#39;: False, &#39;CD163&#39;: False, &#39;CD2&#39;: False, &#39;CD300A&#39;: False, &#39;CD34&#39;: False, &#39;CD37&#39;: False, &#39;CD3E&#39;: False, &#39;CD4&#39;: False, &#39;CD52&#39;: False, &#39;CD53&#39;: False, &#39;CD6&#39;: False, &#39;CD74&#39;: True, &#39;CD84&#39;: False, &#39;CD86&#39;: False, &#39;CD8A&#39;: False, &#39;CD93&#39;: False, &#39;CDH5&#39;: False, &#39;CHRDL1&#39;: False, &#39;CLEC14A&#39;: False, &#39;CMKLR1&#39;: False, &#39;COL10A1&#39;: False, &#39;COL11A1&#39;: False, &#39;COL15A1&#39;: False, &#39;COL1A1&#39;: True, &#39;COL1A2&#39;: False, &#39;COL3A1&#39;: True, &#39;COL4A1&#39;: False, &#39;COL4A2&#39;: False, &#39;COL5A1&#39;: False, &#39;COL5A2&#39;: False, &#39;COL6A3&#39;: False, &#39;CORO1A&#39;: False, &#39;CSF1R&#39;: True, &#39;CSF2RB&#39;: False, &#39;CTHRC1&#39;: False, &#39;CXCL10&#39;: False, &#39;CXCL9&#39;: False, &#39;CYBB&#39;: False, &#39;CYTH4&#39;: False, &#39;CYTIP&#39;: False, &#39;CYYR1&#39;: False, &#39;DAB2&#39;: False, &#39;DCHS1&#39;: False, &#39;DCN&#39;: False, &#39;DIPK2B&#39;: False, &#39;DOCK2&#39;: False, &#39;DOCK8&#39;: False, &#39;DOK2&#39;: False, &#39;DOK3&#39;: False, &#39;EDNRB&#39;: False, &#39;EMILIN1&#39;: False, &#39;EMILIN2&#39;: False, &#39;EPB41L2&#39;: False, &#39;ERG&#39;: True, &#39;EVI2B&#39;: False, &#39;F13A1&#39;: False, &#39;FAM78A&#39;: False, &#39;FAP&#39;: False, &#39;FBN1&#39;: False, &#39;FCER1G&#39;: False, &#39;FCGR2A&#39;: False, &#39;FCGR3A&#39;: False, &#39;FERMT3&#39;: False, &#39;FGD2&#39;: False, &#39;FGD5&#39;: False, &#39;FGL2&#39;: False, &#39;FGR&#39;: False, &#39;FHL1&#39;: False, &#39;FLI1&#39;: True, &#39;FLT4&#39;: True, &#39;FMO2&#39;: False, &#39;FNDC1&#39;: False, &#39;FOLR2&#39;: False, &#39;FPR1&#39;: False, &#39;FPR3&#39;: False, &#39;FSTL1&#39;: False, &#39;FYB1&#39;: False, &#39;GAS7&#39;: True, &#39;GBP1&#39;: False, &#39;GBP4&#39;: False, &#39;GBP5&#39;: False, &#39;GIMAP4&#39;: False, &#39;GIMAP6&#39;: False, &#39;GIMAP7&#39;: False, &#39;GIMAP8&#39;: False, &#39;GLIPR2&#39;: False, &#39;GMFG&#39;: False, &#39;GREM1&#39;: False, &#39;GYPC&#39;: False, &#39;HAVCR2&#39;: False, &#39;HCK&#39;: False, &#39;HCP5&#39;: False, &#39;HEG1&#39;: False, &#39;HK3&#39;: False, &#39;HLA-A&#39;: True, &#39;HLA-B&#39;: False, &#39;HLA-C&#39;: False, &#39;HLA-DMA&#39;: False, &#39;HLA-DMB&#39;: False, &#39;HLA-DOA&#39;: False, &#39;HLA-DPA1&#39;: False, &#39;HLA-DPB1&#39;: False, &#39;HLA-DQA1&#39;: False, &#39;HLA-DQB1&#39;: False, &#39;HLA-DRA&#39;: False, &#39;HLA-DRB1&#39;: False, &#39;HLA-DRB5&#39;: False, &#39;HLA-F&#39;: False, &#39;HTRA3&#39;: False, &#39;IGSF6&#39;: False, &#39;IKZF1&#39;: True, &#39;IL10RA&#39;: False, &#39;IL16&#39;: False, &#39;IL2RB&#39;: False, &#39;IL2RG&#39;: False, &#39;IL33&#39;: False, &#39;IL7R&#39;: True, &#39;INMT&#39;: False, &#39;IRAG1&#39;: False, &#39;IRF8&#39;: False, &#39;ISLR&#39;: False, &#39;ITGA11&#39;: False, &#39;ITGA4&#39;: False, &#39;ITGA8&#39;: False, &#39;ITGAL&#39;: False, &#39;ITGAM&#39;: False, &#39;ITGAX&#39;: False, &#39;ITGB2&#39;: False, &#39;JAML&#39;: False, &#39;KCNAB2&#39;: False, &#39;KLHL6&#39;: False, &#39;LAIR1&#39;: False, &#39;LAMA2&#39;: False, &#39;LAMA4&#39;: False, &#39;LAPTM5&#39;: False, &#39;LCK&#39;: True, &#39;LCP1&#39;: True, &#39;LCP2&#39;: False, &#39;LDB2&#39;: False, &#39;LHFPL6&#39;: True, &#39;LILRB2&#39;: False, &#39;LILRB4&#39;: False, &#39;LIPA&#39;: False, &#39;LMCD1&#39;: False, &#39;LMOD1&#39;: False, &#39;LRRC15&#39;: False, &#39;LRRC32&#39;: False, &#39;LSP1&#39;: False, &#39;LST1&#39;: False, &#39;LTBP2&#39;: False, &#39;LUM&#39;: False, &#39;MARCO&#39;: False, &#39;MFAP4&#39;: False, &#39;MMP11&#39;: False, &#39;MMP2&#39;: False, &#39;MMRN2&#39;: False, &#39;MNDA&#39;: False, &#39;MPEG1&#39;: False, &#39;MRC1&#39;: False, &#39;MS4A4A&#39;: False, &#39;MS4A6A&#39;: False, &#39;MS4A7&#39;: False, &#39;MSR1&#39;: False, &#39;MSRB3&#39;: False, &#39;MXRA5&#39;: False, &#39;MYH11&#39;: True, &#39;MYLK&#39;: False, &#39;MYO1F&#39;: False, &#39;NCF2&#39;: False, &#39;NCF4&#39;: False, &#39;NCKAP1L&#39;: False, &#39;NFAM1&#39;: False, &#39;NOTCH4&#39;: False, &#39;OLFML2B&#39;: False, &#39;PARVG&#39;: False, &#39;PCDH12&#39;: False, &#39;PCDH17&#39;: False, &#39;PDGFRA&#39;: True, &#39;PDGFRB&#39;: True, &#39;PECAM1&#39;: False, &#39;PIK3AP1&#39;: False, &#39;PIK3CG&#39;: False, &#39;PIK3R5&#39;: False, &#39;PLEK&#39;: False, &#39;PLXDC2&#39;: False, &#39;PLXNC1&#39;: False, &#39;PODN&#39;: False, &#39;POSTN&#39;: False, &#39;PPP1R16B&#39;: False, &#39;PRELP&#39;: False, &#39;PREX1&#39;: False, &#39;PRKCB&#39;: True, &#39;PRRX1&#39;: True, &#39;PSMB9&#39;: False, &#39;PTAFR&#39;: False, &#39;PTGER4&#39;: False, &#39;PTPN7&#39;: False, &#39;PTPRB&#39;: True, &#39;PTPRC&#39;: True, &#39;RAMP2&#39;: False, &#39;RAMP3&#39;: False, &#39;RASAL3&#39;: False, &#39;RASSF2&#39;: False, &#39;RCSD1&#39;: False, &#39;RNASE6&#39;: False, &#39;ROBO4&#39;: False, &#39;S1PR1&#39;: False, &#39;SAMHD1&#39;: False, &#39;SAMSN1&#39;: False, &#39;SASH3&#39;: False, &#39;SCN7A&#39;: False, &#39;SELPLG&#39;: False, &#39;SH2D3C&#39;: False, &#39;SHANK3&#39;: False, &#39;SIGLEC1&#39;: False, &#39;SIRPA&#39;: True, &#39;SLA&#39;: False, &#39;SLC15A3&#39;: False, &#39;SLC1A3&#39;: False, &#39;SLC7A7&#39;: False, &#39;SLCO2B1&#39;: False, &#39;SLIT2&#39;: False, &#39;SLIT3&#39;: False, &#39;SPARC&#39;: False, &#39;SPARCL1&#39;: False, &#39;SPI1&#39;: False, &#39;SPN&#39;: False, &#39;SPON1&#39;: False, &#39;SSC5D&#39;: False, &#39;STARD8&#39;: False, &#39;STAT1&#39;: False, &#39;SULF1&#39;: False, &#39;SVEP1&#39;: False, &#39;SYNPO2&#39;: False, &#39;TAGLN&#39;: False, &#39;TAP1&#39;: False, &#39;TBC1D10C&#39;: False, &#39;TCF4&#39;: False, &#39;THBS2&#39;: False, &#39;THY1&#39;: False, &#39;TIE1&#39;: False, &#39;TLR4&#39;: False, &#39;TNFSF13B&#39;: False, &#39;TRAC&#39;: False, &#39;TRBC1&#39;: False, &#39;TRBC2&#39;: False, &#39;TREM2&#39;: False, &#39;TRPV2&#39;: False, &#39;TYROBP&#39;: False, &#39;UBE2L6&#39;: False, &#39;UNC5B&#39;: False, &#39;VCAN&#39;: False, &#39;VSIG4&#39;: False, &#39;VWF&#39;: False, &#39;WAS&#39;: True, &#39;ZEB1&#39;: True, &#39;ZEB2&#39;: False}, &#39;community&#39;: {&#39;LST1&#39;: 0, &#39;FPR1&#39;: 0, &#39;PTAFR&#39;: 0, &#39;LIPA&#39;: 0, &#39;HLA-DQB1&#39;: 0, &#39;TRPV2&#39;: 0, &#39;HLA-DPB1&#39;: 0, &#39;C5AR1&#39;: 0, &#39;FCGR3A&#39;: 0, &#39;TNFSF13B&#39;: 0, &#39;LILRB2&#39;: 0, &#39;NCKAP1L&#39;: 0, &#39;HAVCR2&#39;: 0, &#39;CASP1&#39;: 0, &#39;CD300A&#39;: 0, &#39;MS4A4A&#39;: 0, &#39;GLIPR2&#39;: 0, &#39;CD86&#39;: 0, &#39;PIK3AP1&#39;: 0, &#39;HLA-DRB5&#39;: 0, &#39;C3AR1&#39;: 0, &#39;HLA-DMA&#39;: 0, &#39;NCF4&#39;: 0, &#39;LAIR1&#39;: 0, &#39;RNASE6&#39;: 0, &#39;APBB1IP&#39;: 0, &#39;LCP1&#39;: 0, &#39;ITGB2&#39;: 0, &#39;CSF1R&#39;: 0, &#39;FGR&#39;: 0, &#39;TYROBP&#39;: 0, &#39;GYPC&#39;: 0, &#39;NFAM1&#39;: 0, &#39;ACP5&#39;: 0, &#39;MSR1&#39;: 0, &#39;CD52&#39;: 0, &#39;APOC1&#39;: 0, &#39;FCER1G&#39;: 0, &#39;SLC7A7&#39;: 0, &#39;VSIG4&#39;: 0, &#39;LAPTM5&#39;: 0, &#39;LCP2&#39;: 0, &#39;SAMSN1&#39;: 0, &#39;TLR4&#39;: 0, &#39;ITGAM&#39;: 0, &#39;SLC1A3&#39;: 0, &#39;JAML&#39;: 0, &#39;C1QC&#39;: 0, &#39;HLA-DRB1&#39;: 0, &#39;MARCO&#39;: 0, &#39;ALOX5&#39;: 0, &#39;CD163&#39;: 0, &#39;GMFG&#39;: 0, &#39;ALOX5AP&#39;: 0, &#39;MYO1F&#39;: 0, &#39;CD74&#39;: 0, &#39;HLA-DMB&#39;: 0, &#39;EMILIN2&#39;: 0, &#39;ITGAX&#39;: 0, &#39;TREM2&#39;: 0, &#39;CD4&#39;: 0, &#39;CCR1&#39;: 0, &#39;C1orf162&#39;: 0, &#39;DAB2&#39;: 0, &#39;MS4A7&#39;: 0, &#39;HCK&#39;: 0, &#39;SPI1&#39;: 0, &#39;PLEK&#39;: 0, &#39;SLCO2B1&#39;: 0, &#39;PLXNC1&#39;: 0, &#39;SIRPA&#39;: 0, &#39;SIGLEC1&#39;: 0, &#39;FERMT3&#39;: 0, &#39;HLA-DOA&#39;: 0, &#39;SLC15A3&#39;: 0, &#39;DOK2&#39;: 0, &#39;CD53&#39;: 0, &#39;FPR3&#39;: 0, &#39;LILRB4&#39;: 0, &#39;MPEG1&#39;: 0, &#39;MNDA&#39;: 0, &#39;C1QA&#39;: 0, &#39;FGL2&#39;: 0, &#39;C1QB&#39;: 0, &#39;HLA-DRA&#39;: 0, &#39;CD14&#39;: 0, &#39;SAMHD1&#39;: 0, &#39;HK3&#39;: 0, &#39;NCF2&#39;: 0, &#39;MRC1&#39;: 0, &#39;CYBB&#39;: 0, &#39;IGSF6&#39;: 0, &#39;HLA-DQA1&#39;: 0, &#39;CD84&#39;: 0, &#39;AIF1&#39;: 0, &#39;SELPLG&#39;: 0, &#39;FCGR2A&#39;: 0, &#39;MS4A6A&#39;: 0, &#39;CMKLR1&#39;: 0, &#39;BTK&#39;: 0, &#39;HLA-DPA1&#39;: 0, &#39;MSRB3&#39;: 1, &#39;THY1&#39;: 1, &#39;MYLK&#39;: 1, &#39;LTBP2&#39;: 1, &#39;ADAMTS12&#39;: 1, &#39;PRELP&#39;: 1, &#39;UNC5B&#39;: 1, &#39;ADAMTS2&#39;: 1, &#39;SSC5D&#39;: 1, &#39;TAGLN&#39;: 1, &#39;POSTN&#39;: 1, &#39;AEBP1&#39;: 1, &#39;GREM1&#39;: 1, &#39;COL4A2&#39;: 1, &#39;COL15A1&#39;: 1, &#39;ISLR&#39;: 1, &#39;PRRX1&#39;: 1, &#39;SPARC&#39;: 1, &#39;COL5A2&#39;: 1, &#39;CCDC80&#39;: 1, &#39;VCAN&#39;: 1, &#39;FBN1&#39;: 1, &#39;IRAG1&#39;: 1, &#39;FNDC1&#39;: 1, &#39;SYNPO2&#39;: 1, &#39;LAMA4&#39;: 1, &#39;CCN4&#39;: 1, &#39;ANTXR1&#39;: 1, &#39;COL11A1&#39;: 1, &#39;FSTL1&#39;: 1, &#39;FAP&#39;: 1, &#39;MXRA5&#39;: 1, &#39;LUM&#39;: 1, &#39;COL5A1&#39;: 1, &#39;ACTG2&#39;: 1, &#39;PDGFRA&#39;: 1, &#39;MMP11&#39;: 1, &#39;BGN&#39;: 1, &#39;LMOD1&#39;: 1, &#39;MYH11&#39;: 1, &#39;TCF4&#39;: 1, &#39;OLFML2B&#39;: 1, &#39;DCHS1&#39;: 1, &#39;COL10A1&#39;: 1, &#39;COL3A1&#39;: 1, &#39;ANGPTL2&#39;: 1, &#39;ACTA2&#39;: 1, &#39;ITGA11&#39;: 1, &#39;PODN&#39;: 1, &#39;LRRC15&#39;: 1, &#39;EMILIN1&#39;: 1, &#39;COL6A3&#39;: 1, &#39;SULF1&#39;: 1, &#39;SPON1&#39;: 1, &#39;COL1A2&#39;: 1, &#39;ZEB1&#39;: 1, &#39;PDGFRB&#39;: 1, &#39;HTRA3&#39;: 1, &#39;COL1A1&#39;: 1, &#39;ADGRA2&#39;: 1, &#39;LMCD1&#39;: 1, &#39;COL4A1&#39;: 1, &#39;ADAM12&#39;: 1, &#39;DCN&#39;: 1, &#39;CTHRC1&#39;: 1, &#39;MMP2&#39;: 1, &#39;THBS2&#39;: 1, &#39;RAMP3&#39;: 2, &#39;PTPRB&#39;: 2, &#39;STARD8&#39;: 2, &#39;A2M&#39;: 2, &#39;RAMP2&#39;: 2, &#39;CLEC14A&#39;: 2, &#39;BCL6B&#39;: 2, &#39;SH2D3C&#39;: 2, &#39;SCN7A&#39;: 2, &#39;GAS7&#39;: 2, &#39;FHL1&#39;: 2, &#39;CD93&#39;: 2, &#39;GIMAP4&#39;: 2, &#39;LDB2&#39;: 2, &#39;LAMA2&#39;: 2, &#39;AOC3&#39;: 2, &#39;GIMAP6&#39;: 2, &#39;SLIT2&#39;: 2, &#39;TIE1&#39;: 2, &#39;GIMAP8&#39;: 2, &#39;FMO2&#39;: 2, &#39;MFAP4&#39;: 2, &#39;VWF&#39;: 2, &#39;CYYR1&#39;: 2, &#39;ARHGEF6&#39;: 2, &#39;ADH1B&#39;: 2, &#39;EPB41L2&#39;: 2, &#39;FGD5&#39;: 2, &#39;SPARCL1&#39;: 2, &#39;RASSF2&#39;: 2, &#39;HEG1&#39;: 2, &#39;LHFPL6&#39;: 2, &#39;DIPK2B&#39;: 2, &#39;LRRC32&#39;: 2, &#39;PCDH12&#39;: 2, &#39;SLIT3&#39;: 2, &#39;SHANK3&#39;: 2, &#39;PECAM1&#39;: 2, &#39;FLI1&#39;: 2, &#39;PLXDC2&#39;: 2, &#39;ERG&#39;: 2, &#39;EDNRB&#39;: 2, &#39;ABI3BP&#39;: 2, &#39;PREX1&#39;: 2, &#39;ACVRL1&#39;: 2, &#39;ROBO4&#39;: 2, &#39;CALCRL&#39;: 2, &#39;RCSD1&#39;: 2, &#39;ITGA8&#39;: 2, &#39;FLT4&#39;: 2, &#39;CHRDL1&#39;: 2, &#39;SVEP1&#39;: 2, &#39;MMRN2&#39;: 2, &#39;CDH5&#39;: 2, &#39;ZEB2&#39;: 2, &#39;PCDH17&#39;: 2, &#39;C7&#39;: 2, &#39;PTGER4&#39;: 2, &#39;S1PR1&#39;: 2, &#39;INMT&#39;: 2, &#39;CD34&#39;: 2, &#39;GIMAP7&#39;: 2, &#39;IL33&#39;: 2, &#39;NOTCH4&#39;: 2, &#39;ACAP1&#39;: 3, &#39;PTPRC&#39;: 3, &#39;SLA&#39;: 3, &#39;CCR5&#39;: 3, &#39;WAS&#39;: 3, &#39;LCK&#39;: 3, &#39;IRF8&#39;: 3, &#39;LSP1&#39;: 3, &#39;IL16&#39;: 3, &#39;TRAC&#39;: 3, &#39;KCNAB2&#39;: 3, &#39;ITGA4&#39;: 3, &#39;PARVG&#39;: 3, &#39;CCL5&#39;: 3, &#39;CYTIP&#39;: 3, &#39;RASAL3&#39;: 3, &#39;DOK3&#39;: 3, &#39;PPP1R16B&#39;: 3, &#39;CD8A&#39;: 3, &#39;SPN&#39;: 3, &#39;PIK3CG&#39;: 3, &#39;CORO1A&#39;: 3, &#39;SASH3&#39;: 3, &#39;IL2RB&#39;: 3, &#39;TRBC2&#39;: 3, &#39;PRKCB&#39;: 3, &#39;DOCK2&#39;: 3, &#39;CYTH4&#39;: 3, &#39;ARHGAP30&#39;: 3, &#39;CD37&#39;: 3, &#39;KLHL6&#39;: 3, &#39;CSF2RB&#39;: 3, &#39;TRBC1&#39;: 3, &#39;BIN2&#39;: 3, &#39;FGD2&#39;: 3, &#39;PTPN7&#39;: 3, &#39;IL2RG&#39;: 3, &#39;DOCK8&#39;: 3, &#39;CD6&#39;: 3, &#39;PIK3R5&#39;: 3, &#39;IL7R&#39;: 3, &#39;ITGAL&#39;: 3, &#39;CD2&#39;: 3, &#39;CD3E&#39;: 3, &#39;IKZF1&#39;: 3, &#39;ARHGAP9&#39;: 3, &#39;EVI2B&#39;: 3, &#39;TBC1D10C&#39;: 3, &#39;FYB1&#39;: 3, &#39;IL10RA&#39;: 3, &#39;FAM78A&#39;: 3, &#39;STAT1&#39;: 4, &#39;CXCL10&#39;: 4, &#39;HLA-F&#39;: 4, &#39;GBP1&#39;: 4, &#39;GBP5&#39;: 4, &#39;APOL3&#39;: 4, &#39;HCP5&#39;: 4, &#39;UBE2L6&#39;: 4, &#39;TAP1&#39;: 4, &#39;PSMB9&#39;: 4, &#39;GBP4&#39;: 4, &#39;CXCL9&#39;: 4, &#39;HLA-A&#39;: 4, &#39;HLA-B&#39;: 4, &#39;HLA-C&#39;: 4, &#39;F13A1&#39;: 5, &#39;FOLR2&#39;: 5}}
+</pre></div>
+</div>
+<img alt="../_images/d0b9ad3e172a273e8878c3f36131f0c1f3eb62f055ec56285e834b39c0f36753.png" src="../_images/d0b9ad3e172a273e8878c3f36131f0c1f3eb62f055ec56285e834b39c0f36753.png" />
 </div>
 </div>
 </section>
@@ -4553,6 +1286,316 @@ Community 6 has 2 nodes.
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">communities</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[frozenset({&#39;ACP5&#39;,
+            &#39;AIF1&#39;,
+            &#39;ALOX5&#39;,
+            &#39;ALOX5AP&#39;,
+            &#39;APBB1IP&#39;,
+            &#39;APOC1&#39;,
+            &#39;BTK&#39;,
+            &#39;C1QA&#39;,
+            &#39;C1QB&#39;,
+            &#39;C1QC&#39;,
+            &#39;C1orf162&#39;,
+            &#39;C3AR1&#39;,
+            &#39;C5AR1&#39;,
+            &#39;CASP1&#39;,
+            &#39;CCR1&#39;,
+            &#39;CD14&#39;,
+            &#39;CD163&#39;,
+            &#39;CD300A&#39;,
+            &#39;CD4&#39;,
+            &#39;CD52&#39;,
+            &#39;CD53&#39;,
+            &#39;CD74&#39;,
+            &#39;CD84&#39;,
+            &#39;CD86&#39;,
+            &#39;CMKLR1&#39;,
+            &#39;CSF1R&#39;,
+            &#39;CYBB&#39;,
+            &#39;DAB2&#39;,
+            &#39;DOK2&#39;,
+            &#39;EMILIN2&#39;,
+            &#39;FCER1G&#39;,
+            &#39;FCGR2A&#39;,
+            &#39;FCGR3A&#39;,
+            &#39;FERMT3&#39;,
+            &#39;FGL2&#39;,
+            &#39;FGR&#39;,
+            &#39;FPR1&#39;,
+            &#39;FPR3&#39;,
+            &#39;GLIPR2&#39;,
+            &#39;GMFG&#39;,
+            &#39;GYPC&#39;,
+            &#39;HAVCR2&#39;,
+            &#39;HCK&#39;,
+            &#39;HK3&#39;,
+            &#39;HLA-DMA&#39;,
+            &#39;HLA-DMB&#39;,
+            &#39;HLA-DOA&#39;,
+            &#39;HLA-DPA1&#39;,
+            &#39;HLA-DPB1&#39;,
+            &#39;HLA-DQA1&#39;,
+            &#39;HLA-DQB1&#39;,
+            &#39;HLA-DRA&#39;,
+            &#39;HLA-DRB1&#39;,
+            &#39;HLA-DRB5&#39;,
+            &#39;IGSF6&#39;,
+            &#39;ITGAM&#39;,
+            &#39;ITGAX&#39;,
+            &#39;ITGB2&#39;,
+            &#39;JAML&#39;,
+            &#39;LAIR1&#39;,
+            &#39;LAPTM5&#39;,
+            &#39;LCP1&#39;,
+            &#39;LCP2&#39;,
+            &#39;LILRB2&#39;,
+            &#39;LILRB4&#39;,
+            &#39;LIPA&#39;,
+            &#39;LST1&#39;,
+            &#39;MARCO&#39;,
+            &#39;MNDA&#39;,
+            &#39;MPEG1&#39;,
+            &#39;MRC1&#39;,
+            &#39;MS4A4A&#39;,
+            &#39;MS4A6A&#39;,
+            &#39;MS4A7&#39;,
+            &#39;MSR1&#39;,
+            &#39;MYO1F&#39;,
+            &#39;NCF2&#39;,
+            &#39;NCF4&#39;,
+            &#39;NCKAP1L&#39;,
+            &#39;NFAM1&#39;,
+            &#39;PIK3AP1&#39;,
+            &#39;PLEK&#39;,
+            &#39;PLXNC1&#39;,
+            &#39;PTAFR&#39;,
+            &#39;RNASE6&#39;,
+            &#39;SAMHD1&#39;,
+            &#39;SAMSN1&#39;,
+            &#39;SELPLG&#39;,
+            &#39;SIGLEC1&#39;,
+            &#39;SIRPA&#39;,
+            &#39;SLC15A3&#39;,
+            &#39;SLC1A3&#39;,
+            &#39;SLC7A7&#39;,
+            &#39;SLCO2B1&#39;,
+            &#39;SPI1&#39;,
+            &#39;TLR4&#39;,
+            &#39;TNFSF13B&#39;,
+            &#39;TREM2&#39;,
+            &#39;TRPV2&#39;,
+            &#39;TYROBP&#39;,
+            &#39;VSIG4&#39;}),
+ frozenset({&#39;ACTA2&#39;,
+            &#39;ACTG2&#39;,
+            &#39;ADAM12&#39;,
+            &#39;ADAMTS12&#39;,
+            &#39;ADAMTS2&#39;,
+            &#39;ADGRA2&#39;,
+            &#39;AEBP1&#39;,
+            &#39;ANGPTL2&#39;,
+            &#39;ANTXR1&#39;,
+            &#39;BGN&#39;,
+            &#39;CCDC80&#39;,
+            &#39;CCN4&#39;,
+            &#39;COL10A1&#39;,
+            &#39;COL11A1&#39;,
+            &#39;COL15A1&#39;,
+            &#39;COL1A1&#39;,
+            &#39;COL1A2&#39;,
+            &#39;COL3A1&#39;,
+            &#39;COL4A1&#39;,
+            &#39;COL4A2&#39;,
+            &#39;COL5A1&#39;,
+            &#39;COL5A2&#39;,
+            &#39;COL6A3&#39;,
+            &#39;CTHRC1&#39;,
+            &#39;DCHS1&#39;,
+            &#39;DCN&#39;,
+            &#39;EMILIN1&#39;,
+            &#39;FAP&#39;,
+            &#39;FBN1&#39;,
+            &#39;FNDC1&#39;,
+            &#39;FSTL1&#39;,
+            &#39;GREM1&#39;,
+            &#39;HTRA3&#39;,
+            &#39;IRAG1&#39;,
+            &#39;ISLR&#39;,
+            &#39;ITGA11&#39;,
+            &#39;LAMA4&#39;,
+            &#39;LMCD1&#39;,
+            &#39;LMOD1&#39;,
+            &#39;LRRC15&#39;,
+            &#39;LTBP2&#39;,
+            &#39;LUM&#39;,
+            &#39;MMP11&#39;,
+            &#39;MMP2&#39;,
+            &#39;MSRB3&#39;,
+            &#39;MXRA5&#39;,
+            &#39;MYH11&#39;,
+            &#39;MYLK&#39;,
+            &#39;OLFML2B&#39;,
+            &#39;PDGFRA&#39;,
+            &#39;PDGFRB&#39;,
+            &#39;PODN&#39;,
+            &#39;POSTN&#39;,
+            &#39;PRELP&#39;,
+            &#39;PRRX1&#39;,
+            &#39;SPARC&#39;,
+            &#39;SPON1&#39;,
+            &#39;SSC5D&#39;,
+            &#39;SULF1&#39;,
+            &#39;SYNPO2&#39;,
+            &#39;TAGLN&#39;,
+            &#39;TCF4&#39;,
+            &#39;THBS2&#39;,
+            &#39;THY1&#39;,
+            &#39;UNC5B&#39;,
+            &#39;VCAN&#39;,
+            &#39;ZEB1&#39;}),
+ frozenset({&#39;A2M&#39;,
+            &#39;ABI3BP&#39;,
+            &#39;ACVRL1&#39;,
+            &#39;ADH1B&#39;,
+            &#39;AOC3&#39;,
+            &#39;ARHGEF6&#39;,
+            &#39;BCL6B&#39;,
+            &#39;C7&#39;,
+            &#39;CALCRL&#39;,
+            &#39;CD34&#39;,
+            &#39;CD93&#39;,
+            &#39;CDH5&#39;,
+            &#39;CHRDL1&#39;,
+            &#39;CLEC14A&#39;,
+            &#39;CYYR1&#39;,
+            &#39;DIPK2B&#39;,
+            &#39;EDNRB&#39;,
+            &#39;EPB41L2&#39;,
+            &#39;ERG&#39;,
+            &#39;FGD5&#39;,
+            &#39;FHL1&#39;,
+            &#39;FLI1&#39;,
+            &#39;FLT4&#39;,
+            &#39;FMO2&#39;,
+            &#39;GAS7&#39;,
+            &#39;GIMAP4&#39;,
+            &#39;GIMAP6&#39;,
+            &#39;GIMAP7&#39;,
+            &#39;GIMAP8&#39;,
+            &#39;HEG1&#39;,
+            &#39;IL33&#39;,
+            &#39;INMT&#39;,
+            &#39;ITGA8&#39;,
+            &#39;LAMA2&#39;,
+            &#39;LDB2&#39;,
+            &#39;LHFPL6&#39;,
+            &#39;LRRC32&#39;,
+            &#39;MFAP4&#39;,
+            &#39;MMRN2&#39;,
+            &#39;NOTCH4&#39;,
+            &#39;PCDH12&#39;,
+            &#39;PCDH17&#39;,
+            &#39;PECAM1&#39;,
+            &#39;PLXDC2&#39;,
+            &#39;PREX1&#39;,
+            &#39;PTGER4&#39;,
+            &#39;PTPRB&#39;,
+            &#39;RAMP2&#39;,
+            &#39;RAMP3&#39;,
+            &#39;RASSF2&#39;,
+            &#39;RCSD1&#39;,
+            &#39;ROBO4&#39;,
+            &#39;S1PR1&#39;,
+            &#39;SCN7A&#39;,
+            &#39;SH2D3C&#39;,
+            &#39;SHANK3&#39;,
+            &#39;SLIT2&#39;,
+            &#39;SLIT3&#39;,
+            &#39;SPARCL1&#39;,
+            &#39;STARD8&#39;,
+            &#39;SVEP1&#39;,
+            &#39;TIE1&#39;,
+            &#39;VWF&#39;,
+            &#39;ZEB2&#39;}),
+ frozenset({&#39;ACAP1&#39;,
+            &#39;ARHGAP30&#39;,
+            &#39;ARHGAP9&#39;,
+            &#39;BIN2&#39;,
+            &#39;CCL5&#39;,
+            &#39;CCR5&#39;,
+            &#39;CD2&#39;,
+            &#39;CD37&#39;,
+            &#39;CD3E&#39;,
+            &#39;CD6&#39;,
+            &#39;CD8A&#39;,
+            &#39;CORO1A&#39;,
+            &#39;CSF2RB&#39;,
+            &#39;CYTH4&#39;,
+            &#39;CYTIP&#39;,
+            &#39;DOCK2&#39;,
+            &#39;DOCK8&#39;,
+            &#39;DOK3&#39;,
+            &#39;EVI2B&#39;,
+            &#39;FAM78A&#39;,
+            &#39;FGD2&#39;,
+            &#39;FYB1&#39;,
+            &#39;IKZF1&#39;,
+            &#39;IL10RA&#39;,
+            &#39;IL16&#39;,
+            &#39;IL2RB&#39;,
+            &#39;IL2RG&#39;,
+            &#39;IL7R&#39;,
+            &#39;IRF8&#39;,
+            &#39;ITGA4&#39;,
+            &#39;ITGAL&#39;,
+            &#39;KCNAB2&#39;,
+            &#39;KLHL6&#39;,
+            &#39;LCK&#39;,
+            &#39;LSP1&#39;,
+            &#39;PARVG&#39;,
+            &#39;PIK3CG&#39;,
+            &#39;PIK3R5&#39;,
+            &#39;PPP1R16B&#39;,
+            &#39;PRKCB&#39;,
+            &#39;PTPN7&#39;,
+            &#39;PTPRC&#39;,
+            &#39;RASAL3&#39;,
+            &#39;SASH3&#39;,
+            &#39;SLA&#39;,
+            &#39;SPN&#39;,
+            &#39;TBC1D10C&#39;,
+            &#39;TRAC&#39;,
+            &#39;TRBC1&#39;,
+            &#39;TRBC2&#39;,
+            &#39;WAS&#39;}),
+ frozenset({&#39;APOL3&#39;,
+            &#39;CXCL10&#39;,
+            &#39;CXCL9&#39;,
+            &#39;GBP1&#39;,
+            &#39;GBP4&#39;,
+            &#39;GBP5&#39;,
+            &#39;HCP5&#39;,
+            &#39;HLA-A&#39;,
+            &#39;HLA-B&#39;,
+            &#39;HLA-C&#39;,
+            &#39;HLA-F&#39;,
+            &#39;PSMB9&#39;,
+            &#39;STAT1&#39;,
+            &#39;TAP1&#39;,
+            &#39;UBE2L6&#39;}),
+ frozenset({&#39;F13A1&#39;, &#39;FOLR2&#39;})]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Function to perform ORA on a given list of genes</span>
 <span class="k">def</span> <span class="nf">communityORA</span><span class="p">(</span><span class="n">genes</span><span class="p">):</span>
     <span class="n">enr</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">enrichr</span><span class="p">(</span><span class="n">gene_list</span><span class="o">=</span><span class="n">genes</span><span class="p">,</span> <span class="n">gene_sets</span><span class="o">=</span><span class="p">[</span><span class="n">gene_sets</span><span class="p">],</span> <span class="n">organism</span><span class="o">=</span><span class="s1">&#39;human&#39;</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
@@ -4561,6 +1604,7 @@ Community 6 has 2 nodes.
 <span class="c1"># Convert communities to lists for ORA</span>
 <span class="c1">### YOUR CODE HERE ###</span>
 <span class="n">communities</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">community</span><span class="p">)</span> <span class="k">for</span> <span class="n">community</span> <span class="ow">in</span> <span class="n">communities</span><span class="p">]</span>
+<span class="n">communities</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">communities</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="c1"># Perform ORA for three selected communities</span>
 <span class="c1">### YOUR CODE HERE ###</span>
@@ -5424,9 +2468,9 @@ FGR          10.6328       11.3029        9.6115
 <span class="c1"># Iterate through the columns (samples)</span>
 <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">tcga_gxp_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">G_gxp_nodes_list</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span> <span class="c1"># &quot;.loc[G_gxp_nodes_list]&quot; grabs rows of specified gene symbols</span>
     <span class="c1"># Assign class labels based on the smoking status from the metadata</span>
-    <span class="k">if</span> <span class="n">tcqa_gxp_meta</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sample</span><span class="p">,</span> <span class="s1">&#39;Smoked&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Smoker&#39;</span><span class="p">:</span> <span class="c1">### YOUR CODE HERE ###</span>
+    <span class="k">if</span> <span class="n">tcga_gxp_meta</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sample</span><span class="p">,</span> <span class="s1">&#39;Smoked&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Smoker&#39;</span><span class="p">:</span> <span class="c1">### YOUR CODE HERE ###</span>
         <span class="n">classes</span><span class="p">[</span><span class="n">sample</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;smoker&#39;</span> 
-    <span class="k">elif</span> <span class="n">tcqa_gxp_meta</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sample</span><span class="p">,</span> <span class="s1">&#39;Smoked&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Never&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">tcga_gxp_meta</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sample</span><span class="p">,</span> <span class="s1">&#39;Smoked&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Never&#39;</span><span class="p">:</span>
         <span class="n">classes</span><span class="p">[</span><span class="n">sample</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;control&#39;</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">pass</span>
@@ -5506,7 +2550,7 @@ FGR          10.6328       11.3029        9.6115
     <tr>
       <th>2</th>
       <td>gsea</td>
-      <td>Th17 cell differentiation</td>
+      <td>Th1 and Th2 cell differentiation</td>
       <td>0.735164</td>
       <td>1.659187</td>
       <td>0.096154</td>
@@ -5519,7 +2563,7 @@ FGR          10.6328       11.3029        9.6115
     <tr>
       <th>3</th>
       <td>gsea</td>
-      <td>Th1 and Th2 cell differentiation</td>
+      <td>Th17 cell differentiation</td>
       <td>0.735164</td>
       <td>1.659187</td>
       <td>0.096154</td>
@@ -5567,7 +2611,7 @@ FGR          10.6328       11.3029        9.6115
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/c00feafe91647bda1c6558ca58245ec86b152376fbebab0696a4ff68ed1605d7.png" src="../_images/c00feafe91647bda1c6558ca58245ec86b152376fbebab0696a4ff68ed1605d7.png" />
+<img alt="../_images/68cae591387adc9f09777ffc9132322c6c4e2ba2f0b9b12ea9dae42b888f8162.png" src="../_images/68cae591387adc9f09777ffc9132322c6c4e2ba2f0b9b12ea9dae42b888f8162.png" />
 </div>
 </div>
 <p>You can view and extract leading-edge genes from GSEA results. Leading-edge genes are the subset of genes that contribute most to the enrichment score.</p>
@@ -5642,7 +2686,7 @@ Name: Lead_genes, dtype: object
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[]
 </pre></div>
 </div>
-<img alt="../_images/a84afc4140b2ab7ce1ac90fc5e4d2180f15c950cdc806a777e53d205291cb15c.png" src="../_images/a84afc4140b2ab7ce1ac90fc5e4d2180f15c950cdc806a777e53d205291cb15c.png" />
+<img alt="../_images/212444e64e2596e7953ef117166a1425910fcf2c684a00d286e3dbafb48c4635.png" src="../_images/212444e64e2596e7953ef117166a1425910fcf2c684a00d286e3dbafb48c4635.png" />
 </div>
 </div>
 </section>
@@ -5706,7 +2750,7 @@ Name: Lead_genes, dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/95b55d3f033a033c8de6c411673a9f9492421991d2bff90b6a84a48da9f4e207.png" src="../_images/95b55d3f033a033c8de6c411673a9f9492421991d2bff90b6a84a48da9f4e207.png" />
+<img alt="../_images/d7b64b5b68296e79af1c1d95d8d4fbe5af3335df9f5c9466cb1e83250ac44853.png" src="../_images/d7b64b5b68296e79af1c1d95d8d4fbe5af3335df9f5c9466cb1e83250ac44853.png" />
 </div>
 </div>
 </section>
