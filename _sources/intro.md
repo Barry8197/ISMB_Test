@@ -70,7 +70,7 @@ We have developed a Jupyter Book containing all code and some extra materials to
   <div style="flex: 1; min-width: 250px; text-align: center;">
     <img src="sebestyen_kamp.jpg" alt="Profile Photo 1" style="width: 100px; height: 100px; border-radius: 50%;">
     <h3>Sebestyén Kamp</h3>
-    <p>Short bio for person 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    <p>I am a PhD student at the University of Edinburgh specialising in Graph Neural Networks (GNNs) and their applications in complex diseases, with a primary focus on omics data related to cancer and autism spectrum disorder.</p>
     <p>sebestyen.kamp@ed.ac.uk</p>
   </div>
 
