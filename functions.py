@@ -2,7 +2,9 @@
 # The idea is that we use this as a source from which we can pull functions we introduced in an earlier section
 
 import matplotlib.pyplot as plt
+import matplotlib.patches as Patch
 import matplotlib.patches as mpatches
+from matplotlib.lines import Line2D
 import astropy.stats
 from palettable import wesanderson
 import pandas as pd
@@ -15,9 +17,119 @@ import sklearn as sk
 import seaborn as sns
 from sklearn.metrics import precision_recall_curve , average_precision_score , recall_score ,  PrecisionRecallDisplay
 from tqdm.notebook import tqdm
+from datetime import datetime
 import torch.nn as nn
 import torch.nn.functional as F
 from dgl.nn import GraphConv
+from itertools import chain
+
+def get_edge_attributes(G):
+    """
+    Extracts edge attributes from a graph.
+
+    Args:
+        G (networkx.Graph): The graph from which to extract edge attributes.
+
+    Returns:
+        list: A list of edge attributes.
+
+    Raises:
+        ValueError: If the graph G is empty or not defined.
+    """
+    if not G:
+        raise ValueError("The graph is empty or not defined.")
+
+    # Extract edge attributes
+    edge_attributes = list(set(chain.from_iterable(d.keys() for *_, d in G.edges(data=True)))
+    )
+    return edge_attributes
+
+def draw_network_with_node_attrs(G, node_attributes, communities=None, title='Network Visualization', color_attr=None, shape_attr=None, figsize=(20,10), layout='spring', cmap_name='tab20', with_labels=False, savefig=False, save_path_prefix=''):
+    """
+    Draws a network graph with nodes colored and shaped based on their attributes, and optionally colored by community membership.
+
+    Args:
+        G (networkx.Graph): The graph to be drawn.
+        node_attributes (dict): A dictionary where keys are node names and values are dictionaries of attributes.
+        communities (List[List[Any]], optional): A list where each sublist contains the nodes belonging to a community. Default is None.
+        title (str, optional): The title of the plot. Default is 'Network Visualization'.
+        color_attr (str, optional): Node attribute to color nodes by. Default is None.
+        shape_attr (str, optional): Node attribute to shape nodes by. Default is None.
+        figsize (tuple, optional): The size of the figure. Default is (20, 10).
+        layout (str, optional): The layout algorithm for positioning nodes ('spring', 'circular', etc.). Default is 'spring'.
+        cmap_name (str, optional): The name of the colormap to use for coloring. Default is 'tab20'.
+        with_labels (bool, optional): Whether to draw labels for the nodes. Default is False.
+
+    Raises:
+        ValueError: If the graph G is empty or not defined.
+        ValueError: If node_attributes is empty or not defined.
+
+    The function draws the graph with nodes colored and/or shaped based on their attributes. If communities are provided, nodes are colored by their community memberships. A legend is added to indicate the mapping of attributes to colors and shapes.
+    """
+    
+    if not G:
+        raise ValueError("The graph is empty or not defined.")
+    if not node_attributes:
+        raise ValueError("Node attributes are empty or not defined.")
+
+    if communities:
+        community_dict = {node: idx for idx, community in enumerate(communities) for node in community}
+        node_attributes['community']=community_dict
+    
+    shapes = ['o', '^', 's', 'p', 'h', 'H', '8', 'd', 'D', 'v', '<', '>', 'P', '*', 'X']
+    cmap = plt.get_cmap(cmap_name)
+    
+    unique_attr_vals_color = list(set(node_attributes[color_attr].values())) if color_attr else []
+    color_map = {val: cmap(i / len(unique_attr_vals_color)) for i, val in enumerate(unique_attr_vals_color)}
+    node_colors_from_attribute = [color_map[node_attributes[color_attr][node]] for node in G.nodes()] if color_attr else ['blue']*len(list(G.nodes()))
+    
+    unique_attr_vals_shape = list(set(node_attributes[shape_attr].values())) if shape_attr else []
+    shape_map = {val: shapes[i] for i, val in enumerate(unique_attr_vals_shape)}
+    node_shapes_from_attribute = [shape_map[node_attributes[shape_attr][node]] if shape_attr else 'o' for node in G.nodes()]
+
+    plt.figure(figsize=figsize)
+    pos = getattr(nx, f'{layout}_layout')(G) if hasattr(nx, f'{layout}_layout') else nx.spring_layout(G)
+    
+    node_list_by_shape = {}
+    node_idx_list_by_shape = {}
+    for shape_marker in shapes[:len(unique_attr_vals_shape)]:
+        node_list_by_shape[shape_marker] = [node for node in list(G.nodes()) if shape_map[node_attributes[shape_attr][node]] == shape_marker]
+        node_idx_list_by_shape[shape_marker] = [node_idx for node_idx, node in enumerate(list(G.nodes())) if shape_map[node_attributes[shape_attr][node]] == shape_marker]
+    
+    for shape_marker, node_list in node_list_by_shape.items():
+        nx.draw_networkx_nodes(
+            G, pos,
+            nodelist=node_list_by_shape[shape_marker],
+            node_color=[node_colors_from_attribute[i] for i in node_idx_list_by_shape[shape_marker]],
+            node_shape=shape_marker,
+            node_size=400,
+            edgecolors='yellow'
+        )
+
+    nx.draw_networkx_edges(G, pos, width=0.5)
+    if with_labels:
+        nx.draw_networkx_labels(G, pos, font_size=12)
+
+    legend_fontsize = 14
+    if shape_attr:
+        shape_legend_handles = [Line2D([0], [0], marker=shape_map[val], color='w', label=f'{val}', markerfacecolor='k', markersize=10) for val in unique_attr_vals_shape]
+        leg1 = plt.legend(handles=shape_legend_handles, title=f"{shape_attr.capitalize()} (Shape)", loc='upper left', bbox_to_anchor=(1, 0.5), fontsize=legend_fontsize, title_fontsize=legend_fontsize)
+    if color_attr:
+        color_legend_handles = [mpatches.Patch(facecolor=color_map[val], label=f'{color_attr} {val}') for val in unique_attr_vals_color]
+        leg2 = plt.legend(handles=color_legend_handles, title=f"{color_attr.capitalize()} (Color)", loc='upper left', bbox_to_anchor=(1, 1), fontsize=legend_fontsize, title_fontsize=legend_fontsize)
+    if shape_attr:
+        plt.gca().add_artist(leg1)
+    plt.title(title, fontsize=20)
+    
+    save_path = None
+    if savefig:
+        time_string = datetime.now().strftime('%Y%m%d_%H%M%S')
+        save_path = save_path_prefix + f'_{time_string}.png' if save_path_prefix else f'net_image_{time_string}.png' 
+        plt.savefig(save_path)
+        
+    plt.show()
+    
+    return save_path
 
 def message_passing(node, G):
     """
