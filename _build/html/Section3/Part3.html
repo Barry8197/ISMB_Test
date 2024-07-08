@@ -1,12 +1,13 @@
 
+
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Part 3 : Smoking Network Classification using Graph Convolutional Networks &#8212; ISMB Tutorial Book</title>
   
@@ -18,45 +19,49 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
-  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
-    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js?v=36754332"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'Section3/Part3';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -71,9 +76,10 @@
 
   
   
-  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
+
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>
@@ -114,14 +120,11 @@
 </form></div>
   </div>
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar">
-    </header>
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
   
-
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
-      
-      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -155,18 +158,7 @@
   
   
 </a></div>
-        <div class="sidebar-primary-item">
-
- <script>
- document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
-        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -179,7 +171,7 @@
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../GettingStarted.html">Getting Started</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../Section1_intro.html">Section 1 - Network Basics</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../Section1/Section1.html">Part 1 - Introduction to Biomedical Networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Section1/Part1.html">Part 1 - Introduction to Biomedical Networks</a></li>
 
 
 
@@ -196,7 +188,7 @@
 
 
 
-<li class="toctree-l2"><a class="reference internal" href="../Section1/Section1-PSN.html">Part 2 - Patient similarity networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Section1/Part2.html">Part 2 - Patient similarity networks</a></li>
 
 </ul>
 </li>
@@ -209,7 +201,7 @@
 <li class="toctree-l2"><a class="reference internal" href="Part1.html"><font color="darkblue"> Part 1 : Message Passing </font></a></li>
 <li class="toctree-l2"><a class="reference internal" href="Part2.html"><font color="darkblue"> Part 2 : Problem Formulation / Patient Similarity Network Generation </font></a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#"><font color="darkblue"> Part 3 : Smoking Network Classification using Graph Convolutional Networks</font></a></li>
-<li class="toctree-l2"><a class="reference internal" href="Part4.html"><font color="darkblue"> Part 4 : Similarity Network Fusion with Graph Convolutional Networks</font></a></li>
+<li class="toctree-l2"><a class="reference internal" href="Part4.html">Part 4 : Similarity Network Fusion with Graph Convolutional Networks</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../ConceptGlossary.html">Concept Glossary</a></li>
@@ -409,11 +401,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-functions-and-packages"><font color="darkblue">Import Functions and Packages </font></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data-and-network"><font color="darkblue"> Load Data and Network </font></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-deep-graph-library"><font color="darkblue"> Working with Deep Graph Library</font></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-convolutional-network"><font color="darkblue">Graph Convolutional Network </font></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-evaluation"><font color="darkblue"> Training &amp; Evaluation </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-import-functions-and-packages-font"><font color="darkblue">Import Functions and Packages </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-load-data-and-network-font"><font color="darkblue"> Load Data and Network </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-working-with-deep-graph-library-font"><font color="darkblue"> Working with Deep Graph Library</font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-graph-convolutional-network-font"><font color="darkblue">Graph Convolutional Network </font></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-training-evaluation-font"><font color="darkblue"> Training &amp; Evaluation </font></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#train-the-model">Train the Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#we-are-going-to-compare-our-model-to-a-logistic-regression-baseline">We are going to compare our model to a Logistic Regression Baseline</a></li>
 </ul>
 </li>
 </ul>
@@ -425,10 +419,10 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article">
+                <article class="bd-article" role="main">
                   
-  <section id="part-3-smoking-network-classification-using-graph-convolutional-networks">
-<h1><font color='darkblue'> Part 3 : Smoking Network Classification using Graph Convolutional Networks</font><a class="headerlink" href="#part-3-smoking-network-classification-using-graph-convolutional-networks" title="Link to this heading">#</a></h1>
+  <section id="font-color-darkblue-part-3-smoking-network-classification-using-graph-convolutional-networks-font">
+<h1><font color='darkblue'> Part 3 : Smoking Network Classification using Graph Convolutional Networks</font><a class="headerlink" href="#font-color-darkblue-part-3-smoking-network-classification-using-graph-convolutional-networks-font" title="Permalink to this heading">#</a></h1>
 <p>In this part we will work with a Graph Convolutional Network (GCN).</p>
 <p>In the previous part we formulated a task to predict whether individuals in the Generation Scotland Dataset have ever smoked.</p>
 <p>We generated a patient similarity network from CpG sites which are known to be associated with smoking. We will also work with the patient similarity network generated in section 1.</p>
@@ -442,8 +436,8 @@ We will now highlight the difference between our two networks to see if we can l
 <li><p>Comparing the performance of PSN’s</p></li>
 <li><p>Comparing the performance of GCN to simple linear regression</p></li>
 </ul>
-<section id="import-functions-and-packages">
-<h2><font color='darkblue'>Import Functions and Packages </font><a class="headerlink" href="#import-functions-and-packages" title="Link to this heading">#</a></h2>
+<section id="font-color-darkblue-import-functions-and-packages-font">
+<h2><font color='darkblue'>Import Functions and Packages </font><a class="headerlink" href="#font-color-darkblue-import-functions-and-packages-font" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
@@ -459,8 +453,8 @@ We will now highlight the difference between our two networks to see if we can l
 </div>
 </div>
 </section>
-<section id="load-data-and-network">
-<h2><font color='darkblue'> Load Data and Network </font><a class="headerlink" href="#load-data-and-network" title="Link to this heading">#</a></h2>
+<section id="font-color-darkblue-load-data-and-network-font">
+<h2><font color='darkblue'> Load Data and Network </font><a class="headerlink" href="#font-color-darkblue-load-data-and-network-font" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the data using pickle</span>
@@ -471,14 +465,26 @@ We will now highlight the difference between our two networks to see if we can l
 </div>
 </div>
 </section>
-<section id="working-with-deep-graph-library">
-<h2><font color='darkblue'> Working with <a class="reference external" href="https://www.dgl.ai/">Deep Graph Library</a></font><a class="headerlink" href="#working-with-deep-graph-library" title="Link to this heading">#</a></h2>
+<section id="font-color-darkblue-working-with-deep-graph-library-font">
+<h2><font color='darkblue'> Working with <a class="reference external" href="https://www.dgl.ai/">Deep Graph Library</a></font><a class="headerlink" href="#font-color-darkblue-working-with-deep-graph-library-font" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;DGLBACKEND&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;pytorch&quot;</span>
 <span class="kn">import</span> <span class="nn">dgl</span>
 <span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">#################################################</span>
+<span class="sd">                YOUR CODE HERE</span>
+<span class="sd">#################################################</span>
+<span class="sd">Create a DGL graph from the networkx graph </span>
+
+<span class="sd">Add the features to the nodes, ensuring the order of the </span>
+<span class="sd">features matches the order of the nodes. </span>
+
+<span class="sd">Note : DGL only accepts torch.Tensors as feature attributes</span>
+<span class="sd">&#39;&#39;&#39;</span>
 
 <span class="n">g</span> <span class="o">=</span> <span class="n">dgl</span><span class="o">.</span><span class="n">from_networkx</span><span class="p">(</span><span class="n">loaded_data</span><span class="p">[</span><span class="s1">&#39;PSN_EWAS&#39;</span><span class="p">]</span> <span class="p">,</span> <span class="n">node_attrs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;idx&#39;</span> <span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">])</span> <span class="c1"># Create a DGL graph from the networkx graph</span>
 <span class="n">g</span><span class="o">.</span><span class="n">ndata</span><span class="p">[</span><span class="s1">&#39;feat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">loaded_data</span><span class="p">[</span><span class="s1">&#39;Feat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">ndata</span><span class="p">[</span><span class="s1">&#39;idx&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="c1"># Add the features to the nodes</span>
@@ -496,8 +502,12 @@ We will now highlight the difference between our two networks to see if we can l
 <span class="n">node_0_edges</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">e1</span> <span class="p">,</span> <span class="n">e2</span> <span class="ow">in</span> <span class="n">loaded_data</span><span class="p">[</span><span class="s1">&#39;PSN_EWAS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">node_0</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="p">:</span>  <span class="c1"># Get the edges of this node in the networkx graph</span>
     <span class="n">node_0_edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e2</span><span class="p">)</span>
-        
-<span class="c1"># Note : DGL will reorder the nodes if integers present in the node name</span>
+<span class="w">        </span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">###########################################################################</span>
+<span class="sd">Note : DGL will reorder the nodes if integers are present in the node name</span>
+<span class="sd">###########################################################################</span>
+<span class="sd">&#39;&#39;&#39;</span>
 
 <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">phenotypes</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">ndata</span><span class="p">[</span><span class="s1">&#39;idx&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">out_edges</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()]</span><span class="o">.</span><span class="n">index</span><span class="p">))</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">node_0_edges</span><span class="p">)</span> <span class="c1"># Check if the edges match between the networkx and dgl graph</span>
 </pre></div>
@@ -510,8 +520,8 @@ We will now highlight the difference between our two networks to see if we can l
 </div>
 </div>
 </section>
-<section id="graph-convolutional-network">
-<h2><font color='darkblue'>Graph Convolutional Network </font><a class="headerlink" href="#graph-convolutional-network" title="Link to this heading">#</a></h2>
+<section id="font-color-darkblue-graph-convolutional-network-font">
+<h2><font color='darkblue'>Graph Convolutional Network </font><a class="headerlink" href="#font-color-darkblue-graph-convolutional-network-font" title="Permalink to this heading">#</a></h2>
 <p>Here we will specify the layers of the GCN model using the <a class="reference external" href="https://docs.dgl.ai/en/2.0.x/generated/dgl.nn.pytorch.conv.GraphConv.html">GraphConv</a> class from DGL.</p>
 <p>See <a class="reference external" href="https://www.w3schools.com/python/python_classes.asp">Object Oriented Programming</a> for more information on building classes in python.</p>
 <p>See <a class="reference external" href="https://docs.dgl.ai/en/2.0.x/generated/dgl.nn.pytorch.conv.GraphConv.html">GraphConv</a> for more documentation on the class.</p>
@@ -580,8 +590,8 @@ We will now highlight the difference between our two networks to see if we can l
 </div>
 </div>
 </div>
-<section id="training-evaluation">
-<h3><font color='darkblue'> Training &amp; Evaluation </font><a class="headerlink" href="#training-evaluation" title="Link to this heading">#</a></h3>
+<section id="font-color-darkblue-training-evaluation-font">
+<h3><font color='darkblue'> Training &amp; Evaluation </font><a class="headerlink" href="#font-color-darkblue-training-evaluation-font" title="Permalink to this heading">#</a></h3>
 <p>We need to define training and evaluation functions for our GCN model. The code provided follows the outline defined in Chapter 6 of <a class="reference external" href="https://www.cs.mcgill.ca/~wlh/grl_book/">Hamilton’s book</a> for training GNN’s.</p>
 <p>The code below is fully operational and provided for practical demonstration. Similar examples of GNN training functions are provided by DGL in their <a class="reference external" href="https://docs.dgl.ai/tutorials/blitz/index.html">Blitz Introduction</a></p>
 <p>In these functions we implement <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html">Cross Entropy Loss</a> for multi-class classification. We use the <a class="reference external" href="https://pytorch.org/docs/stable/optim.html#torch.optim.Adam">Adam Optimizer</a> to update the model parameters and we use the <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.StepLR.html">StepLR</a> function to decay the learning rate</p>
@@ -593,6 +603,7 @@ We will now highlight the difference between our two networks to see if we can l
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">precision_recall_curve</span> <span class="p">,</span> <span class="n">average_precision_score</span> <span class="p">,</span> <span class="n">recall_score</span> <span class="p">,</span>  <span class="n">PrecisionRecallDisplay</span>
 <span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">train_split</span> <span class="p">,</span> <span class="n">val_split</span> <span class="p">,</span> <span class="n">device</span> <span class="p">,</span>  <span class="n">model</span> <span class="p">,</span> <span class="n">labels</span> <span class="p">,</span> <span class="n">epochs</span> <span class="p">,</span> <span class="n">lr</span><span class="p">):</span>
     <span class="c1"># loss function, optimizer and scheduler</span>
@@ -692,8 +703,20 @@ We will now highlight the difference between our two networks to see if we can l
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">#################################################</span>
+<span class="sd">               YOUR CODE HERE</span>
+<span class="sd">#################################################</span>
 
+<span class="sd">Here we are going to prepare our data for input to the </span>
+<span class="sd">Graph Convoloution Network</span>
+
+<span class="sd">1. Move the graph to the relevant device - GPU/CPU</span>
+<span class="sd">2. Get the node labels from the meta data, order by network nodes and reset the index</span>
+<span class="sd">3. Specify the input shape to the model from the shape of the input data</span>
+<span class="sd">4. One hot encode the node labels using torch.nn.functional.one_hot()</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
 <span class="n">device</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;cuda&#39;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;cpu&#39;</span><span class="p">)</span> <span class="c1"># Set the device to GPU if available else CPU</span>
 
 <span class="n">g</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span> <span class="c1"># Move the graph to the device</span>
@@ -705,8 +728,16 @@ We will now highlight the difference between our two networks to see if we can l
 <span class="n">GCN_input_shapes</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">ndata</span><span class="p">[</span><span class="s1">&#39;feat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># Get the input shape of the GCN model</span>
 
 <span class="n">labels</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">one_hot</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">ndata</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">int64</span><span class="p">))</span> <span class="c1"># Encode the labels as one hot vectors</span>
-
-<span class="n">output_metrics</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="train-the-model">
+<h3>Train the Model<a class="headerlink" href="#train-the-model" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">output_metrics</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">logits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
 <span class="n">labels_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
 
@@ -743,18 +774,21 @@ We will now highlight the difference between our two networks to see if we can l
   )
   (drop): Dropout(p=0.1, inplace=False)
 )
-Graph(num_nodes=1000, num_edges=39616,
+Graph(num_nodes=1000, num_edges=38940,
       ndata_schemes={&#39;idx&#39;: Scheme(shape=(), dtype=torch.int64), &#39;label&#39;: Scheme(shape=(), dtype=torch.int8), &#39;feat&#39;: Scheme(shape=(23676,), dtype=torch.float32)}
       edata_schemes={})
 </pre></div>
 </div>
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "41a168cf2fae45c1bfffb760b28336b9", "version_major": 2, "version_minor": 0}</script><img alt="../_images/fa17f19e3558d4c98d1e3eb0edbd542608099323ef507929a1f9b26bbf279923.png" src="../_images/fa17f19e3558d4c98d1e3eb0edbd542608099323ef507929a1f9b26bbf279923.png" />
-<img alt="../_images/b7a668cbd52a730a4f6c7d9638a52d8cd9785c5160b45b2f6a60449825e83640.png" src="../_images/b7a668cbd52a730a4f6c7d9638a52d8cd9785c5160b45b2f6a60449825e83640.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GNN Model | Test Accuracy = 0.7125 | F1 = 0.6816 |
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "8acbd8fdac9f437f8a5d5a796bdfa9f5", "version_major": 2, "version_minor": 0}</script><img alt="../_images/632bfa90a30d71db6541c8df831c9124fe180a7abc8dcc090e54b42cc2b2b856.png" src="../_images/632bfa90a30d71db6541c8df831c9124fe180a7abc8dcc090e54b42cc2b2b856.png" />
+<img alt="../_images/4b89320ee3911b0f236c41d7a366e98c6146ab507aa3b6369d564f23f978393f.png" src="../_images/4b89320ee3911b0f236c41d7a366e98c6146ab507aa3b6369d564f23f978393f.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GNN Model | Test Accuracy = 0.6600 | F1 = 0.6316 |
 </pre></div>
 </div>
 </div>
 </div>
+</section>
+<section id="we-are-going-to-compare-our-model-to-a-logistic-regression-baseline">
+<h3>We are going to compare our model to a Logistic Regression Baseline<a class="headerlink" href="#we-are-going-to-compare-our-model-to-a-logistic-regression-baseline" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span> <span class="c1"># Import the logistic regression model from sklearn</span>
@@ -770,10 +804,10 @@ Graph(num_nodes=1000, num_edges=39616,
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Baseline Logistic Regression ACC : 0.745
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Baseline Logistic Regression ACC : 0.7625
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\Barry\anaconda3\lib\site-packages\sklearn\linear_model\_sag.py:350: ConvergenceWarning: The max_iter was reached which means the coef_ did not converge
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/bryan/.conda/envs/bryanISMB/lib/python3.8/site-packages/sklearn/linear_model/_sag.py:350: ConvergenceWarning: The max_iter was reached which means the coef_ did not converge
   warnings.warn(
 </pre></div>
 </div>
@@ -830,7 +864,7 @@ Graph(num_nodes=1000, num_edges=39616,
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><font color='darkblue'> Part 4 : Similarity Network Fusion with Graph Convolutional Networks</font></p>
+        <p class="prev-next-title">Part 4 : Similarity Network Fusion with Graph Convolutional Networks</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -843,18 +877,19 @@ Graph(num_nodes=1000, num_edges=39616,
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
-
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-functions-and-packages"><font color="darkblue">Import Functions and Packages </font></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data-and-network"><font color="darkblue"> Load Data and Network </font></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-deep-graph-library"><font color="darkblue"> Working with Deep Graph Library</font></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-convolutional-network"><font color="darkblue">Graph Convolutional Network </font></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-evaluation"><font color="darkblue"> Training &amp; Evaluation </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-import-functions-and-packages-font"><font color="darkblue">Import Functions and Packages </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-load-data-and-network-font"><font color="darkblue"> Load Data and Network </font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-working-with-deep-graph-library-font"><font color="darkblue"> Working with Deep Graph Library</font></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-graph-convolutional-network-font"><font color="darkblue">Graph Convolutional Network </font></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#font-color-darkblue-training-evaluation-font"><font color="darkblue"> Training &amp; Evaluation </font></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#train-the-model">Train the Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#we-are-going-to-compare-our-model-to-a-logistic-regression-baseline">We are going to compare our model to a Logistic Regression Baseline</a></li>
 </ul>
 </li>
 </ul>
@@ -881,7 +916,7 @@ By https://biomedicalinformaticsgroup.github.io/
 
   <p class="copyright">
     
-      © Copyright 2023.
+      © Copyright 2022.
       <br/>
     
   </p>
@@ -905,8 +940,8 @@ By https://biomedicalinformaticsgroup.github.io/
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
   <footer class="bd-footer">
   </footer>
