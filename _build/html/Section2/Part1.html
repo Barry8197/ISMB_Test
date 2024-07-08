@@ -501,9 +501,12 @@ document.write(`
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define paths to .gml network files from Section 1</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">intermediate_data_dir</span> <span class="o">=</span> <span class="s1">&#39;/data/intermediate/&#39;</span>
+<span class="n">raw_data_dir</span> <span class="o">=</span> <span class="s1">&#39;/data/raw/&#39;</span>
+
+<span class="c1"># Define paths to .gml network files from Section 1</span>
 <span class="c1"># These paths point to the Gene correlation network, Patient network from (1) TCGA gene expression data and (2) TCGA DNA methylation data.</span>
-<span class="n">G_gxp_path</span> <span class="o">=</span> <span class="s1">&#39;section2_data/section2_networks_v1/gene_coexpression_network.gml&#39;</span>
+<span class="n">G_gxp_path</span> <span class="o">=</span> <span class="n">intermediate_data_dir</span> <span class="o">+</span> <span class="s1">&#39;section2_networks_v1/gene_coexpression_network.gml&#39;</span>
 
 <span class="c1"># Load the GML graphs into NetworkX graph objects</span>
 <span class="c1"># nx.read_gml() function reads a graph from a GML file</span>
@@ -515,7 +518,7 @@ document.write(`
 
 <span class="c1"># Define paths to the raw TCGA datasets</span>
 <span class="c1"># tcga_dnam_path = &#39;section2_data/ISMB_TCGA_DNAm.pkl&#39;  # TCGA DNA methylation data</span>
-<span class="n">tcga_gxp_path</span> <span class="o">=</span> <span class="s1">&#39;section2_data/ISMB_TCGA_GE.pkl&#39;</span>  <span class="c1"># TCGA Gene expression data</span>
+<span class="n">tcga_gxp_path</span> <span class="o">=</span> <span class="n">raw_data_dir</span> <span class="o">+</span> <span class="s1">&#39;ISMB_TCGA_GE.pkl&#39;</span>  <span class="c1"># TCGA Gene expression data</span>
 
 <span class="c1"># Load the gene expression dataset</span>
 <span class="c1"># pd.read_pickle() function loads a pickled pandas DataFrame or Series</span>
@@ -523,7 +526,7 @@ document.write(`
 
 <span class="c1"># For this example, we&#39;ll use a CSV file that includes gene symbols</span>
 <span class="c1"># pd.read_csv() function loads a CSV file into a pandas DataFrame</span>
-<span class="n">tcga_gxp_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;section2_data/tcga_ge_df_symbols_t.csv&#39;</span><span class="p">)</span>  <span class="c1"># Dataset with gene symbols</span>
+<span class="n">tcga_gxp_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">intermediate_data_dir</span> <span class="o">+</span> <span class="s1">&#39;tcga_ge_df_symbols_t.csv&#39;</span><span class="p">)</span> <span class="c1"># Dataset with gene symbols</span>
 <span class="c1"># Set &#39;GENES&#39; column as the index for easy access to gene-specific data</span>
 <span class="n">tcga_gxp_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;GENES&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
