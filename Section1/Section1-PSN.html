@@ -196,10 +196,6 @@
 
 
 
-
-
-
-
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Patient similarity network</a></li>
 
 </ul>
@@ -414,7 +410,10 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Patient similarity network</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dnameth-pn">DNAmeth PN</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dna-methylation-based-patient-similarity-network">DNA methylation based Patient Similarity Network</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task">Task</a></li>
+</ul>
+</li>
 </ul>
 
             </nav>
@@ -459,8 +458,8 @@ document.write(`
 </div>
 <ul class="simple">
 <li><p>Based on the same expression matrix we can create a patient similarity network.</p></li>
-<li><p>By transposing the matrix will switch the rows and columns,</p></li>
-<li><p>meaning that patients will become the rows and genes will become the columns.</p></li>
+<li><p>Transposing the matrix will switch the rows and columns,</p></li>
+<li><p>meaning that patients will become the columns instead of genes</p></li>
 <li><p>By doing this, you can compute the correlation (or similarity) between patients based on their gene expression profiles,</p></li>
 <li><p>and then create a network where nodes represent patients and edges represent similarities.</p></li>
 </ul>
@@ -1009,137 +1008,12 @@ document.write(`
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">save_graphs</span><span class="p">(</span><span class="n">correlation_matrices_dict</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">,</span> <span class="n">matrix_names</span><span class="p">):</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">data_dir</span><span class="p">):</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
-    
-    <span class="c1"># Define parameter combinations</span>
-    <span class="n">thresholds</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">]</span>
-    <span class="n">k_values</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
-    <span class="n">degree_thresholds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="n">keep_largest_component_options</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">]</span>
-
-    <span class="k">for</span> <span class="n">matrix_name</span> <span class="ow">in</span> <span class="n">matrix_names</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">matrix_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">correlation_matrices_dict</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Matrix </span><span class="si">{</span><span class="n">matrix_name</span><span class="si">}</span><span class="s2"> not found in the provided dictionary. Skipping...&quot;</span><span class="p">)</span>
-            <span class="k">continue</span>
-        
-        <span class="n">correlation_matrix</span> <span class="o">=</span> <span class="n">correlation_matrices_dict</span><span class="p">[</span><span class="n">matrix_name</span><span class="p">]</span>
-        
-        <span class="k">for</span> <span class="n">threshold</span> <span class="ow">in</span> <span class="n">thresholds</span><span class="p">:</span>
-            <span class="c1"># Create the initial graph from the correlation matrix</span>
-            <span class="n">initial_graph</span> <span class="o">=</span> <span class="n">create_graph_from_correlation</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span><span class="p">)</span>
-            
-            <span class="k">for</span> <span class="n">degree_threshold</span> <span class="ow">in</span> <span class="n">degree_thresholds</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">keep_largest_component</span> <span class="ow">in</span> <span class="n">keep_largest_component_options</span><span class="p">:</span>
-                    <span class="c1"># Clean the graph</span>
-                    <span class="n">cleaned_graph</span> <span class="o">=</span> <span class="n">clean_graph</span><span class="p">(</span><span class="n">initial_graph</span><span class="p">,</span> <span class="n">degree_threshold</span><span class="o">=</span><span class="n">degree_threshold</span><span class="p">,</span> <span class="n">keep_largest_component</span><span class="o">=</span><span class="n">keep_largest_component</span><span class="p">)</span>
-                    
-                    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">k_values</span><span class="p">:</span>
-                        <span class="c1"># Sparsify the graph using KNN</span>
-                        <span class="n">sparsified_graph</span> <span class="o">=</span> <span class="n">knn_sparsification</span><span class="p">(</span><span class="n">cleaned_graph</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
-                        
-                        <span class="c1"># Calculate the average clustering coefficient</span>
-                        <span class="n">avg_clustering</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">average_clustering</span><span class="p">(</span><span class="n">sparsified_graph</span><span class="p">)</span>
-                        
-                        <span class="c1"># Construct the filename with relevant information</span>
-                        <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">matrix_name</span><span class="si">}</span><span class="s2">_network_threshold_</span><span class="si">{</span><span class="n">threshold</span><span class="si">}</span><span class="s2">_k_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">_degree_</span><span class="si">{</span><span class="n">degree_threshold</span><span class="si">}</span><span class="s2">_largest_</span><span class="si">{</span><span class="n">keep_largest_component</span><span class="si">}</span><span class="s2">_clustering_</span><span class="si">{</span><span class="n">avg_clustering</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">.gml&quot;</span>
-                        <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-                        
-                        <span class="c1"># Save the graph to a GML file</span>
-                        <span class="n">nx</span><span class="o">.</span><span class="n">write_gml</span><span class="p">(</span><span class="n">sparsified_graph</span><span class="p">,</span> <span class="n">filepath</span><span class="p">)</span>
-                        
-                        <span class="c1"># Print the details</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saved: </span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">correlation_matrices_dict</span><span class="p">,</span> <span class="n">matrix_names</span><span class="p">):</span>
-    <span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;../../ismb_data/05072024/PSN-Met&#39;</span>  <span class="c1"># Adjust the directory path as needed</span>
-    <span class="n">save_graphs</span><span class="p">(</span><span class="n">correlation_matrices_dict</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">,</span> <span class="n">matrix_names</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="c1"># correlation_matrices_dict = {</span>
-    <span class="c1">#     &#39;pearson&#39;: pd.DataFrame(),  # Replace with actual data</span>
-    <span class="c1">#     &#39;spearman&#39;: pd.DataFrame()  # Replace with actual data if needed</span>
-    <span class="c1"># }</span>
-    <span class="n">matrix_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;pearson&#39;</span><span class="p">]</span>  <span class="c1"># Replace with the desired correlation matrix names</span>
-    <span class="n">main</span><span class="p">(</span><span class="n">p_meth_correlation_matrices</span><span class="p">,</span> <span class="n">matrix_names</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.6_k_3_degree_0_largest_False_clustering_0.21.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.6_k_5_degree_0_largest_False_clustering_0.25.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.6_k_7_degree_0_largest_False_clustering_0.27.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.6_k_10_degree_0_largest_False_clustering_0.30.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.6_k_3_degree_0_largest_True_clustering_0.21.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.6_k_5_degree_0_largest_True_clustering_0.25.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.6_k_7_degree_0_largest_True_clustering_0.27.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.6_k_10_degree_0_largest_True_clustering_0.30.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.6_k_3_degree_1_largest_False_clustering_0.21.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.6_k_5_degree_1_largest_False_clustering_0.25.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.6_k_7_degree_1_largest_False_clustering_0.27.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.6_k_10_degree_1_largest_False_clustering_0.30.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.6_k_3_degree_1_largest_True_clustering_0.21.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.6_k_5_degree_1_largest_True_clustering_0.25.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.6_k_7_degree_1_largest_True_clustering_0.27.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.6_k_10_degree_1_largest_True_clustering_0.30.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.7_k_3_degree_0_largest_False_clustering_0.20.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.7_k_5_degree_0_largest_False_clustering_0.25.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.7_k_7_degree_0_largest_False_clustering_0.27.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.7_k_10_degree_0_largest_False_clustering_0.31.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.7_k_3_degree_0_largest_True_clustering_0.20.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.7_k_5_degree_0_largest_True_clustering_0.25.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.7_k_7_degree_0_largest_True_clustering_0.27.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.7_k_10_degree_0_largest_True_clustering_0.31.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.7_k_3_degree_1_largest_False_clustering_0.20.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.7_k_5_degree_1_largest_False_clustering_0.25.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.7_k_7_degree_1_largest_False_clustering_0.27.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.7_k_10_degree_1_largest_False_clustering_0.31.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.7_k_3_degree_1_largest_True_clustering_0.20.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.7_k_5_degree_1_largest_True_clustering_0.25.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.7_k_7_degree_1_largest_True_clustering_0.27.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.7_k_10_degree_1_largest_True_clustering_0.31.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.8_k_3_degree_0_largest_False_clustering_0.21.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.8_k_5_degree_0_largest_False_clustering_0.25.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.8_k_7_degree_0_largest_False_clustering_0.28.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.8_k_10_degree_0_largest_False_clustering_0.32.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.8_k_3_degree_0_largest_True_clustering_0.21.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.8_k_5_degree_0_largest_True_clustering_0.25.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.8_k_7_degree_0_largest_True_clustering_0.28.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.8_k_10_degree_0_largest_True_clustering_0.32.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.8_k_3_degree_1_largest_False_clustering_0.21.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.8_k_5_degree_1_largest_False_clustering_0.25.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.8_k_7_degree_1_largest_False_clustering_0.28.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.8_k_10_degree_1_largest_False_clustering_0.32.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.8_k_3_degree_1_largest_True_clustering_0.21.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.8_k_5_degree_1_largest_True_clustering_0.25.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.8_k_7_degree_1_largest_True_clustering_0.28.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.8_k_10_degree_1_largest_True_clustering_0.32.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.9_k_3_degree_0_largest_False_clustering_0.22.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.9_k_5_degree_0_largest_False_clustering_0.27.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.9_k_7_degree_0_largest_False_clustering_0.30.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.9_k_10_degree_0_largest_False_clustering_0.35.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.9_k_3_degree_0_largest_True_clustering_0.22.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.9_k_5_degree_0_largest_True_clustering_0.27.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.9_k_7_degree_0_largest_True_clustering_0.31.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.9_k_10_degree_0_largest_True_clustering_0.36.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.9_k_3_degree_1_largest_False_clustering_0.22.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.9_k_5_degree_1_largest_False_clustering_0.27.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.9_k_7_degree_1_largest_False_clustering_0.30.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.9_k_10_degree_1_largest_False_clustering_0.35.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.9_k_3_degree_1_largest_True_clustering_0.22.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.9_k_5_degree_1_largest_True_clustering_0.27.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.9_k_7_degree_1_largest_True_clustering_0.31.gml
-Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.9_k_10_degree_1_largest_True_clustering_0.36.gml
-</pre></div>
-</div>
-</div>
-</div>
 </section>
-<section id="dnameth-pn">
-<h1>DNAmeth PN<a class="headerlink" href="#dnameth-pn" title="Link to this heading">#</a></h1>
+<section id="dna-methylation-based-patient-similarity-network">
+<h1>DNA methylation based Patient Similarity Network<a class="headerlink" href="#dna-methylation-based-patient-similarity-network" title="Link to this heading">#</a></h1>
+<section id="task">
+<h2>Task<a class="headerlink" href="#task" title="Link to this heading">#</a></h2>
+<p>In the second task, we are preparing an additional network for the same patients, this time based on DNA methylation data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the data using pickle</span>
@@ -1474,474 +1348,521 @@ Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.9_k_10_degre
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;datMeta&quot;</span><span class="p">][</span><span class="s2">&quot;patient&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">GE_data</span><span class="p">[</span><span class="s2">&quot;datMeta&quot;</span><span class="p">][</span><span class="s2">&quot;patient&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;TCGA-55-7914&#39;,
- &#39;TCGA-38-4631&#39;,
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;TCGA-38-7271&#39;,
+ &#39;TCGA-55-7914&#39;,
+ &#39;TCGA-95-7043&#39;,
  &#39;TCGA-73-4658&#39;,
+ &#39;TCGA-86-8076&#39;,
+ &#39;TCGA-55-7726&#39;,
+ &#39;TCGA-44-6147&#39;,
  &#39;TCGA-50-5932&#39;,
- &#39;TCGA-55-7576&#39;,
- &#39;TCGA-55-8615&#39;,
- &#39;TCGA-44-2655&#39;,
- &#39;TCGA-50-5939&#39;,
+ &#39;TCGA-44-2661&#39;,
  &#39;TCGA-86-7954&#39;,
+ &#39;TCGA-73-4662&#39;,
  &#39;TCGA-44-7671&#39;,
  &#39;TCGA-78-8660&#39;,
  &#39;TCGA-62-A46P&#39;,
  &#39;TCGA-55-6978&#39;,
- &#39;TCGA-86-8674&#39;,
- &#39;TCGA-55-A48Y&#39;,
- &#39;TCGA-78-8662&#39;,
- &#39;TCGA-50-5931&#39;,
- &#39;TCGA-55-8299&#39;,
- &#39;TCGA-62-8398&#39;,
- &#39;TCGA-44-5643&#39;,
+ &#39;TCGA-50-6592&#39;,
+ &#39;TCGA-38-4625&#39;,
+ &#39;TCGA-80-5611&#39;,
+ &#39;TCGA-86-8054&#39;,
+ &#39;TCGA-55-6986&#39;,
+ &#39;TCGA-L9-A5IP&#39;,
+ &#39;TCGA-69-7764&#39;,
+ &#39;TCGA-49-6744&#39;,
+ &#39;TCGA-75-5125&#39;,
+ &#39;TCGA-38-4626&#39;,
  &#39;TCGA-69-7763&#39;,
  &#39;TCGA-86-8279&#39;,
- &#39;TCGA-75-6214&#39;,
  &#39;TCGA-93-8067&#39;,
  &#39;TCGA-97-8179&#39;,
- &#39;TCGA-50-5944&#39;,
- &#39;TCGA-55-A48Z&#39;,
- &#39;TCGA-55-8089&#39;,
- &#39;TCGA-L9-A5IP&#39;,
- &#39;TCGA-MN-A4N5&#39;,
- &#39;TCGA-38-A44F&#39;,
- &#39;TCGA-MP-A4SW&#39;,
- &#39;TCGA-97-A4M6&#39;,
+ &#39;TCGA-55-A48Y&#39;,
  &#39;TCGA-86-8055&#39;,
  &#39;TCGA-91-6835&#39;,
- &#39;TCGA-55-A48X&#39;,
+ &#39;TCGA-55-6982&#39;,
+ &#39;TCGA-55-A4DF&#39;,
  &#39;TCGA-44-6774&#39;,
  &#39;TCGA-50-5066&#39;,
- &#39;TCGA-95-A4VN&#39;,
- &#39;TCGA-50-5930&#39;,
+ &#39;TCGA-05-5423&#39;,
+ &#39;TCGA-67-3774&#39;,
+ &#39;TCGA-97-A4M2&#39;,
+ &#39;TCGA-95-7567&#39;,
  &#39;TCGA-49-AAR0&#39;,
- &#39;TCGA-44-7672&#39;,
  &#39;TCGA-44-2656&#39;,
+ &#39;TCGA-53-7813&#39;,
  &#39;TCGA-O1-A52J&#39;,
- &#39;TCGA-62-8402&#39;,
- &#39;TCGA-55-6642&#39;,
- &#39;TCGA-69-8253&#39;,
- &#39;TCGA-44-7669&#39;,
- &#39;TCGA-86-8358&#39;,
- &#39;TCGA-L9-A444&#39;,
+ &#39;TCGA-35-4122&#39;,
+ &#39;TCGA-55-8092&#39;,
  &#39;TCGA-49-6761&#39;,
- &#39;TCGA-NJ-A4YQ&#39;,
+ &#39;TCGA-49-4507&#39;,
+ &#39;TCGA-55-7816&#39;,
+ &#39;TCGA-78-7145&#39;,
+ &#39;TCGA-55-6983&#39;,
  &#39;TCGA-53-7624&#39;,
- &#39;TCGA-78-7143&#39;,
- &#39;TCGA-L9-A7SV&#39;,
  &#39;TCGA-97-A4M3&#39;,
- &#39;TCGA-35-5375&#39;,
- &#39;TCGA-78-7163&#39;,
+ &#39;TCGA-50-5068&#39;,
  &#39;TCGA-78-8648&#39;,
+ &#39;TCGA-44-6778&#39;,
  &#39;TCGA-80-5608&#39;,
+ &#39;TCGA-86-8281&#39;,
  &#39;TCGA-MP-A4T6&#39;,
+ &#39;TCGA-55-8085&#39;,
+ &#39;TCGA-62-8399&#39;,
+ &#39;TCGA-97-A4M5&#39;,
  &#39;TCGA-97-7547&#39;,
  &#39;TCGA-05-5429&#39;,
- &#39;TCGA-86-A4P8&#39;,
- &#39;TCGA-44-6145&#39;,
+ &#39;TCGA-55-7994&#39;,
+ &#39;TCGA-55-8094&#39;,
  &#39;TCGA-05-4425&#39;,
+ &#39;TCGA-44-4112&#39;,
+ &#39;TCGA-49-6767&#39;,
  &#39;TCGA-49-4490&#39;,
+ &#39;TCGA-MP-A4T9&#39;,
+ &#39;TCGA-50-5942&#39;,
  &#39;TCGA-MP-A4SV&#39;,
  &#39;TCGA-49-AAR4&#39;,
- &#39;TCGA-44-8117&#39;,
- &#39;TCGA-62-8394&#39;,
- &#39;TCGA-86-8669&#39;,
+ &#39;TCGA-05-4397&#39;,
+ &#39;TCGA-44-A47A&#39;,
  &#39;TCGA-86-8359&#39;,
+ &#39;TCGA-78-7539&#39;,
  &#39;TCGA-MP-A4T8&#39;,
+ &#39;TCGA-99-8032&#39;,
  &#39;TCGA-50-6595&#39;,
- &#39;TCGA-44-7667&#39;,
- &#39;TCGA-NJ-A4YG&#39;,
  &#39;TCGA-55-6968&#39;,
  &#39;TCGA-44-8120&#39;,
  &#39;TCGA-55-8302&#39;,
  &#39;TCGA-99-8025&#39;,
  &#39;TCGA-64-1679&#39;,
- &#39;TCGA-50-6594&#39;,
- &#39;TCGA-38-4632&#39;,
- &#39;TCGA-86-8075&#39;,
- &#39;TCGA-MP-A4TF&#39;,
- &#39;TCGA-MP-A5C7&#39;,
- &#39;TCGA-MP-A4TJ&#39;,
- &#39;TCGA-NJ-A55O&#39;,
- &#39;TCGA-64-5778&#39;,
- &#39;TCGA-62-8397&#39;,
- &#39;TCGA-99-8033&#39;,
- &#39;TCGA-91-6849&#39;,
- &#39;TCGA-50-5049&#39;,
- &#39;TCGA-55-5899&#39;,
- &#39;TCGA-MP-A4TC&#39;,
- &#39;TCGA-86-7711&#39;,
- &#39;TCGA-91-6847&#39;,
- &#39;TCGA-97-8552&#39;,
- &#39;TCGA-50-6591&#39;,
- &#39;TCGA-05-5425&#39;,
- &#39;TCGA-86-7701&#39;,
- &#39;TCGA-55-6975&#39;,
- &#39;TCGA-44-7660&#39;,
- &#39;TCGA-69-7979&#39;,
- &#39;TCGA-55-A491&#39;,
- &#39;TCGA-75-6203&#39;,
- &#39;TCGA-L9-A743&#39;,
- &#39;TCGA-64-5815&#39;,
- &#39;TCGA-78-8655&#39;,
- &#39;TCGA-86-8278&#39;,
- &#39;TCGA-95-7039&#39;,
- &#39;TCGA-97-7941&#39;,
- &#39;TCGA-MP-A4TE&#39;,
- &#39;TCGA-44-2668&#39;,
- &#39;TCGA-69-7765&#39;,
- &#39;TCGA-86-8671&#39;,
- &#39;TCGA-78-7160&#39;,
- &#39;TCGA-75-6206&#39;,
- &#39;TCGA-55-7913&#39;,
- &#39;TCGA-67-6216&#39;,
- &#39;TCGA-MN-A4N4&#39;,
- &#39;TCGA-62-A46O&#39;,
- &#39;TCGA-55-7815&#39;,
- &#39;TCGA-55-7728&#39;,
- &#39;TCGA-97-A4M0&#39;,
- &#39;TCGA-05-5715&#39;,
- &#39;TCGA-50-6593&#39;,
- &#39;TCGA-44-5645&#39;,
- &#39;TCGA-86-6562&#39;,
- &#39;TCGA-55-A493&#39;,
- &#39;TCGA-69-8254&#39;,
- &#39;TCGA-50-5936&#39;,
- &#39;TCGA-86-8668&#39;,
- &#39;TCGA-50-5941&#39;,
- &#39;TCGA-97-8175&#39;,
- &#39;TCGA-69-7978&#39;,
- &#39;TCGA-78-7220&#39;,
- &#39;TCGA-62-A46V&#39;,
- &#39;TCGA-78-7167&#39;,
- &#39;TCGA-55-8616&#39;,
- &#39;TCGA-44-A4SS&#39;,
- &#39;TCGA-44-2665&#39;,
- &#39;TCGA-78-7146&#39;,
- &#39;TCGA-78-7155&#39;,
- &#39;TCGA-97-7937&#39;,
- &#39;TCGA-05-4410&#39;,
- &#39;TCGA-95-7948&#39;,
- &#39;TCGA-91-6836&#39;,
- &#39;TCGA-50-5935&#39;,
- &#39;TCGA-80-5607&#39;,
- &#39;TCGA-50-5072&#39;,
- &#39;TCGA-44-6146&#39;,
- &#39;TCGA-55-8511&#39;,
- &#39;TCGA-05-4396&#39;,
- &#39;TCGA-73-4676&#39;,
- &#39;TCGA-05-4405&#39;,
- &#39;TCGA-95-7562&#39;,
- &#39;TCGA-44-7661&#39;,
- &#39;TCGA-55-8619&#39;,
- &#39;TCGA-55-7724&#39;,
- &#39;TCGA-97-8172&#39;,
- &#39;TCGA-95-7947&#39;,
- &#39;TCGA-44-6144&#39;,
- &#39;TCGA-86-6851&#39;,
- &#39;TCGA-55-7911&#39;,
- &#39;TCGA-44-5644&#39;,
- &#39;TCGA-75-6211&#39;,
- &#39;TCGA-55-8512&#39;,
- &#39;TCGA-MP-A4T4&#39;,
- &#39;TCGA-78-7149&#39;,
- &#39;TCGA-75-5125&#39;,
- &#39;TCGA-55-6980&#39;,
- &#39;TCGA-S2-AA1A&#39;,
- &#39;TCGA-NJ-A4YP&#39;,
- &#39;TCGA-49-AAR9&#39;,
- &#39;TCGA-78-7145&#39;,
- &#39;TCGA-75-7031&#39;,
- &#39;TCGA-91-8499&#39;,
- &#39;TCGA-86-7953&#39;,
- &#39;TCGA-49-AARO&#39;,
- &#39;TCGA-55-7227&#39;,
- &#39;TCGA-55-7816&#39;,
- &#39;TCGA-55-6983&#39;,
- &#39;TCGA-86-7714&#39;,
- &#39;TCGA-55-8620&#39;,
- &#39;TCGA-49-AAR3&#39;,
- &#39;TCGA-69-8255&#39;,
- &#39;TCGA-75-6207&#39;,
- &#39;TCGA-50-5068&#39;,
- &#39;TCGA-62-A46Y&#39;,
- &#39;TCGA-NJ-A4YF&#39;,
- &#39;TCGA-91-6830&#39;,
- &#39;TCGA-44-6778&#39;,
- &#39;TCGA-86-8281&#39;,
- &#39;TCGA-62-8395&#39;,
- &#39;TCGA-55-8085&#39;,
- &#39;TCGA-97-A4M5&#39;,
- &#39;TCGA-62-8399&#39;,
- &#39;TCGA-91-8496&#39;,
- &#39;TCGA-55-7281&#39;,
- &#39;TCGA-44-4112&#39;,
- &#39;TCGA-55-7994&#39;,
- &#39;TCGA-69-A59K&#39;,
- &#39;TCGA-75-7025&#39;,
- &#39;TCGA-44-3918&#39;,
- &#39;TCGA-MP-A4T9&#39;,
- &#39;TCGA-69-7761&#39;,
- &#39;TCGA-97-7554&#39;,
- &#39;TCGA-50-6673&#39;,
- &#39;TCGA-55-A494&#39;,
- &#39;TCGA-55-7910&#39;,
- &#39;TCGA-05-4390&#39;,
- &#39;TCGA-44-7659&#39;,
- &#39;TCGA-NJ-A55A&#39;,
- &#39;TCGA-55-7727&#39;,
- &#39;TCGA-49-4514&#39;,
- &#39;TCGA-55-8508&#39;,
- &#39;TCGA-55-A490&#39;,
- &#39;TCGA-44-A4SU&#39;,
- &#39;TCGA-55-7907&#39;,
- &#39;TCGA-97-A4M1&#39;,
- &#39;TCGA-64-1681&#39;,
- &#39;TCGA-62-A46R&#39;,
- &#39;TCGA-97-A4M7&#39;,
- &#39;TCGA-50-5055&#39;,
- &#39;TCGA-50-5946&#39;,
- &#39;TCGA-86-7713&#39;,
- &#39;TCGA-86-8073&#39;,
- &#39;TCGA-49-AARE&#39;,
- &#39;TCGA-55-7283&#39;,
- &#39;TCGA-05-4415&#39;,
- &#39;TCGA-75-5147&#39;,
- &#39;TCGA-78-7154&#39;,
- &#39;TCGA-55-8507&#39;,
- &#39;TCGA-44-A47G&#39;,
- &#39;TCGA-78-7536&#39;,
- &#39;TCGA-91-6831&#39;,
- &#39;TCGA-49-4488&#39;,
- &#39;TCGA-75-7030&#39;,
- &#39;TCGA-86-A4JF&#39;,
- &#39;TCGA-44-2666&#39;,
- &#39;TCGA-62-A470&#39;,
- &#39;TCGA-78-7147&#39;,
- &#39;TCGA-55-6543&#39;,
- &#39;TCGA-55-6712&#39;,
- &#39;TCGA-91-A4BC&#39;,
- &#39;TCGA-55-8505&#39;,
- &#39;TCGA-MP-A4TK&#39;,
- &#39;TCGA-49-AAR2&#39;,
- &#39;TCGA-64-5774&#39;,
- &#39;TCGA-50-6590&#39;,
- &#39;TCGA-J2-8192&#39;,
- &#39;TCGA-78-7162&#39;,
- &#39;TCGA-80-5611&#39;,
- &#39;TCGA-73-A9RS&#39;,
- &#39;TCGA-97-7546&#39;,
- &#39;TCGA-49-6744&#39;,
- &#39;TCGA-78-8640&#39;,
- &#39;TCGA-86-8585&#39;,
- &#39;TCGA-55-6987&#39;,
- &#39;TCGA-L4-A4E5&#39;,
- &#39;TCGA-55-6982&#39;,
- &#39;TCGA-97-7553&#39;,
- &#39;TCGA-55-8090&#39;,
- &#39;TCGA-73-7498&#39;,
- &#39;TCGA-78-7540&#39;,
- &#39;TCGA-50-5051&#39;,
- &#39;TCGA-55-7284&#39;,
- &#39;TCGA-55-8621&#39;,
- &#39;TCGA-91-7771&#39;,
- &#39;TCGA-55-7725&#39;,
- &#39;TCGA-44-3917&#39;,
- &#39;TCGA-97-8177&#39;,
- &#39;TCGA-67-6217&#39;,
- &#39;TCGA-78-7166&#39;,
- &#39;TCGA-38-7271&#39;,
- &#39;TCGA-49-6742&#39;,
- &#39;TCGA-44-6147&#39;,
- &#39;TCGA-05-5420&#39;,
- &#39;TCGA-44-7670&#39;,
- &#39;TCGA-05-4427&#39;,
- &#39;TCGA-55-6981&#39;,
- &#39;TCGA-J2-A4AD&#39;,
- &#39;TCGA-50-6592&#39;,
- &#39;TCGA-91-6848&#39;,
- &#39;TCGA-50-6597&#39;,
- &#39;TCGA-05-4384&#39;,
- &#39;TCGA-44-2659&#39;,
- &#39;TCGA-44-6776&#39;,
- &#39;TCGA-44-8119&#39;,
- &#39;TCGA-55-8207&#39;,
- &#39;TCGA-38-6178&#39;,
- &#39;TCGA-J2-8194&#39;,
- &#39;TCGA-64-5775&#39;,
- &#39;TCGA-78-7633&#39;,
- &#39;TCGA-55-8203&#39;,
- &#39;TCGA-49-6745&#39;,
- &#39;TCGA-86-8076&#39;,
- &#39;TCGA-55-7726&#39;,
- &#39;TCGA-55-6979&#39;,
- &#39;TCGA-62-A471&#39;,
- &#39;TCGA-55-7573&#39;,
- &#39;TCGA-NJ-A7XG&#39;,
- &#39;TCGA-55-8091&#39;,
- &#39;TCGA-95-7043&#39;,
- &#39;TCGA-86-7955&#39;,
- &#39;TCGA-91-A4BD&#39;,
- &#39;TCGA-55-6986&#39;,
- &#39;TCGA-97-8176&#39;,
- &#39;TCGA-64-5779&#39;,
- &#39;TCGA-75-5146&#39;,
- &#39;TCGA-75-6212&#39;,
- &#39;TCGA-NJ-A4YI&#39;,
- &#39;TCGA-69-7764&#39;,
- &#39;TCGA-55-8096&#39;,
- &#39;TCGA-97-8171&#39;,
- &#39;TCGA-55-A492&#39;,
- &#39;TCGA-71-8520&#39;,
- &#39;TCGA-55-A57B&#39;,
- &#39;TCGA-L9-A443&#39;,
- &#39;TCGA-44-6775&#39;,
- &#39;TCGA-55-A4DG&#39;,
- &#39;TCGA-67-4679&#39;,
- &#39;TCGA-55-8506&#39;,
- &#39;TCGA-05-5428&#39;,
- &#39;TCGA-64-5781&#39;,
- &#39;TCGA-53-7813&#39;,
- &#39;TCGA-86-8056&#39;,
- &#39;TCGA-75-7027&#39;,
- &#39;TCGA-78-7535&#39;,
- &#39;TCGA-55-8092&#39;,
- &#39;TCGA-91-8497&#39;,
- &#39;TCGA-78-7158&#39;,
- &#39;TCGA-78-7159&#39;,
- &#39;TCGA-86-A4D0&#39;,
- &#39;TCGA-78-7537&#39;,
- &#39;TCGA-05-4424&#39;,
- &#39;TCGA-55-8514&#39;,
- &#39;TCGA-55-8094&#39;,
- &#39;TCGA-49-6767&#39;,
- &#39;TCGA-95-8494&#39;,
- &#39;TCGA-50-5942&#39;,
- &#39;TCGA-93-A4JQ&#39;,
- &#39;TCGA-73-7499&#39;,
- &#39;TCGA-50-5933&#39;,
- &#39;TCGA-MP-A4TH&#39;,
- &#39;TCGA-MN-A4N1&#39;,
- &#39;TCGA-55-7903&#39;,
- &#39;TCGA-55-8208&#39;,
- &#39;TCGA-50-7109&#39;,
  &#39;TCGA-95-8039&#39;,
  &#39;TCGA-44-A479&#39;,
- &#39;TCGA-55-6971&#39;,
- &#39;TCGA-55-8205&#39;,
- &#39;TCGA-55-8510&#39;,
- &#39;TCGA-99-7458&#39;,
- &#39;TCGA-49-AAQV&#39;,
- &#39;TCGA-49-AARR&#39;,
- &#39;TCGA-99-8028&#39;,
- &#39;TCGA-75-6205&#39;,
- &#39;TCGA-50-8459&#39;,
- &#39;TCGA-93-A4JN&#39;,
- &#39;TCGA-78-7150&#39;,
- &#39;TCGA-95-A4VP&#39;,
- &#39;TCGA-50-5045&#39;,
- &#39;TCGA-55-8513&#39;,
- &#39;TCGA-55-7574&#39;,
- &#39;TCGA-97-8547&#39;,
- &#39;TCGA-67-6215&#39;,
- &#39;TCGA-69-7973&#39;,
- &#39;TCGA-62-A46S&#39;,
- &#39;TCGA-62-A472&#39;,
- &#39;TCGA-55-6985&#39;,
- &#39;TCGA-J2-A4AG&#39;,
- &#39;TCGA-J2-A4AE&#39;,
- &#39;TCGA-93-7348&#39;,
- &#39;TCGA-55-8087&#39;,
- &#39;TCGA-97-A4LX&#39;,
- &#39;TCGA-78-7148&#39;,
- &#39;TCGA-78-7542&#39;,
- &#39;TCGA-97-7938&#39;,
- &#39;TCGA-4B-A93V&#39;,
- &#39;TCGA-93-7347&#39;,
- &#39;TCGA-55-6984&#39;,
- &#39;TCGA-MP-A4TI&#39;,
- &#39;TCGA-50-5044&#39;,
- &#39;TCGA-55-7570&#39;,
- &#39;TCGA-86-8054&#39;,
- &#39;TCGA-91-6829&#39;,
- &#39;TCGA-83-5908&#39;,
- &#39;TCGA-L4-A4E6&#39;,
- &#39;TCGA-97-7552&#39;,
- &#39;TCGA-93-A4JP&#39;,
- &#39;TCGA-55-A4DF&#39;,
- &#39;TCGA-MP-A4TD&#39;,
- &#39;TCGA-05-5423&#39;,
- &#39;TCGA-97-A4M2&#39;,
- &#39;TCGA-44-6777&#39;,
- &#39;TCGA-95-7567&#39;,
- &#39;TCGA-93-A4JO&#39;,
- &#39;TCGA-69-7974&#39;,
- &#39;TCGA-MP-A4T7&#39;,
- &#39;TCGA-86-8074&#39;,
- &#39;TCGA-71-6725&#39;,
- &#39;TCGA-50-8460&#39;,
- &#39;TCGA-62-A46U&#39;,
- &#39;TCGA-55-8204&#39;,
- &#39;TCGA-75-5122&#39;,
- &#39;TCGA-78-7156&#39;,
- &#39;TCGA-53-A4EZ&#39;,
- &#39;TCGA-55-6970&#39;,
- &#39;TCGA-44-A47A&#39;,
- &#39;TCGA-78-7539&#39;,
- &#39;TCGA-99-8032&#39;,
- &#39;TCGA-NJ-A55R&#39;,
- &#39;TCGA-69-7760&#39;,
  &#39;TCGA-44-6148&#39;,
- &#39;TCGA-78-7161&#39;,
- &#39;TCGA-86-A456&#39;,
- &#39;TCGA-97-8174&#39;,
- &#39;TCGA-MP-A4SY&#39;,
- &#39;TCGA-L9-A8F4&#39;,
- &#39;TCGA-75-5126&#39;,
- &#39;TCGA-MP-A4TA&#39;,
- &#39;TCGA-91-6828&#39;,
+ &#39;TCGA-NJ-A55O&#39;,
+ &#39;TCGA-MP-A5C7&#39;,
+ &#39;TCGA-64-5778&#39;,
+ &#39;TCGA-55-6971&#39;,
  &#39;TCGA-49-AARN&#39;,
  &#39;TCGA-44-A47B&#39;,
- &#39;TCGA-49-AARQ&#39;,
+ &#39;TCGA-55-5899&#39;,
+ &#39;TCGA-49-AAQV&#39;,
+ &#39;TCGA-99-8028&#39;,
+ &#39;TCGA-75-6205&#39;,
+ &#39;TCGA-97-8552&#39;,
+ &#39;TCGA-50-8459&#39;,
+ &#39;TCGA-05-5425&#39;,
+ &#39;TCGA-78-7150&#39;,
  &#39;TCGA-86-A4P7&#39;,
  &#39;TCGA-49-4512&#39;,
  &#39;TCGA-55-8206&#39;,
- &#39;TCGA-69-8453&#39;,
- &#39;TCGA-05-4417&#39;,
  &#39;TCGA-55-8614&#39;,
- &#39;TCGA-49-6743&#39;,
+ &#39;TCGA-64-5815&#39;,
  &#39;TCGA-L9-A50W&#39;,
- &#39;TCGA-44-7662&#39;,
- &#39;TCGA-95-7944&#39;,
+ &#39;TCGA-73-4675&#39;,
  &#39;TCGA-55-7995&#39;,
  &#39;TCGA-05-4433&#39;,
- &#39;TCGA-55-8301&#39;,
- &#39;TCGA-69-7980&#39;,
- &#39;TCGA-78-7152&#39;,
- &#39;TCGA-55-8097&#39;,
- &#39;TCGA-86-8673&#39;,
- &#39;TCGA-86-8672&#39;,
- &#39;TCGA-55-6972&#39;,
+ &#39;TCGA-55-7727&#39;,
+ &#39;TCGA-44-2668&#39;,
+ &#39;TCGA-44-A4SU&#39;,
+ &#39;TCGA-55-7907&#39;,
+ &#39;TCGA-69-7765&#39;,
  &#39;TCGA-49-4487&#39;,
- &#39;TCGA-78-7153&#39;,
  &#39;TCGA-44-2662&#39;,
- &#39;TCGA-44-6779&#39;,
- &#39;TCGA-99-AA5R&#39;,
- &#39;TCGA-53-7626&#39;,
- &#39;TCGA-50-8457&#39;,
- &#39;TCGA-91-6840&#39;,
+ &#39;TCGA-67-6216&#39;,
+ &#39;TCGA-55-7283&#39;,
  &#39;TCGA-86-8280&#39;,
+ &#39;TCGA-91-6840&#39;,
+ &#39;TCGA-78-7154&#39;,
+ &#39;TCGA-49-4488&#39;,
+ &#39;TCGA-93-7348&#39;,
+ &#39;TCGA-62-A470&#39;,
+ &#39;TCGA-78-7147&#39;,
+ &#39;TCGA-50-5936&#39;,
+ &#39;TCGA-55-6984&#39;,
+ &#39;TCGA-50-5941&#39;,
+ &#39;TCGA-69-7978&#39;,
+ &#39;TCGA-78-7220&#39;,
+ &#39;TCGA-55-8616&#39;,
+ &#39;TCGA-44-A4SS&#39;,
+ &#39;TCGA-55-7570&#39;,
+ &#39;TCGA-78-7146&#39;,
+ &#39;TCGA-44-3398&#39;,
+ &#39;TCGA-05-5420&#39;,
+ &#39;TCGA-50-5072&#39;,
+ &#39;TCGA-05-4396&#39;,
+ &#39;TCGA-05-4405&#39;,
+ &#39;TCGA-50-5935&#39;,
+ &#39;TCGA-38-4629&#39;,
+ &#39;TCGA-55-8619&#39;,
+ &#39;TCGA-05-4410&#39;,
+ &#39;TCGA-73-4676&#39;,
+ &#39;TCGA-97-8172&#39;,
+ &#39;TCGA-44-7661&#39;,
+ &#39;TCGA-05-4384&#39;,
+ &#39;TCGA-44-2655&#39;,
+ &#39;TCGA-80-5607&#39;,
+ &#39;TCGA-67-3770&#39;,
+ &#39;TCGA-91-6836&#39;,
+ &#39;TCGA-95-7562&#39;,
+ &#39;TCGA-55-8511&#39;,
+ &#39;TCGA-44-6776&#39;,
+ &#39;TCGA-95-7948&#39;,
+ &#39;TCGA-91-7771&#39;,
+ &#39;TCGA-50-5944&#39;,
+ &#39;TCGA-MN-A4N5&#39;,
+ &#39;TCGA-73-4677&#39;,
+ &#39;TCGA-78-7540&#39;,
+ &#39;TCGA-91-6829&#39;,
+ &#39;TCGA-78-8640&#39;,
+ &#39;TCGA-62-8398&#39;,
+ &#39;TCGA-55-8512&#39;,
+ &#39;TCGA-83-5908&#39;,
+ &#39;TCGA-55-6987&#39;,
+ &#39;TCGA-93-A4JP&#39;,
+ &#39;TCGA-73-A9RS&#39;,
+ &#39;TCGA-L4-A4E5&#39;,
+ &#39;TCGA-86-8074&#39;,
+ &#39;TCGA-86-8358&#39;,
+ &#39;TCGA-78-7158&#39;,
+ &#39;TCGA-91-8497&#39;,
+ &#39;TCGA-49-AARO&#39;,
+ &#39;TCGA-78-7159&#39;,
+ &#39;TCGA-55-7227&#39;,
+ &#39;TCGA-86-7714&#39;,
+ &#39;TCGA-L9-A7SV&#39;,
+ &#39;TCGA-78-7143&#39;,
+ &#39;TCGA-91-8499&#39;,
+ &#39;TCGA-49-AAR3&#39;,
+ &#39;TCGA-55-8620&#39;,
+ &#39;TCGA-69-8255&#39;,
+ &#39;TCGA-75-6207&#39;,
+ &#39;TCGA-62-A46Y&#39;,
+ &#39;TCGA-NJ-A4YF&#39;,
+ &#39;TCGA-91-6830&#39;,
+ &#39;TCGA-62-8395&#39;,
+ &#39;TCGA-49-4486&#39;,
+ &#39;TCGA-44-6145&#39;,
+ &#39;TCGA-86-A4P8&#39;,
+ &#39;TCGA-78-7537&#39;,
+ &#39;TCGA-44-3919&#39;,
+ &#39;TCGA-35-4123&#39;,
+ &#39;TCGA-62-8394&#39;,
+ &#39;TCGA-69-7761&#39;,
+ &#39;TCGA-62-A46U&#39;,
+ &#39;TCGA-97-8547&#39;,
+ &#39;TCGA-97-7554&#39;,
+ &#39;TCGA-50-6673&#39;,
+ &#39;TCGA-95-7039&#39;,
+ &#39;TCGA-95-7944&#39;,
+ &#39;TCGA-55-8301&#39;,
+ &#39;TCGA-78-7152&#39;,
+ &#39;TCGA-05-4390&#39;,
+ &#39;TCGA-44-7659&#39;,
+ &#39;TCGA-97-7941&#39;,
+ &#39;TCGA-49-4514&#39;,
+ &#39;TCGA-55-A490&#39;,
+ &#39;TCGA-55-8508&#39;,
+ &#39;TCGA-MP-A4TE&#39;,
+ &#39;TCGA-97-A4M1&#39;,
+ &#39;TCGA-75-6206&#39;,
+ &#39;TCGA-86-8671&#39;,
+ &#39;TCGA-78-7160&#39;,
+ &#39;TCGA-64-1681&#39;,
+ &#39;TCGA-49-4494&#39;,
+ &#39;TCGA-50-5946&#39;,
+ &#39;TCGA-55-7913&#39;,
+ &#39;TCGA-44-6779&#39;,
+ &#39;TCGA-49-AARE&#39;,
+ &#39;TCGA-05-4403&#39;,
+ &#39;TCGA-99-AA5R&#39;,
+ &#39;TCGA-73-4659&#39;,
+ &#39;TCGA-50-8457&#39;,
+ &#39;TCGA-75-5147&#39;,
+ &#39;TCGA-55-8507&#39;,
+ &#39;TCGA-78-7536&#39;,
  &#39;TCGA-95-A4VK&#39;,
+ &#39;TCGA-38-4627&#39;,
+ &#39;TCGA-67-6215&#39;,
+ &#39;TCGA-69-7973&#39;,
+ &#39;TCGA-05-5715&#39;,
+ &#39;TCGA-75-7030&#39;,
+ &#39;TCGA-44-2666&#39;,
+ &#39;TCGA-62-A472&#39;,
+ &#39;TCGA-55-6985&#39;,
+ &#39;TCGA-J2-A4AG&#39;,
+ &#39;TCGA-97-A4LX&#39;,
+ &#39;TCGA-55-6543&#39;,
+ &#39;TCGA-97-7938&#39;,
+ &#39;TCGA-35-3615&#39;,
+ &#39;TCGA-44-2657&#39;,
+ &#39;TCGA-55-8505&#39;,
+ &#39;TCGA-97-8175&#39;,
+ &#39;TCGA-49-4510&#39;,
+ &#39;TCGA-MP-A4TK&#39;,
+ &#39;TCGA-50-5044&#39;,
+ &#39;TCGA-49-AAR2&#39;,
+ &#39;TCGA-05-4250&#39;,
+ &#39;TCGA-97-7937&#39;,
+ &#39;TCGA-64-5774&#39;,
+ &#39;TCGA-86-8674&#39;,
+ &#39;TCGA-50-6590&#39;,
+ &#39;TCGA-64-5779&#39;,
+ &#39;TCGA-75-5146&#39;,
+ &#39;TCGA-44-6144&#39;,
+ &#39;TCGA-78-8662&#39;,
+ &#39;TCGA-55-7911&#39;,
+ &#39;TCGA-86-8585&#39;,
+ &#39;TCGA-38-A44F&#39;,
+ &#39;TCGA-64-1680&#39;,
+ &#39;TCGA-97-A4M6&#39;,
+ &#39;TCGA-75-6214&#39;,
+ &#39;TCGA-55-6980&#39;,
+ &#39;TCGA-97-7553&#39;,
+ &#39;TCGA-55-A48X&#39;,
+ &#39;TCGA-64-1677&#39;,
+ &#39;TCGA-73-7498&#39;,
+ &#39;TCGA-38-6178&#39;,
+ &#39;TCGA-44-7670&#39;,
+ &#39;TCGA-62-A471&#39;,
+ &#39;TCGA-49-4505&#39;,
+ &#39;TCGA-NJ-A7XG&#39;,
+ &#39;TCGA-55-6981&#39;,
+ &#39;TCGA-91-6848&#39;,
+ &#39;TCGA-55-8090&#39;,
+ &#39;TCGA-55-7725&#39;,
+ &#39;TCGA-55-8207&#39;,
+ &#39;TCGA-44-6146&#39;,
+ &#39;TCGA-05-4434&#39;,
+ &#39;TCGA-55-6979&#39;,
+ &#39;TCGA-05-4427&#39;,
+ &#39;TCGA-55-8615&#39;,
+ &#39;TCGA-50-5939&#39;,
+ &#39;TCGA-05-4418&#39;,
+ &#39;TCGA-67-6217&#39;,
+ &#39;TCGA-49-6745&#39;,
+ &#39;TCGA-55-1595&#39;,
+ &#39;TCGA-49-6742&#39;,
+ &#39;TCGA-05-4402&#39;,
+ &#39;TCGA-05-4382&#39;,
+ &#39;TCGA-55-7576&#39;,
+ &#39;TCGA-67-3773&#39;,
+ &#39;TCGA-78-7633&#39;,
+ &#39;TCGA-50-6597&#39;,
+ &#39;TCGA-44-2659&#39;,
+ &#39;TCGA-95-7947&#39;,
+ &#39;TCGA-55-7724&#39;,
+ &#39;TCGA-J2-A4AD&#39;,
+ &#39;TCGA-55-8091&#39;,
+ &#39;TCGA-55-1592&#39;,
+ &#39;TCGA-73-4670&#39;,
+ &#39;TCGA-55-1594&#39;,
+ &#39;TCGA-55-8621&#39;,
+ &#39;TCGA-50-5051&#39;,
+ &#39;TCGA-49-4501&#39;,
+ &#39;TCGA-J2-8194&#39;,
+ &#39;TCGA-44-8119&#39;,
+ &#39;TCGA-55-8203&#39;,
+ &#39;TCGA-97-8177&#39;,
+ &#39;TCGA-55-7573&#39;,
+ &#39;TCGA-55-8089&#39;,
+ &#39;TCGA-38-4630&#39;,
+ &#39;TCGA-78-7166&#39;,
+ &#39;TCGA-38-4631&#39;,
+ &#39;TCGA-55-1596&#39;,
+ &#39;TCGA-91-A4BD&#39;,
+ &#39;TCGA-67-3771&#39;,
+ &#39;TCGA-J2-8192&#39;,
+ &#39;TCGA-55-A48Z&#39;,
+ &#39;TCGA-97-8176&#39;,
+ &#39;TCGA-86-6851&#39;,
+ &#39;TCGA-50-5931&#39;,
+ &#39;TCGA-NJ-A4YI&#39;,
+ &#39;TCGA-97-7552&#39;,
+ &#39;TCGA-MP-A4T4&#39;,
+ &#39;TCGA-L4-A4E6&#39;,
+ &#39;TCGA-44-5643&#39;,
+ &#39;TCGA-MP-A4TD&#39;,
+ &#39;TCGA-05-4244&#39;,
+ &#39;TCGA-50-5930&#39;,
+ &#39;TCGA-44-6777&#39;,
+ &#39;TCGA-05-4430&#39;,
+ &#39;TCGA-05-4426&#39;,
+ &#39;TCGA-44-6775&#39;,
+ &#39;TCGA-05-4420&#39;,
+ &#39;TCGA-55-8506&#39;,
+ &#39;TCGA-44-7672&#39;,
+ &#39;TCGA-62-8402&#39;,
+ &#39;TCGA-86-8056&#39;,
+ &#39;TCGA-05-4422&#39;,
+ &#39;TCGA-75-7027&#39;,
+ &#39;TCGA-78-7535&#39;,
+ &#39;TCGA-50-8460&#39;,
+ &#39;TCGA-75-7031&#39;,
+ &#39;TCGA-L9-A444&#39;,
+ &#39;TCGA-73-4666&#39;,
+ &#39;TCGA-86-7953&#39;,
+ &#39;TCGA-86-A4D0&#39;,
+ &#39;TCGA-NJ-A4YQ&#39;,
+ &#39;TCGA-91-8496&#39;,
+ &#39;TCGA-67-3772&#39;,
+ &#39;TCGA-55-7281&#39;,
+ &#39;TCGA-05-4424&#39;,
+ &#39;TCGA-69-A59K&#39;,
+ &#39;TCGA-75-7025&#39;,
+ &#39;TCGA-55-8514&#39;,
+ &#39;TCGA-95-8494&#39;,
+ &#39;TCGA-05-4395&#39;,
+ &#39;TCGA-93-A4JQ&#39;,
+ &#39;TCGA-44-8117&#39;,
+ &#39;TCGA-55-8204&#39;,
+ &#39;TCGA-50-5933&#39;,
+ &#39;TCGA-MN-A4N1&#39;,
+ &#39;TCGA-55-7903&#39;,
+ &#39;TCGA-86-8669&#39;,
+ &#39;TCGA-55-6970&#39;,
+ &#39;TCGA-50-6594&#39;,
+ &#39;TCGA-86-8075&#39;,
+ &#39;TCGA-MP-A4TF&#39;,
+ &#39;TCGA-69-7760&#39;,
+ &#39;TCGA-78-7161&#39;,
+ &#39;TCGA-91-6849&#39;,
+ &#39;TCGA-99-8033&#39;,
+ &#39;TCGA-55-8205&#39;,
+ &#39;TCGA-55-8510&#39;,
+ &#39;TCGA-91-6828&#39;,
+ &#39;TCGA-50-5049&#39;,
+ &#39;TCGA-99-7458&#39;,
+ &#39;TCGA-49-AARR&#39;,
+ &#39;TCGA-MP-A4TC&#39;,
+ &#39;TCGA-49-AARQ&#39;,
+ &#39;TCGA-93-A4JN&#39;,
+ &#39;TCGA-95-A4VP&#39;,
+ &#39;TCGA-69-8453&#39;,
+ &#39;TCGA-55-8513&#39;,
+ &#39;TCGA-55-6975&#39;,
+ &#39;TCGA-86-8278&#39;,
+ &#39;TCGA-75-6203&#39;,
+ &#39;TCGA-49-6743&#39;,
+ &#39;TCGA-55-7574&#39;,
+ &#39;TCGA-78-8655&#39;,
+ &#39;TCGA-05-4389&#39;,
+ &#39;TCGA-86-7701&#39;,
+ &#39;TCGA-91-6831&#39;,
+ &#39;TCGA-55-7728&#39;,
+ &#39;TCGA-97-A4M0&#39;,
+ &#39;TCGA-50-6593&#39;,
+ &#39;TCGA-86-6562&#39;,
+ &#39;TCGA-62-A46S&#39;,
+ &#39;TCGA-86-A4JF&#39;,
+ &#39;TCGA-J2-A4AE&#39;,
+ &#39;TCGA-55-8087&#39;,
+ &#39;TCGA-78-7542&#39;,
+ &#39;TCGA-78-7148&#39;,
+ &#39;TCGA-55-A493&#39;,
+ &#39;TCGA-91-A4BC&#39;,
+ &#39;TCGA-05-4432&#39;,
+ &#39;TCGA-55-6712&#39;,
+ &#39;TCGA-4B-A93V&#39;,
+ &#39;TCGA-93-7347&#39;,
+ &#39;TCGA-86-8668&#39;,
+ &#39;TCGA-MP-A4TI&#39;,
+ &#39;TCGA-69-8254&#39;,
+ &#39;TCGA-64-1676&#39;,
+ &#39;TCGA-62-A46V&#39;,
+ &#39;TCGA-78-7167&#39;,
+ &#39;TCGA-55-7284&#39;,
+ &#39;TCGA-78-7162&#39;,
+ &#39;TCGA-75-6212&#39;,
+ &#39;TCGA-97-7546&#39;,
+ &#39;TCGA-44-5644&#39;,
+ &#39;TCGA-55-8299&#39;,
+ &#39;TCGA-75-6211&#39;,
+ &#39;TCGA-MP-A4SW&#39;,
+ &#39;TCGA-78-7149&#39;,
+ &#39;TCGA-S2-AA1A&#39;,
+ &#39;TCGA-95-A4VN&#39;,
+ &#39;TCGA-55-8096&#39;,
+ &#39;TCGA-05-4398&#39;,
+ &#39;TCGA-97-8171&#39;,
+ &#39;TCGA-55-A492&#39;,
+ &#39;TCGA-71-8520&#39;,
+ &#39;TCGA-44-3396&#39;,
+ &#39;TCGA-55-A57B&#39;,
+ &#39;TCGA-L9-A443&#39;,
+ &#39;TCGA-55-A4DG&#39;,
+ &#39;TCGA-67-4679&#39;,
+ &#39;TCGA-64-5781&#39;,
+ &#39;TCGA-93-A4JO&#39;,
+ &#39;TCGA-NJ-A4YP&#39;,
+ &#39;TCGA-69-7974&#39;,
+ &#39;TCGA-MP-A4T7&#39;,
+ &#39;TCGA-55-6642&#39;,
+ &#39;TCGA-49-AAR9&#39;,
+ &#39;TCGA-69-8253&#39;,
+ &#39;TCGA-05-4249&#39;,
+ &#39;TCGA-44-7669&#39;,
+ &#39;TCGA-71-6725&#39;,
+ &#39;TCGA-73-7499&#39;,
+ &#39;TCGA-MP-A4TH&#39;,
+ &#39;TCGA-55-8208&#39;,
+ &#39;TCGA-78-7156&#39;,
+ &#39;TCGA-75-5122&#39;,
+ &#39;TCGA-50-7109&#39;,
+ &#39;TCGA-NJ-A55R&#39;,
+ &#39;TCGA-53-A4EZ&#39;,
+ &#39;TCGA-NJ-A4YG&#39;,
+ &#39;TCGA-86-A456&#39;,
+ &#39;TCGA-38-4632&#39;,
+ &#39;TCGA-MP-A4TJ&#39;,
+ &#39;TCGA-97-8174&#39;,
+ &#39;TCGA-MP-A4SY&#39;,
+ &#39;TCGA-62-8397&#39;,
+ &#39;TCGA-L9-A8F4&#39;,
+ &#39;TCGA-75-5126&#39;,
+ &#39;TCGA-MP-A4TA&#39;,
+ &#39;TCGA-86-7711&#39;,
+ &#39;TCGA-50-5045&#39;,
+ &#39;TCGA-05-4417&#39;,
+ &#39;TCGA-44-7660&#39;,
+ &#39;TCGA-69-7979&#39;,
+ &#39;TCGA-55-A491&#39;,
+ &#39;TCGA-L9-A743&#39;,
+ &#39;TCGA-55-A494&#39;,
+ &#39;TCGA-44-7662&#39;,
+ &#39;TCGA-55-7910&#39;,
+ &#39;TCGA-69-7980&#39;,
+ &#39;TCGA-55-8097&#39;,
+ &#39;TCGA-73-4668&#39;,
+ &#39;TCGA-NJ-A55A&#39;,
+ &#39;TCGA-86-8672&#39;,
+ &#39;TCGA-86-8673&#39;,
+ &#39;TCGA-78-7153&#39;,
+ &#39;TCGA-97-A4M7&#39;,
+ &#39;TCGA-62-A46R&#39;,
+ &#39;TCGA-50-5055&#39;,
+ &#39;TCGA-38-4628&#39;,
+ &#39;TCGA-86-7713&#39;,
+ &#39;TCGA-86-8073&#39;,
+ &#39;TCGA-MN-A4N4&#39;,
+ &#39;TCGA-53-7626&#39;,
+ &#39;TCGA-44-A47G&#39;,
  &#39;TCGA-55-6969&#39;]
 </pre></div>
 </div>
 </div>
 </div>
+<ol class="arabic simple">
+<li><p>Load the smoking-related DNA methylation data from a tab-separated values (TSV) file. (os.path.join(data_dir,”smoking.tsv”))</p></li>
+<li><p>Identify CpG sites that are commonly annotated in the smoking dataset</p></li>
+<li><p>Filter the DNA methylation data to include only the common CpG sites identified in the previous step</p></li>
+<li><p>Identify patients that are present in both the gene expression dataset and the methylation dataset.</p></li>
+<li><p>Filter the methylation data to include only the common patients and common CpG sites.</p></li>
+<li><p>Transpose the filtered methylation data matrix.</p></li>
+</ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">smoking_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="s2">&quot;smoking.tsv&quot;</span><span class="p">)</span> <span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span> <span class="c1">#Tab seperated document from EWAS</span>
@@ -1949,7 +1870,7 @@ Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.9_k_10_degre
 <span class="n">cpgs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">common_annotated_cpgs</span><span class="p">)</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">meth_data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
 
 
-<span class="n">common_patients</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;datMeta&quot;</span><span class="p">][</span><span class="s2">&quot;patient&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">())</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">meth_data</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">common_patients</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">GE_data</span><span class="p">[</span><span class="s2">&quot;datMeta&quot;</span><span class="p">][</span><span class="s2">&quot;patient&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">())</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">meth_data</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 
 
 <span class="n">meth_data_filt</span> <span class="o">=</span> <span class="n">meth_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span> <span class="nb">list</span><span class="p">(</span><span class="n">common_patients</span><span class="p">)</span> <span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">cpgs</span><span class="p">)]</span>
@@ -1984,149 +1905,149 @@ Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.9_k_10_degre
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>TCGA-05-4396</th>
-      <th>TCGA-78-7155</th>
-      <th>TCGA-44-7659</th>
-      <th>TCGA-44-A4SU</th>
-      <th>TCGA-95-7948</th>
-      <th>TCGA-NJ-A4YF</th>
-      <th>TCGA-62-A46R</th>
-      <th>TCGA-86-8279</th>
-      <th>TCGA-91-6836</th>
-      <th>TCGA-69-8253</th>
+      <th>TCGA-L9-A5IP</th>
+      <th>TCGA-97-8177</th>
+      <th>TCGA-97-A4M5</th>
+      <th>TCGA-NJ-A7XG</th>
+      <th>TCGA-49-4487</th>
+      <th>TCGA-80-5608</th>
+      <th>TCGA-50-5045</th>
+      <th>TCGA-78-7536</th>
+      <th>TCGA-50-8457</th>
+      <th>TCGA-78-7150</th>
       <th>...</th>
-      <th>TCGA-64-5775</th>
-      <th>TCGA-55-7910</th>
-      <th>TCGA-55-6969</th>
-      <th>TCGA-49-AAQV</th>
-      <th>TCGA-97-8552</th>
-      <th>TCGA-MP-A4T4</th>
-      <th>TCGA-78-7160</th>
-      <th>TCGA-97-A4M3</th>
-      <th>TCGA-50-6595</th>
-      <th>TCGA-55-6982</th>
+      <th>TCGA-91-8497</th>
+      <th>TCGA-55-7576</th>
+      <th>TCGA-50-5935</th>
+      <th>TCGA-55-7726</th>
+      <th>TCGA-44-7659</th>
+      <th>TCGA-67-6216</th>
+      <th>TCGA-73-4676</th>
+      <th>TCGA-44-6779</th>
+      <th>TCGA-50-5066</th>
+      <th>TCGA-44-A47A</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>cg17287155</th>
-      <td>0.958676</td>
-      <td>0.566635</td>
-      <td>0.954226</td>
-      <td>0.940611</td>
-      <td>0.968043</td>
-      <td>0.946452</td>
-      <td>0.860949</td>
-      <td>0.953696</td>
-      <td>0.973568</td>
-      <td>0.916756</td>
+      <th>cg06235438</th>
+      <td>0.704462</td>
+      <td>0.765600</td>
+      <td>0.735481</td>
+      <td>0.889260</td>
+      <td>0.626550</td>
+      <td>0.796208</td>
+      <td>0.691311</td>
+      <td>0.902062</td>
+      <td>0.739429</td>
+      <td>0.875700</td>
       <td>...</td>
-      <td>0.695966</td>
-      <td>0.962198</td>
-      <td>0.576167</td>
-      <td>0.951114</td>
-      <td>0.965335</td>
-      <td>0.918081</td>
-      <td>0.935858</td>
-      <td>0.960996</td>
-      <td>0.963649</td>
-      <td>0.977802</td>
+      <td>0.787259</td>
+      <td>0.790955</td>
+      <td>0.801376</td>
+      <td>0.797787</td>
+      <td>0.781594</td>
+      <td>0.766541</td>
+      <td>0.595076</td>
+      <td>0.729774</td>
+      <td>0.751685</td>
+      <td>0.581357</td>
     </tr>
     <tr>
-      <th>cg08035323</th>
-      <td>0.204264</td>
-      <td>0.422195</td>
-      <td>0.346077</td>
-      <td>0.158932</td>
-      <td>0.187505</td>
-      <td>0.432249</td>
-      <td>0.357338</td>
-      <td>0.274765</td>
-      <td>0.678613</td>
-      <td>0.251432</td>
+      <th>cg16519923</th>
+      <td>0.350686</td>
+      <td>0.613381</td>
+      <td>0.530897</td>
+      <td>0.564738</td>
+      <td>0.536597</td>
+      <td>0.689610</td>
+      <td>0.507226</td>
+      <td>0.769669</td>
+      <td>0.547481</td>
+      <td>0.546939</td>
       <td>...</td>
-      <td>0.106467</td>
-      <td>0.605801</td>
-      <td>0.426653</td>
-      <td>0.218842</td>
-      <td>0.149895</td>
-      <td>0.180247</td>
-      <td>0.227759</td>
-      <td>0.415433</td>
-      <td>0.229493</td>
-      <td>0.224023</td>
+      <td>0.494253</td>
+      <td>0.653185</td>
+      <td>0.603005</td>
+      <td>0.462919</td>
+      <td>0.500837</td>
+      <td>0.660526</td>
+      <td>0.393625</td>
+      <td>0.610697</td>
+      <td>0.567744</td>
+      <td>0.382835</td>
     </tr>
     <tr>
-      <th>cg19717773</th>
-      <td>0.853913</td>
-      <td>0.958796</td>
-      <td>0.948303</td>
-      <td>0.897569</td>
-      <td>0.953298</td>
-      <td>0.941726</td>
-      <td>0.871651</td>
-      <td>0.878930</td>
-      <td>0.822781</td>
-      <td>0.929314</td>
+      <th>cg03636183</th>
+      <td>0.558301</td>
+      <td>0.522365</td>
+      <td>0.590719</td>
+      <td>0.542055</td>
+      <td>0.650863</td>
+      <td>0.588275</td>
+      <td>0.619079</td>
+      <td>0.446724</td>
+      <td>0.580573</td>
+      <td>0.391529</td>
       <td>...</td>
-      <td>0.874589</td>
-      <td>0.435955</td>
-      <td>0.596656</td>
-      <td>0.827823</td>
-      <td>0.832132</td>
-      <td>0.804611</td>
-      <td>0.776288</td>
-      <td>0.890808</td>
-      <td>0.650614</td>
-      <td>0.638636</td>
+      <td>0.540174</td>
+      <td>0.640841</td>
+      <td>0.651893</td>
+      <td>0.465395</td>
+      <td>0.690399</td>
+      <td>0.632989</td>
+      <td>0.463317</td>
+      <td>0.594800</td>
+      <td>0.564197</td>
+      <td>0.653906</td>
     </tr>
     <tr>
-      <th>cg17924476</th>
-      <td>0.578420</td>
-      <td>0.178692</td>
-      <td>0.667851</td>
-      <td>0.473261</td>
-      <td>0.622205</td>
-      <td>0.648433</td>
-      <td>0.679621</td>
-      <td>0.326106</td>
-      <td>0.779092</td>
-      <td>0.428426</td>
+      <th>cg16556677</th>
+      <td>0.643590</td>
+      <td>0.733000</td>
+      <td>0.637958</td>
+      <td>0.588998</td>
+      <td>0.653712</td>
+      <td>0.668136</td>
+      <td>0.669321</td>
+      <td>0.546550</td>
+      <td>0.691405</td>
+      <td>0.547689</td>
       <td>...</td>
-      <td>0.306427</td>
-      <td>0.710742</td>
-      <td>0.406598</td>
-      <td>0.426056</td>
-      <td>0.513044</td>
-      <td>0.486175</td>
-      <td>0.527042</td>
-      <td>0.487867</td>
-      <td>0.475064</td>
-      <td>0.605959</td>
+      <td>0.633321</td>
+      <td>0.784905</td>
+      <td>0.772402</td>
+      <td>0.521192</td>
+      <td>0.752280</td>
+      <td>0.838290</td>
+      <td>0.575633</td>
+      <td>0.793454</td>
+      <td>0.659951</td>
+      <td>0.824979</td>
     </tr>
     <tr>
-      <th>cg27241845</th>
-      <td>0.190956</td>
-      <td>0.107218</td>
-      <td>0.271998</td>
-      <td>0.326582</td>
-      <td>0.210409</td>
-      <td>0.292984</td>
-      <td>0.323971</td>
-      <td>0.170928</td>
-      <td>0.195694</td>
-      <td>0.246759</td>
+      <th>cg24090911</th>
+      <td>0.679264</td>
+      <td>0.756709</td>
+      <td>0.761862</td>
+      <td>0.789242</td>
+      <td>0.784405</td>
+      <td>0.761720</td>
+      <td>0.709197</td>
+      <td>0.533741</td>
+      <td>0.812883</td>
+      <td>0.767221</td>
       <td>...</td>
-      <td>0.201612</td>
-      <td>0.431354</td>
-      <td>0.415353</td>
-      <td>0.536400</td>
-      <td>0.376193</td>
-      <td>0.485102</td>
-      <td>0.393647</td>
-      <td>0.221291</td>
-      <td>0.505748</td>
-      <td>0.361600</td>
+      <td>0.577648</td>
+      <td>0.870502</td>
+      <td>0.917933</td>
+      <td>0.726192</td>
+      <td>0.864028</td>
+      <td>0.829835</td>
+      <td>0.496581</td>
+      <td>0.874250</td>
+      <td>0.681626</td>
+      <td>0.842857</td>
     </tr>
     <tr>
       <th>...</th>
@@ -2153,130 +2074,131 @@ Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.9_k_10_degre
       <td>...</td>
     </tr>
     <tr>
-      <th>cg26361535</th>
-      <td>0.707913</td>
-      <td>0.898110</td>
-      <td>0.719424</td>
-      <td>0.560542</td>
-      <td>0.847301</td>
-      <td>0.742228</td>
-      <td>0.810642</td>
-      <td>0.741395</td>
-      <td>0.802132</td>
-      <td>0.706401</td>
+      <th>cg23161492</th>
+      <td>0.554244</td>
+      <td>0.560400</td>
+      <td>0.409177</td>
+      <td>0.719385</td>
+      <td>0.449251</td>
+      <td>0.486408</td>
+      <td>0.313101</td>
+      <td>0.540278</td>
+      <td>0.474049</td>
+      <td>0.657513</td>
       <td>...</td>
-      <td>0.812918</td>
-      <td>0.743279</td>
-      <td>0.788556</td>
-      <td>0.692957</td>
-      <td>0.713474</td>
-      <td>0.758808</td>
-      <td>0.706660</td>
-      <td>0.750235</td>
-      <td>0.664126</td>
-      <td>0.690027</td>
+      <td>0.429354</td>
+      <td>0.584473</td>
+      <td>0.373168</td>
+      <td>0.470337</td>
+      <td>0.699737</td>
+      <td>0.265069</td>
+      <td>0.422142</td>
+      <td>0.515816</td>
+      <td>0.354033</td>
+      <td>0.661620</td>
     </tr>
     <tr>
-      <th>cg06235438</th>
-      <td>0.805387</td>
-      <td>0.897500</td>
-      <td>0.781594</td>
-      <td>0.795184</td>
-      <td>0.886040</td>
-      <td>0.844269</td>
-      <td>0.691382</td>
-      <td>0.834697</td>
-      <td>0.919788</td>
-      <td>0.778454</td>
+      <th>cg04180046</th>
+      <td>0.760798</td>
+      <td>0.627530</td>
+      <td>0.561161</td>
+      <td>0.668213</td>
+      <td>0.710857</td>
+      <td>0.682087</td>
+      <td>0.712194</td>
+      <td>0.728562</td>
+      <td>0.691135</td>
+      <td>0.266435</td>
       <td>...</td>
-      <td>0.728339</td>
-      <td>0.917023</td>
-      <td>0.614139</td>
-      <td>0.648874</td>
-      <td>0.799862</td>
-      <td>0.634457</td>
-      <td>0.625825</td>
-      <td>0.834810</td>
-      <td>0.807956</td>
-      <td>0.765255</td>
+      <td>0.508344</td>
+      <td>0.791685</td>
+      <td>0.576055</td>
+      <td>0.372007</td>
+      <td>0.731834</td>
+      <td>0.580984</td>
+      <td>0.422930</td>
+      <td>0.878109</td>
+      <td>0.697204</td>
+      <td>0.759649</td>
     </tr>
     <tr>
-      <th>cg00310412</th>
-      <td>0.324739</td>
-      <td>0.254853</td>
-      <td>0.378588</td>
-      <td>0.430408</td>
-      <td>0.676291</td>
-      <td>0.357737</td>
-      <td>0.549030</td>
-      <td>0.376939</td>
-      <td>0.558502</td>
-      <td>0.484490</td>
+      <th>cg04885881</th>
+      <td>0.526381</td>
+      <td>0.287194</td>
+      <td>0.449110</td>
+      <td>0.294257</td>
+      <td>0.389154</td>
+      <td>0.383441</td>
+      <td>0.279278</td>
+      <td>0.329857</td>
+      <td>0.229649</td>
+      <td>0.496855</td>
       <td>...</td>
-      <td>0.272397</td>
-      <td>0.261938</td>
-      <td>0.425177</td>
-      <td>0.510116</td>
-      <td>0.545462</td>
-      <td>0.411286</td>
-      <td>0.463077</td>
-      <td>0.489310</td>
-      <td>0.466666</td>
-      <td>0.457315</td>
+      <td>0.289696</td>
+      <td>0.354345</td>
+      <td>0.330573</td>
+      <td>0.307197</td>
+      <td>0.246585</td>
+      <td>0.238996</td>
+      <td>0.523181</td>
+      <td>0.471247</td>
+      <td>0.349305</td>
+      <td>0.284987</td>
     </tr>
     <tr>
-      <th>cg11231349</th>
-      <td>0.295414</td>
-      <td>0.781144</td>
-      <td>0.560626</td>
-      <td>0.431219</td>
-      <td>0.836589</td>
-      <td>0.766791</td>
-      <td>0.801446</td>
-      <td>0.463695</td>
-      <td>0.705177</td>
-      <td>0.434514</td>
+      <th>cg24556382</th>
+      <td>0.481587</td>
+      <td>0.726927</td>
+      <td>0.635479</td>
+      <td>0.595553</td>
+      <td>0.679223</td>
+      <td>0.465760</td>
+      <td>0.571945</td>
+      <td>0.215526</td>
+      <td>0.660404</td>
+      <td>0.345572</td>
       <td>...</td>
-      <td>0.189563</td>
-      <td>0.688879</td>
-      <td>0.677946</td>
-      <td>0.487507</td>
-      <td>0.566952</td>
-      <td>0.605613</td>
-      <td>0.650328</td>
-      <td>0.548267</td>
-      <td>0.628291</td>
-      <td>0.680081</td>
+      <td>0.576382</td>
+      <td>0.558424</td>
+      <td>0.812648</td>
+      <td>0.330948</td>
+      <td>0.661905</td>
+      <td>0.398924</td>
+      <td>0.873810</td>
+      <td>0.411682</td>
+      <td>0.612189</td>
+      <td>0.892020</td>
     </tr>
     <tr>
-      <th>cg13039251</th>
-      <td>0.816164</td>
-      <td>0.952329</td>
-      <td>0.828096</td>
-      <td>0.697523</td>
-      <td>0.944524</td>
-      <td>0.694437</td>
-      <td>0.792971</td>
-      <td>0.897156</td>
-      <td>0.919938</td>
-      <td>0.908559</td>
+      <th>cg02451831</th>
+      <td>0.307483</td>
+      <td>0.739561</td>
+      <td>0.849217</td>
+      <td>0.879128</td>
+      <td>0.754773</td>
+      <td>0.450580</td>
+      <td>0.508209</td>
+      <td>0.251486</td>
+      <td>0.805876</td>
+      <td>0.772828</td>
       <td>...</td>
-      <td>0.746869</td>
-      <td>0.892041</td>
-      <td>0.662868</td>
-      <td>0.831193</td>
-      <td>0.733719</td>
-      <td>0.748447</td>
-      <td>0.773739</td>
-      <td>0.878079</td>
-      <td>0.654313</td>
-      <td>0.780113</td>
+      <td>0.765841</td>
+      <td>0.782477</td>
+      <td>0.861534</td>
+      <td>0.531319</td>
+      <td>0.873599</td>
+      <td>0.786577</td>
+      <td>0.845538</td>
+      <td>0.414161</td>
+      <td>0.648577</td>
+      <td>0.827596</td>
     </tr>
   </tbody>
 </table>
-<p>112 rows × 459 columns</p>
+<p>112 rows × 442 columns</p>
 </div></div></div>
 </div>
+<p>Calculate the pearson correlation of the data in a similar fashion.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dictionary to store different correlation matrices</span>
@@ -2313,149 +2235,149 @@ Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.9_k_10_degre
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>TCGA-05-4396</th>
-      <th>TCGA-78-7155</th>
-      <th>TCGA-44-7659</th>
-      <th>TCGA-44-A4SU</th>
-      <th>TCGA-95-7948</th>
-      <th>TCGA-NJ-A4YF</th>
-      <th>TCGA-62-A46R</th>
-      <th>TCGA-86-8279</th>
-      <th>TCGA-91-6836</th>
-      <th>TCGA-69-8253</th>
+      <th>TCGA-L9-A5IP</th>
+      <th>TCGA-97-8177</th>
+      <th>TCGA-97-A4M5</th>
+      <th>TCGA-NJ-A7XG</th>
+      <th>TCGA-49-4487</th>
+      <th>TCGA-80-5608</th>
+      <th>TCGA-50-5045</th>
+      <th>TCGA-78-7536</th>
+      <th>TCGA-50-8457</th>
+      <th>TCGA-78-7150</th>
       <th>...</th>
-      <th>TCGA-64-5775</th>
-      <th>TCGA-55-7910</th>
-      <th>TCGA-55-6969</th>
-      <th>TCGA-49-AAQV</th>
-      <th>TCGA-97-8552</th>
-      <th>TCGA-MP-A4T4</th>
-      <th>TCGA-78-7160</th>
-      <th>TCGA-97-A4M3</th>
-      <th>TCGA-50-6595</th>
-      <th>TCGA-55-6982</th>
+      <th>TCGA-91-8497</th>
+      <th>TCGA-55-7576</th>
+      <th>TCGA-50-5935</th>
+      <th>TCGA-55-7726</th>
+      <th>TCGA-44-7659</th>
+      <th>TCGA-67-6216</th>
+      <th>TCGA-73-4676</th>
+      <th>TCGA-44-6779</th>
+      <th>TCGA-50-5066</th>
+      <th>TCGA-44-A47A</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>TCGA-05-4396</th>
+      <th>TCGA-L9-A5IP</th>
       <td>1.000000</td>
-      <td>0.193975</td>
-      <td>0.818004</td>
-      <td>0.706219</td>
-      <td>0.743836</td>
-      <td>0.602989</td>
-      <td>0.742042</td>
-      <td>0.643735</td>
-      <td>0.657386</td>
-      <td>0.740345</td>
+      <td>0.750352</td>
+      <td>0.792929</td>
+      <td>0.775113</td>
+      <td>0.771453</td>
+      <td>0.762132</td>
+      <td>0.792639</td>
+      <td>0.700945</td>
+      <td>0.777697</td>
+      <td>0.749786</td>
       <td>...</td>
-      <td>0.748432</td>
-      <td>0.547436</td>
-      <td>0.597274</td>
-      <td>0.680124</td>
-      <td>0.692098</td>
-      <td>0.692626</td>
-      <td>0.684315</td>
-      <td>0.769898</td>
-      <td>0.711369</td>
-      <td>0.787964</td>
+      <td>0.693956</td>
+      <td>0.745302</td>
+      <td>0.702926</td>
+      <td>0.806156</td>
+      <td>0.696502</td>
+      <td>0.681261</td>
+      <td>0.706900</td>
+      <td>0.815488</td>
+      <td>0.824247</td>
+      <td>0.662803</td>
     </tr>
     <tr>
-      <th>TCGA-78-7155</th>
-      <td>0.193975</td>
+      <th>TCGA-97-8177</th>
+      <td>0.750352</td>
       <td>1.000000</td>
-      <td>0.249829</td>
-      <td>0.395890</td>
-      <td>0.204422</td>
-      <td>0.482311</td>
-      <td>0.372793</td>
-      <td>0.508959</td>
-      <td>0.354464</td>
-      <td>0.398558</td>
+      <td>0.906620</td>
+      <td>0.872505</td>
+      <td>0.896966</td>
+      <td>0.857012</td>
+      <td>0.887044</td>
+      <td>0.742459</td>
+      <td>0.933424</td>
+      <td>0.746607</td>
       <td>...</td>
-      <td>0.289107</td>
-      <td>0.407242</td>
-      <td>0.377518</td>
-      <td>0.284280</td>
-      <td>0.339471</td>
-      <td>0.346341</td>
-      <td>0.327364</td>
-      <td>0.412694</td>
-      <td>0.285801</td>
-      <td>0.314715</td>
+      <td>0.910966</td>
+      <td>0.873954</td>
+      <td>0.879528</td>
+      <td>0.827868</td>
+      <td>0.863407</td>
+      <td>0.862244</td>
+      <td>0.823589</td>
+      <td>0.843569</td>
+      <td>0.870039</td>
+      <td>0.855682</td>
     </tr>
     <tr>
-      <th>TCGA-44-7659</th>
-      <td>0.818004</td>
-      <td>0.249829</td>
+      <th>TCGA-97-A4M5</th>
+      <td>0.792929</td>
+      <td>0.906620</td>
       <td>1.000000</td>
-      <td>0.826650</td>
-      <td>0.785593</td>
-      <td>0.700999</td>
-      <td>0.825551</td>
-      <td>0.724933</td>
-      <td>0.821875</td>
-      <td>0.843355</td>
+      <td>0.875438</td>
+      <td>0.900053</td>
+      <td>0.862816</td>
+      <td>0.901533</td>
+      <td>0.742855</td>
+      <td>0.913055</td>
+      <td>0.784530</td>
       <td>...</td>
-      <td>0.665225</td>
-      <td>0.681551</td>
-      <td>0.651957</td>
-      <td>0.820354</td>
-      <td>0.843185</td>
-      <td>0.825097</td>
-      <td>0.810799</td>
-      <td>0.866557</td>
-      <td>0.777071</td>
-      <td>0.865215</td>
+      <td>0.904910</td>
+      <td>0.822555</td>
+      <td>0.865804</td>
+      <td>0.843548</td>
+      <td>0.841370</td>
+      <td>0.811997</td>
+      <td>0.910897</td>
+      <td>0.781393</td>
+      <td>0.870607</td>
+      <td>0.771044</td>
     </tr>
     <tr>
-      <th>TCGA-44-A4SU</th>
-      <td>0.706219</td>
-      <td>0.395890</td>
-      <td>0.826650</td>
+      <th>TCGA-NJ-A7XG</th>
+      <td>0.775113</td>
+      <td>0.872505</td>
+      <td>0.875438</td>
       <td>1.000000</td>
-      <td>0.706079</td>
-      <td>0.803676</td>
-      <td>0.841651</td>
-      <td>0.843599</td>
-      <td>0.752557</td>
-      <td>0.894144</td>
+      <td>0.813323</td>
+      <td>0.825825</td>
+      <td>0.840628</td>
+      <td>0.741381</td>
+      <td>0.908135</td>
+      <td>0.725394</td>
       <td>...</td>
-      <td>0.749176</td>
-      <td>0.746985</td>
-      <td>0.772428</td>
-      <td>0.845118</td>
-      <td>0.897244</td>
-      <td>0.874354</td>
-      <td>0.873428</td>
-      <td>0.891760</td>
-      <td>0.870929</td>
-      <td>0.887174</td>
+      <td>0.872843</td>
+      <td>0.868354</td>
+      <td>0.884608</td>
+      <td>0.837838</td>
+      <td>0.900364</td>
+      <td>0.836612</td>
+      <td>0.753218</td>
+      <td>0.812014</td>
+      <td>0.832514</td>
+      <td>0.793274</td>
     </tr>
     <tr>
-      <th>TCGA-95-7948</th>
-      <td>0.743836</td>
-      <td>0.204422</td>
-      <td>0.785593</td>
-      <td>0.706079</td>
+      <th>TCGA-49-4487</th>
+      <td>0.771453</td>
+      <td>0.896966</td>
+      <td>0.900053</td>
+      <td>0.813323</td>
       <td>1.000000</td>
-      <td>0.584029</td>
-      <td>0.734438</td>
-      <td>0.613603</td>
-      <td>0.619221</td>
-      <td>0.777417</td>
+      <td>0.851447</td>
+      <td>0.926583</td>
+      <td>0.760655</td>
+      <td>0.892917</td>
+      <td>0.718079</td>
       <td>...</td>
-      <td>0.492293</td>
-      <td>0.505619</td>
-      <td>0.502785</td>
-      <td>0.722540</td>
-      <td>0.716956</td>
-      <td>0.655740</td>
-      <td>0.715913</td>
-      <td>0.721765</td>
-      <td>0.663815</td>
-      <td>0.758829</td>
+      <td>0.858880</td>
+      <td>0.831646</td>
+      <td>0.831506</td>
+      <td>0.769613</td>
+      <td>0.821722</td>
+      <td>0.843301</td>
+      <td>0.826595</td>
+      <td>0.809863</td>
+      <td>0.901425</td>
+      <td>0.812857</td>
     </tr>
     <tr>
       <th>...</th>
@@ -2482,130 +2404,239 @@ Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.9_k_10_degre
       <td>...</td>
     </tr>
     <tr>
-      <th>TCGA-MP-A4T4</th>
-      <td>0.692626</td>
-      <td>0.346341</td>
-      <td>0.825097</td>
-      <td>0.874354</td>
-      <td>0.655740</td>
-      <td>0.776320</td>
-      <td>0.878001</td>
-      <td>0.806946</td>
-      <td>0.767686</td>
-      <td>0.819515</td>
+      <th>TCGA-67-6216</th>
+      <td>0.681261</td>
+      <td>0.862244</td>
+      <td>0.811997</td>
+      <td>0.836612</td>
+      <td>0.843301</td>
+      <td>0.756288</td>
+      <td>0.844520</td>
+      <td>0.623768</td>
+      <td>0.849560</td>
+      <td>0.629313</td>
       <td>...</td>
-      <td>0.756999</td>
-      <td>0.717192</td>
-      <td>0.847667</td>
-      <td>0.901430</td>
-      <td>0.848721</td>
+      <td>0.827494</td>
+      <td>0.888694</td>
+      <td>0.839266</td>
+      <td>0.761374</td>
+      <td>0.887381</td>
       <td>1.000000</td>
-      <td>0.897432</td>
-      <td>0.839914</td>
-      <td>0.898881</td>
-      <td>0.885355</td>
+      <td>0.675235</td>
+      <td>0.829117</td>
+      <td>0.827366</td>
+      <td>0.855497</td>
     </tr>
     <tr>
-      <th>TCGA-78-7160</th>
-      <td>0.684315</td>
-      <td>0.327364</td>
-      <td>0.810799</td>
-      <td>0.873428</td>
-      <td>0.715913</td>
-      <td>0.802789</td>
-      <td>0.824020</td>
-      <td>0.772543</td>
-      <td>0.750039</td>
-      <td>0.870535</td>
+      <th>TCGA-73-4676</th>
+      <td>0.706900</td>
+      <td>0.823589</td>
+      <td>0.910897</td>
+      <td>0.753218</td>
+      <td>0.826595</td>
+      <td>0.803814</td>
+      <td>0.827674</td>
+      <td>0.694755</td>
+      <td>0.814776</td>
+      <td>0.736933</td>
       <td>...</td>
-      <td>0.667334</td>
-      <td>0.767336</td>
-      <td>0.776790</td>
-      <td>0.915711</td>
-      <td>0.910966</td>
-      <td>0.897432</td>
+      <td>0.829156</td>
+      <td>0.678059</td>
+      <td>0.779263</td>
+      <td>0.765433</td>
+      <td>0.711141</td>
+      <td>0.675235</td>
       <td>1.000000</td>
-      <td>0.884854</td>
-      <td>0.884864</td>
-      <td>0.867522</td>
+      <td>0.633899</td>
+      <td>0.802940</td>
+      <td>0.675955</td>
     </tr>
     <tr>
-      <th>TCGA-97-A4M3</th>
-      <td>0.769898</td>
-      <td>0.412694</td>
-      <td>0.866557</td>
-      <td>0.891760</td>
-      <td>0.721765</td>
-      <td>0.807358</td>
-      <td>0.843136</td>
-      <td>0.830240</td>
-      <td>0.814988</td>
-      <td>0.900011</td>
+      <th>TCGA-44-6779</th>
+      <td>0.815488</td>
+      <td>0.843569</td>
+      <td>0.781393</td>
+      <td>0.812014</td>
+      <td>0.809863</td>
+      <td>0.777771</td>
+      <td>0.837654</td>
+      <td>0.667718</td>
+      <td>0.814770</td>
+      <td>0.694002</td>
       <td>...</td>
-      <td>0.727136</td>
-      <td>0.793337</td>
-      <td>0.726181</td>
-      <td>0.825672</td>
-      <td>0.884542</td>
-      <td>0.839914</td>
-      <td>0.884854</td>
+      <td>0.735527</td>
+      <td>0.861013</td>
+      <td>0.758416</td>
+      <td>0.807886</td>
+      <td>0.781137</td>
+      <td>0.829117</td>
+      <td>0.633899</td>
       <td>1.000000</td>
-      <td>0.861065</td>
-      <td>0.881172</td>
+      <td>0.859323</td>
+      <td>0.767080</td>
     </tr>
     <tr>
-      <th>TCGA-50-6595</th>
-      <td>0.711369</td>
-      <td>0.285801</td>
-      <td>0.777071</td>
-      <td>0.870929</td>
-      <td>0.663815</td>
-      <td>0.780360</td>
-      <td>0.863865</td>
-      <td>0.752995</td>
-      <td>0.728182</td>
-      <td>0.826681</td>
+      <th>TCGA-50-5066</th>
+      <td>0.824247</td>
+      <td>0.870039</td>
+      <td>0.870607</td>
+      <td>0.832514</td>
+      <td>0.901425</td>
+      <td>0.849570</td>
+      <td>0.948990</td>
+      <td>0.756705</td>
+      <td>0.873864</td>
+      <td>0.781976</td>
       <td>...</td>
-      <td>0.779388</td>
-      <td>0.735896</td>
-      <td>0.796939</td>
-      <td>0.877620</td>
-      <td>0.849621</td>
-      <td>0.898881</td>
-      <td>0.884864</td>
-      <td>0.861065</td>
+      <td>0.807555</td>
+      <td>0.864433</td>
+      <td>0.809323</td>
+      <td>0.854363</td>
+      <td>0.795254</td>
+      <td>0.827366</td>
+      <td>0.802940</td>
+      <td>0.859323</td>
       <td>1.000000</td>
-      <td>0.894268</td>
+      <td>0.751277</td>
     </tr>
     <tr>
-      <th>TCGA-55-6982</th>
-      <td>0.787964</td>
-      <td>0.314715</td>
-      <td>0.865215</td>
-      <td>0.887174</td>
-      <td>0.758829</td>
-      <td>0.790128</td>
-      <td>0.860869</td>
-      <td>0.784622</td>
-      <td>0.803617</td>
-      <td>0.873813</td>
+      <th>TCGA-44-A47A</th>
+      <td>0.662803</td>
+      <td>0.855682</td>
+      <td>0.771044</td>
+      <td>0.793274</td>
+      <td>0.812857</td>
+      <td>0.747459</td>
+      <td>0.761599</td>
+      <td>0.581117</td>
+      <td>0.808390</td>
+      <td>0.592556</td>
       <td>...</td>
-      <td>0.744385</td>
-      <td>0.745769</td>
-      <td>0.759718</td>
-      <td>0.867130</td>
-      <td>0.865557</td>
-      <td>0.885355</td>
-      <td>0.867522</td>
-      <td>0.881172</td>
-      <td>0.894268</td>
+      <td>0.796334</td>
+      <td>0.848689</td>
+      <td>0.810336</td>
+      <td>0.676087</td>
+      <td>0.873074</td>
+      <td>0.855497</td>
+      <td>0.675955</td>
+      <td>0.767080</td>
+      <td>0.751277</td>
       <td>1.000000</td>
     </tr>
   </tbody>
 </table>
-<p>459 rows × 459 columns</p>
+<p>442 rows × 442 columns</p>
 </div></div></div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p_meth_pearson_graph</span> <span class="o">=</span> <span class="n">create_graph_from_correlation</span><span class="p">(</span><span class="n">p_meth_correlation_matrices</span><span class="p">[</span><span class="s1">&#39;pearson&#39;</span><span class="p">],</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="c1"># Clean the graph by removing unconnected nodes</span>
+<span class="n">p_meth_pearson_graph_pruned</span> <span class="o">=</span> <span class="n">clean_graph</span><span class="p">(</span><span class="n">p_meth_pearson_graph</span><span class="p">,</span>
+                                    <span class="n">degree_threshold</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                    <span class="n">keep_largest_component</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">visualize_graph</span><span class="p">(</span><span class="n">p_meth_pearson_graph_pruned</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Pearson Correlation Network (Threshold = 0.8)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">16</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">p_meth_pearson_graph</span> <span class="o">=</span> <span class="n">create_graph_from_correlation</span><span class="p">(</span><span class="n">p_meth_correlation_matrices</span><span class="p">[</span><span class="s1">&#39;pearson&#39;</span><span class="p">],</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="c1"># Clean the graph by removing unconnected nodes</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">p_meth_pearson_graph_pruned</span> <span class="o">=</span> <span class="n">clean_graph</span><span class="p">(</span><span class="n">p_meth_pearson_graph</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>                                     <span class="n">degree_threshold</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>                                     <span class="n">keep_largest_component</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;create_graph_from_correlation&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p_meth_pearson_graph_pruned_knn</span> <span class="o">=</span> <span class="n">knn_sparsification</span><span class="p">(</span><span class="n">p_meth_pearson_graph_pruned</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visualize_graph</span><span class="p">(</span><span class="n">p_meth_pearson_graph_pruned_knn</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Pearson Correlation Network (Threshold = 0.8)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nx</span><span class="o">.</span><span class="n">write_gml</span><span class="p">(</span><span class="n">p_meth_pearson_graph_pruned_knn</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="s1">&#39;patient_meth_network_knn.gml&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">save_graphs</span><span class="p">(</span><span class="n">correlation_matrices_dict</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">,</span> <span class="n">matrix_names</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">data_dir</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
+    
+    <span class="c1"># Define parameter combinations</span>
+    <span class="n">thresholds</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">]</span>
+    <span class="n">k_values</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+    <span class="n">degree_thresholds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">keep_largest_component_options</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">matrix_name</span> <span class="ow">in</span> <span class="n">matrix_names</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">matrix_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">correlation_matrices_dict</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Matrix </span><span class="si">{</span><span class="n">matrix_name</span><span class="si">}</span><span class="s2"> not found in the provided dictionary. Skipping...&quot;</span><span class="p">)</span>
+            <span class="k">continue</span>
+        
+        <span class="n">correlation_matrix</span> <span class="o">=</span> <span class="n">correlation_matrices_dict</span><span class="p">[</span><span class="n">matrix_name</span><span class="p">]</span>
+        
+        <span class="k">for</span> <span class="n">threshold</span> <span class="ow">in</span> <span class="n">thresholds</span><span class="p">:</span>
+            <span class="c1"># Create the initial graph from the correlation matrix</span>
+            <span class="n">initial_graph</span> <span class="o">=</span> <span class="n">create_graph_from_correlation</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span><span class="p">)</span>
+            
+            <span class="k">for</span> <span class="n">degree_threshold</span> <span class="ow">in</span> <span class="n">degree_thresholds</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">keep_largest_component</span> <span class="ow">in</span> <span class="n">keep_largest_component_options</span><span class="p">:</span>
+                    <span class="c1"># Clean the graph</span>
+                    <span class="n">cleaned_graph</span> <span class="o">=</span> <span class="n">clean_graph</span><span class="p">(</span><span class="n">initial_graph</span><span class="p">,</span> <span class="n">degree_threshold</span><span class="o">=</span><span class="n">degree_threshold</span><span class="p">,</span> <span class="n">keep_largest_component</span><span class="o">=</span><span class="n">keep_largest_component</span><span class="p">)</span>
+                    
+                    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">k_values</span><span class="p">:</span>
+                        <span class="c1"># Sparsify the graph using KNN</span>
+                        <span class="n">sparsified_graph</span> <span class="o">=</span> <span class="n">knn_sparsification</span><span class="p">(</span><span class="n">cleaned_graph</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+                        
+                        <span class="c1"># Calculate the average clustering coefficient</span>
+                        <span class="n">avg_clustering</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">average_clustering</span><span class="p">(</span><span class="n">sparsified_graph</span><span class="p">)</span>
+                        
+                        <span class="c1"># Construct the filename with relevant information</span>
+                        <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">matrix_name</span><span class="si">}</span><span class="s2">_network_threshold_</span><span class="si">{</span><span class="n">threshold</span><span class="si">}</span><span class="s2">_k_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">_degree_</span><span class="si">{</span><span class="n">degree_threshold</span><span class="si">}</span><span class="s2">_largest_</span><span class="si">{</span><span class="n">keep_largest_component</span><span class="si">}</span><span class="s2">_clustering_</span><span class="si">{</span><span class="n">avg_clustering</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">.gml&quot;</span>
+                        <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+                        
+                        <span class="c1"># Save the graph to a GML file</span>
+                        <span class="n">nx</span><span class="o">.</span><span class="n">write_gml</span><span class="p">(</span><span class="n">sparsified_graph</span><span class="p">,</span> <span class="n">filepath</span><span class="p">)</span>
+                        
+                        <span class="c1"># Print the details</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saved: </span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">correlation_matrices_dict</span><span class="p">,</span> <span class="n">matrix_names</span><span class="p">):</span>
+    <span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;../../ismb_data/05072024/PSN-Met&#39;</span>  <span class="c1"># Adjust the directory path as needed</span>
+    <span class="n">save_graphs</span><span class="p">(</span><span class="n">correlation_matrices_dict</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">,</span> <span class="n">matrix_names</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># correlation_matrices_dict = {</span>
+    <span class="c1">#     &#39;pearson&#39;: pd.DataFrame(),  # Replace with actual data</span>
+    <span class="c1">#     &#39;spearman&#39;: pd.DataFrame()  # Replace with actual data if needed</span>
+    <span class="c1"># }</span>
+    <span class="n">matrix_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;pearson&#39;</span><span class="p">]</span>  <span class="c1"># Replace with the desired correlation matrix names</span>
+    <span class="n">main</span><span class="p">(</span><span class="n">p_meth_correlation_matrices</span><span class="p">,</span> <span class="n">matrix_names</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -2673,7 +2704,10 @@ Saved: ../../ismb_data/05072024/PSN-Met/pearson_network_threshold_0.9_k_10_degre
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Patient similarity network</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dnameth-pn">DNAmeth PN</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dna-methylation-based-patient-similarity-network">DNA methylation based Patient Similarity Network</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task">Task</a></li>
+</ul>
+</li>
 </ul>
 
   </nav></div>

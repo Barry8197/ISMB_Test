@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
@@ -195,15 +195,16 @@
 
 
 
-
-
-
+<li class="toctree-l2"><a class="reference internal" href="../Section1/Section1-PSN.html">Patient similarity network</a></li>
 
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../Section2_intro.html">Section 2: Network Analysis</a></li>
-
-<li class="toctree-l1 has-children"><a class="reference internal" href="../Section3_intro.html">Section 3 - SNF + GNN’s</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Section2_intro.html">Section 2: Network Analysis</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Section2/Part1.html">Part 1: Over-representation and Enrichment Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Section2/Part2.html">Part 2: Similarity Network Fusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Section3_intro.html">Section 3 - SNF + GNN’s</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../Section3/Part1.html"><font color="darkblue"> Part 1 : Message Passing </font></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Section3/Part2.html"><font color="darkblue"> Part 2 : Problem Formulation / Patient Similarity Network Generation </font></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Section3/Part3.html"><font color="darkblue"> Part 3 : Smoking Network Classification using Graph Convolutional Networks</font></a></li>
@@ -366,7 +367,9 @@ document.write(`
 <span class="c1"># The idea is that we use this as a source from which we can pull functions we introduced in an earlier section</span>
 
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">Patch</span>
 <span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">mpatches</span>
+<span class="kn">from</span> <span class="nn">matplotlib.lines</span> <span class="kn">import</span> <span class="n">Line2D</span>
 <span class="kn">import</span> <span class="nn">astropy.stats</span>
 <span class="kn">from</span> <span class="nn">palettable</span> <span class="kn">import</span> <span class="n">wesanderson</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -379,9 +382,125 @@ document.write(`
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">precision_recall_curve</span> <span class="p">,</span> <span class="n">average_precision_score</span> <span class="p">,</span> <span class="n">recall_score</span> <span class="p">,</span>  <span class="n">PrecisionRecallDisplay</span>
 <span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
 <span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
 <span class="kn">from</span> <span class="nn">dgl.nn</span> <span class="kn">import</span> <span class="n">GraphConv</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
+
+<div class="viewcode-block" id="get_edge_attributes">
+<a class="viewcode-back" href="../functions_definitions.html#functions.get_edge_attributes">[docs]</a>
+<span class="k">def</span> <span class="nf">get_edge_attributes</span><span class="p">(</span><span class="n">G</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extracts edge attributes from a graph.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        G (networkx.Graph): The graph from which to extract edge attributes.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: A list of edge attributes.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If the graph G is empty or not defined.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">G</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The graph is empty or not defined.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Extract edge attributes</span>
+    <span class="n">edge_attributes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">for</span> <span class="o">*</span><span class="n">_</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">)))</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">edge_attributes</span></div>
+
+
+<div class="viewcode-block" id="draw_network_with_node_attrs">
+<a class="viewcode-back" href="../functions_definitions.html#functions.draw_network_with_node_attrs">[docs]</a>
+<span class="k">def</span> <span class="nf">draw_network_with_node_attrs</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">node_attributes</span><span class="p">,</span> <span class="n">communities</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Network Visualization&#39;</span><span class="p">,</span> <span class="n">color_attr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shape_attr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">layout</span><span class="o">=</span><span class="s1">&#39;spring&#39;</span><span class="p">,</span> <span class="n">cmap_name</span><span class="o">=</span><span class="s1">&#39;tab20&#39;</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">savefig</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save_path_prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Draws a network graph with nodes colored and shaped based on their attributes, and optionally colored by community membership.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        G (networkx.Graph): The graph to be drawn.</span>
+<span class="sd">        node_attributes (dict): A dictionary where keys are node names and values are dictionaries of attributes.</span>
+<span class="sd">        communities (List[List[Any]], optional): A list where each sublist contains the nodes belonging to a community. Default is None.</span>
+<span class="sd">        title (str, optional): The title of the plot. Default is &#39;Network Visualization&#39;.</span>
+<span class="sd">        color_attr (str, optional): Node attribute to color nodes by. Default is None.</span>
+<span class="sd">        shape_attr (str, optional): Node attribute to shape nodes by. Default is None.</span>
+<span class="sd">        figsize (tuple, optional): The size of the figure. Default is (20, 10).</span>
+<span class="sd">        layout (str, optional): The layout algorithm for positioning nodes (&#39;spring&#39;, &#39;circular&#39;, etc.). Default is &#39;spring&#39;.</span>
+<span class="sd">        cmap_name (str, optional): The name of the colormap to use for coloring. Default is &#39;tab20&#39;.</span>
+<span class="sd">        with_labels (bool, optional): Whether to draw labels for the nodes. Default is False.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If the graph G is empty or not defined.</span>
+<span class="sd">        ValueError: If node_attributes is empty or not defined.</span>
+
+<span class="sd">    The function draws the graph with nodes colored and/or shaped based on their attributes. If communities are provided, nodes are colored by their community memberships. A legend is added to indicate the mapping of attributes to colors and shapes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">G</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The graph is empty or not defined.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">node_attributes</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Node attributes are empty or not defined.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">communities</span><span class="p">:</span>
+        <span class="n">community_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="p">:</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">community</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">communities</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">community</span><span class="p">}</span>
+        <span class="n">node_attributes</span><span class="p">[</span><span class="s1">&#39;community&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">community_dict</span>
+    
+    <span class="n">shapes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="s1">&#39;^&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;P&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">]</span>
+    <span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="n">cmap_name</span><span class="p">)</span>
+    
+    <span class="n">unique_attr_vals_color</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">node_attributes</span><span class="p">[</span><span class="n">color_attr</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span> <span class="k">if</span> <span class="n">color_attr</span> <span class="k">else</span> <span class="p">[]</span>
+    <span class="n">color_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">val</span><span class="p">:</span> <span class="n">cmap</span><span class="p">(</span><span class="n">i</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_attr_vals_color</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">unique_attr_vals_color</span><span class="p">)}</span>
+    <span class="n">node_colors_from_attribute</span> <span class="o">=</span> <span class="p">[</span><span class="n">color_map</span><span class="p">[</span><span class="n">node_attributes</span><span class="p">[</span><span class="n">color_attr</span><span class="p">][</span><span class="n">node</span><span class="p">]]</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()]</span> <span class="k">if</span> <span class="n">color_attr</span> <span class="k">else</span> <span class="p">[</span><span class="s1">&#39;blue&#39;</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()))</span>
+    
+    <span class="n">unique_attr_vals_shape</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">node_attributes</span><span class="p">[</span><span class="n">shape_attr</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span> <span class="k">if</span> <span class="n">shape_attr</span> <span class="k">else</span> <span class="p">[]</span>
+    <span class="n">shape_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">val</span><span class="p">:</span> <span class="n">shapes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">unique_attr_vals_shape</span><span class="p">)}</span>
+    <span class="n">node_shapes_from_attribute</span> <span class="o">=</span> <span class="p">[</span><span class="n">shape_map</span><span class="p">[</span><span class="n">node_attributes</span><span class="p">[</span><span class="n">shape_attr</span><span class="p">][</span><span class="n">node</span><span class="p">]]</span> <span class="k">if</span> <span class="n">shape_attr</span> <span class="k">else</span> <span class="s1">&#39;o&#39;</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()]</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+    <span class="n">pos</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">layout</span><span class="si">}</span><span class="s1">_layout&#39;</span><span class="p">)(</span><span class="n">G</span><span class="p">)</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">layout</span><span class="si">}</span><span class="s1">_layout&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="n">nx</span><span class="o">.</span><span class="n">spring_layout</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+    
+    <span class="n">node_list_by_shape</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">node_idx_list_by_shape</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">shape_marker</span> <span class="ow">in</span> <span class="n">shapes</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">unique_attr_vals_shape</span><span class="p">)]:</span>
+        <span class="n">node_list_by_shape</span><span class="p">[</span><span class="n">shape_marker</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">node</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">())</span> <span class="k">if</span> <span class="n">shape_map</span><span class="p">[</span><span class="n">node_attributes</span><span class="p">[</span><span class="n">shape_attr</span><span class="p">][</span><span class="n">node</span><span class="p">]]</span> <span class="o">==</span> <span class="n">shape_marker</span><span class="p">]</span>
+        <span class="n">node_idx_list_by_shape</span><span class="p">[</span><span class="n">shape_marker</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">node_idx</span> <span class="k">for</span> <span class="n">node_idx</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()))</span> <span class="k">if</span> <span class="n">shape_map</span><span class="p">[</span><span class="n">node_attributes</span><span class="p">[</span><span class="n">shape_attr</span><span class="p">][</span><span class="n">node</span><span class="p">]]</span> <span class="o">==</span> <span class="n">shape_marker</span><span class="p">]</span>
+    
+    <span class="k">for</span> <span class="n">shape_marker</span><span class="p">,</span> <span class="n">node_list</span> <span class="ow">in</span> <span class="n">node_list_by_shape</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">nx</span><span class="o">.</span><span class="n">draw_networkx_nodes</span><span class="p">(</span>
+            <span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span>
+            <span class="n">nodelist</span><span class="o">=</span><span class="n">node_list_by_shape</span><span class="p">[</span><span class="n">shape_marker</span><span class="p">],</span>
+            <span class="n">node_color</span><span class="o">=</span><span class="p">[</span><span class="n">node_colors_from_attribute</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">node_idx_list_by_shape</span><span class="p">[</span><span class="n">shape_marker</span><span class="p">]],</span>
+            <span class="n">node_shape</span><span class="o">=</span><span class="n">shape_marker</span><span class="p">,</span>
+            <span class="n">node_size</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span>
+            <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;yellow&#39;</span>
+        <span class="p">)</span>
+
+    <span class="n">nx</span><span class="o">.</span><span class="n">draw_networkx_edges</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">with_labels</span><span class="p">:</span>
+        <span class="n">nx</span><span class="o">.</span><span class="n">draw_networkx_labels</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+    <span class="n">legend_fontsize</span> <span class="o">=</span> <span class="mi">14</span>
+    <span class="k">if</span> <span class="n">shape_attr</span><span class="p">:</span>
+        <span class="n">shape_legend_handles</span> <span class="o">=</span> <span class="p">[</span><span class="n">Line2D</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="n">shape_map</span><span class="p">[</span><span class="n">val</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">markerfacecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">unique_attr_vals_shape</span><span class="p">]</span>
+        <span class="n">leg1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="o">=</span><span class="n">shape_legend_handles</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">shape_attr</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s2"> (Shape)&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">legend_fontsize</span><span class="p">,</span> <span class="n">title_fontsize</span><span class="o">=</span><span class="n">legend_fontsize</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">color_attr</span><span class="p">:</span>
+        <span class="n">color_legend_handles</span> <span class="o">=</span> <span class="p">[</span><span class="n">mpatches</span><span class="o">.</span><span class="n">Patch</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="n">color_map</span><span class="p">[</span><span class="n">val</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">color_attr</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">unique_attr_vals_color</span><span class="p">]</span>
+        <span class="n">leg2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="o">=</span><span class="n">color_legend_handles</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">color_attr</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s2"> (Color)&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">legend_fontsize</span><span class="p">,</span> <span class="n">title_fontsize</span><span class="o">=</span><span class="n">legend_fontsize</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">shape_attr</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span><span class="n">leg1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    
+    <span class="n">save_path</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">savefig</span><span class="p">:</span>
+        <span class="n">time_string</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">_%H%M%S&#39;</span><span class="p">)</span>
+        <span class="n">save_path</span> <span class="o">=</span> <span class="n">save_path_prefix</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;_</span><span class="si">{</span><span class="n">time_string</span><span class="si">}</span><span class="s1">.png&#39;</span> <span class="k">if</span> <span class="n">save_path_prefix</span> <span class="k">else</span> <span class="sa">f</span><span class="s1">&#39;net_image_</span><span class="si">{</span><span class="n">time_string</span><span class="si">}</span><span class="s1">.png&#39;</span> 
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
+        
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+    <span class="k">return</span> <span class="n">save_path</span></div>
+
 
 <div class="viewcode-block" id="message_passing">
 <a class="viewcode-back" href="../functions_definitions.html#functions.message_passing">[docs]</a>
