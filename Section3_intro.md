@@ -68,15 +68,6 @@ Node classification in GNNs is a task where the goal is to predict the label or 
 ## Deep Graph Library (DGL)
 DGL is a framework agnostic library of GNN architectures. In this tutorial we will work with a PyTorch implementation but Tensorflow and Apache MXNet are also supported. Our use of DGL will be limited to the implementation of GCN, in particular the GraphConv function. We encourage you to interact further with the DGL library and explore some of their [tutorials](https://docs.dgl.ai/tutorials/blitz/index.html) and other [model architecutres](https://docs.dgl.ai/api/python/nn-pytorch.html)
 
-## Similarity Network Fusion (SNF) 
-As introduced earlier, SNF is an algorithm for the fusion of networks. It is applied to fuse the graphs into a single network representing the full spectrum of the underlying data. It allows complimentary information to be shared between modalities, and is effective in identifying novel relationships between patients. It also integrates missing patient samples inherently by complimenting a missing edge in one modality with the same relationship from others. 
-
-```{image} ./SNF.png
-:alt: fishy
-:width: 1200px
-:align: center
-```
-
 ## Generation Scotland Dataset 
 Generation Scotland is a research study looking at the health and well-being of volunteers and their families. Volunteers answer questionnaires and provide samples for genetic testing. These are combined with NHS health records and innovative laboratory science to create a rich evidence base for understanding health. 
 

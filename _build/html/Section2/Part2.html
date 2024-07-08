@@ -28,7 +28,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -179,7 +179,7 @@
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../GettingStarted.html">Getting Started</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../Section1_intro.html">Section 1 - Network Basics</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../Section1/Section1.html">Section 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Section1/Section1.html">Part 1 - Introduction to Biomedical Networks</a></li>
 
 
 
@@ -196,7 +196,7 @@
 
 
 
-<li class="toctree-l2"><a class="reference internal" href="../Section1/Section1-PSN.html">Patient similarity network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Section1/Section1-PSN.html">Part 2 - Patient similarity networks</a></li>
 
 </ul>
 </li>
@@ -480,10 +480,13 @@ document.write(`
 <h2>Paths<a class="headerlink" href="#paths" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define paths to .gml network files from Section 1</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">intermediate_data_dir</span> <span class="o">=</span> <span class="s1">&#39;/data/intermediate/&#39;</span>
+<span class="n">raw_data_dir</span> <span class="o">=</span> <span class="s1">&#39;/data/raw/&#39;</span>
+
+<span class="c1"># Define paths to .gml network files from Section 1</span>
 <span class="c1"># These paths point to the Gene correlation network, Patient network from (1) TCGA gene expression data and (2) TCGA DNA methylation data.</span>
-<span class="n">G_patient_gxp_path</span> <span class="o">=</span> <span class="s1">&#39;section2_data/section2_networks_v2/patient_coexpression_network_knn.gml&#39;</span>
-<span class="n">G_patient_dnam_path</span> <span class="o">=</span> <span class="s1">&#39;section2_data/section2_networks_v2/patient_meth_network_knn.gml&#39;</span>
+<span class="n">G_patient_gxp_path</span> <span class="o">=</span> <span class="n">intermediate_data_dir</span> <span class="o">+</span> <span class="s1">&#39;section2_networks_v2/patient_coexpression_network_knn.gml&#39;</span>
+<span class="n">G_patient_dnam_path</span> <span class="o">=</span> <span class="n">intermediate_data_dir</span> <span class="o">+</span> <span class="s1">&#39;section2_networks_v2/patient_meth_network_knn.gml&#39;</span>
 
 <span class="c1"># Load the GML graphs into NetworkX graph objects</span>
 <span class="c1"># nx.read_gml() function reads a graph from a GML file</span>
@@ -496,8 +499,8 @@ document.write(`
 <span class="n">G_patient_dnam_nodes_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">G_patient_dnam</span><span class="o">.</span><span class="n">nodes</span><span class="p">())</span>  <span class="c1"># Patient nodes</span>
 
 <span class="c1"># Define paths to the raw TCGA datasets</span>
-<span class="n">tcga_dnam_path</span> <span class="o">=</span> <span class="s1">&#39;section2_data/ISMB_TCGA_DNAm.pkl&#39;</span>  <span class="c1"># TCGA DNA methylation data</span>
-<span class="n">tcga_gxp_path</span> <span class="o">=</span> <span class="s1">&#39;section2_data/ISMB_TCGA_GE.pkl&#39;</span>  <span class="c1"># TCGA Gene expression data</span>
+<span class="n">tcga_dnam_path</span> <span class="o">=</span> <span class="n">raw_data_dir</span> <span class="o">+</span> <span class="s1">&#39;ISMB_TCGA_DNAm.pkl&#39;</span>  <span class="c1"># TCGA DNA methylation data</span>
+<span class="n">tcga_gxp_path</span> <span class="o">=</span> <span class="n">raw_data_dir</span> <span class="o">+</span> <span class="s1">&#39;ISMB_TCGA_GE.pkl&#39;</span>  <span class="c1"># TCGA Gene expression data</span>
 
 <span class="c1"># Load the gene expression dataset</span>
 <span class="c1"># pd.read_pickle() function loads a pickled pandas DataFrame or Series</span>
@@ -508,7 +511,7 @@ document.write(`
 
 <span class="c1"># For this example, we&#39;ll use a CSV file that includes gene symbols</span>
 <span class="c1"># pd.read_csv() function loads a CSV file into a pandas DataFrame</span>
-<span class="n">tcga_gxp_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;section2_data/tcga_ge_df_symbols_t.csv&#39;</span><span class="p">)</span>  <span class="c1"># Dataset with gene symbols</span>
+<span class="n">tcga_gxp_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">intermediate_data_dir</span> <span class="o">+</span> <span class="s1">&#39;tcga_ge_df_symbols_t.csv&#39;</span><span class="p">)</span>  <span class="c1"># Dataset with gene symbols</span>
 <span class="c1"># Set &#39;GENES&#39; column as the index for easy access to gene-specific data</span>
 <span class="n">tcga_gxp_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;GENES&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
@@ -586,6 +589,14 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use the greedy modularity maximization method to detect communities in the patient network.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">#################################################</span>
+<span class="sd">                YOUR CODE HERE</span>
+<span class="sd">#################################################</span>
+
+<span class="sd">Use the greedy modularity maximisation method to detect communities in the patient network.</span>
+<span class="sd">    hint : use nx.algorithms.community.modularity_max.greedy_modularity_communities()</span>
+<span class="sd">&#39;&#39;&#39;</span>
 <span class="n">patient_gxp_communities</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">algorithms</span><span class="o">.</span><span class="n">community</span><span class="o">.</span><span class="n">modularity_max</span><span class="o">.</span><span class="n">greedy_modularity_communities</span><span class="p">(</span><span class="n">G_patient_gxp</span><span class="p">)</span> <span class="c1"># , weight=G_patient_gxp_weight)</span>
 <span class="n">patient_dnam_communities</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">algorithms</span><span class="o">.</span><span class="n">community</span><span class="o">.</span><span class="n">modularity_max</span><span class="o">.</span><span class="n">greedy_modularity_communities</span><span class="p">(</span><span class="n">G_patient_dnam</span><span class="p">)</span> <span class="c1">#, weight=G_patient_dnam_weight)</span>
 
@@ -629,8 +640,26 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get overlapping patient nodes from the two patient networks</span>
 <span class="c1"># In patient networks, the nodes represent patients. We want to ensure that there are sufficient number of nodes commonly found in the networks of different modalities before Similarity Network Fusion (SNF), so that they represent different aspects of the same patients.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">#################################################</span>
+<span class="sd">                YOUR CODE HERE</span>
+<span class="sd">#################################################</span>
+
+<span class="sd">In patient networks, the nodes represent patients. We want to ensure that there are sufficient number of nodes commonly found in the networks of different modalities before Similarity Network Fusion (SNF), so that they represent different aspects of the same patients.</span>
+<span class="sd">Get overlapping patient nodes from the two patient networks</span>
+<span class="sd">    hint : use set() </span>
+<span class="sd">&#39;&#39;&#39;</span>
 <span class="n">all_idx</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">G_patient_gxp_nodes_list</span><span class="p">)</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">G_patient_dnam_nodes_list</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of overlapping patient nodes: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">all_idx</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">#################################################</span>
+<span class="sd">                YOUR CODE HERE</span>
+<span class="sd">#################################################</span>
+
+<span class="sd">Create adjacency matrix from G_patient_gxp and G_patient_dnam for overlapping nodes</span>
+<span class="sd">    hint : use nx.to_pandas_adjacency() with argument &quot;nodelist&quot;</span>
+<span class="sd">&#39;&#39;&#39;</span>
 
 <span class="c1"># Create adjacency matrix for G_patient_gxp with overlapping nodes</span>
 <span class="n">G_patient_gxp_adj_matrix</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">to_pandas_adjacency</span><span class="p">(</span><span class="n">G_patient_gxp</span><span class="p">,</span> <span class="n">nodelist</span><span class="o">=</span><span class="n">all_idx</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">G_patient_gxp_weight</span><span class="p">)</span>

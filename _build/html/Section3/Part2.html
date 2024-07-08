@@ -28,7 +28,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -179,7 +179,7 @@
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../GettingStarted.html">Getting Started</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../Section1_intro.html">Section 1 - Network Basics</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../Section1/Section1.html">Section 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Section1/Section1.html">Part 1 - Introduction to Biomedical Networks</a></li>
 
 
 
@@ -196,9 +196,7 @@
 
 
 
-
-
-
+<li class="toctree-l2"><a class="reference internal" href="../Section1/Section1-PSN.html">Part 2 - Patient similarity networks</a></li>
 
 </ul>
 </li>
@@ -444,8 +442,98 @@ document.write(`
 <span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
 <span class="kn">from</span> <span class="nn">palettable</span> <span class="kn">import</span> <span class="n">wesanderson</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span> <span class="p">,</span> <span class="s1">&#39;./../&#39;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span> <span class="p">,</span> <span class="s1">&#39;/tutorial/&#39;</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">functions</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/conda/envs/ismb24/lib/python3.10/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">8</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">import</span> <span class="nn">sys</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span> <span class="p">,</span> <span class="s1">&#39;/tutorial/&#39;</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">8</span> <span class="kn">from</span> <span class="nn">functions</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">File</span> <span class="o">/</span><span class="n">tutorial</span><span class="o">/</span><span class="n">functions</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">20</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="ne">---&gt; </span><span class="mi">20</span> <span class="kn">from</span> <span class="nn">dgl.nn</span> <span class="kn">import</span> <span class="n">GraphConv</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span> <span class="k">def</span> <span class="nf">message_passing</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">G</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span><span class="sd">     Perform message passing for a given node in a graph.</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span><span class="sd"> </span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">     </span><span class="mi">37</span><span class="sd">         Aggregation: Aggregate the gathered messages using median aggregation.</span>
+<span class="g g-Whitespace">     </span><span class="mi">38</span><span class="sd">     &quot;&quot;&quot;</span>
+
+<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">conda</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">ismb24</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.10</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">dgl</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">16</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="kn">from</span> <span class="nn">.logging</span> <span class="kn">import</span> <span class="n">enable_verbose_logging</span>  <span class="c1"># usort: skip</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="kn">from</span> <span class="nn">.backend</span> <span class="kn">import</span> <span class="n">backend_name</span><span class="p">,</span> <span class="n">load_backend</span>  <span class="c1"># usort: skip</span>
+<span class="ne">---&gt; </span><span class="mi">16</span> <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span>     <span class="n">container</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span>     <span class="n">cuda</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span>     <span class="n">dataloading</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">20</span>     <span class="n">function</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span>     <span class="n">ops</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span>     <span class="n">random</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span>     <span class="n">sampling</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span>     <span class="n">storages</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span> <span class="kn">from</span> <span class="nn">._ffi.base</span> <span class="kn">import</span> <span class="n">__version__</span><span class="p">,</span> <span class="n">DGLError</span>
+<span class="g g-Whitespace">     </span><span class="mi">27</span> <span class="kn">from</span> <span class="nn">._ffi.function</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">28</span>     <span class="n">extract_ext_funcs</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span>     <span class="n">get_global_func</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">30</span>     <span class="n">list_global_func_names</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">31</span>     <span class="n">register_func</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">32</span> <span class="p">)</span>
+
+<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">conda</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">ismb24</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.10</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">dgl</span><span class="o">/</span><span class="n">dataloading</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">13</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="k">if</span> <span class="n">F</span><span class="o">.</span><span class="n">get_preferred_backend</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;pytorch&quot;</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span>     <span class="kn">from</span> <span class="nn">.spot_target</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="ne">---&gt; </span><span class="mi">13</span>     <span class="kn">from</span> <span class="nn">.dataloader</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span>     <span class="kn">from</span> <span class="nn">.dist_dataloader</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">conda</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">ismb24</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.10</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">dgl</span><span class="o">/</span><span class="n">dataloading</span><span class="o">/</span><span class="n">dataloader</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">27</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span> <span class="kn">from</span> <span class="nn">..batch</span> <span class="kn">import</span> <span class="n">batch</span> <span class="k">as</span> <span class="n">batch_graphs</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span> <span class="kn">from</span> <span class="nn">..cuda</span> <span class="kn">import</span> <span class="n">GPUCache</span>
+<span class="ne">---&gt; </span><span class="mi">27</span> <span class="kn">from</span> <span class="nn">..distributed</span> <span class="kn">import</span> <span class="n">DistGraph</span>
+<span class="g g-Whitespace">     </span><span class="mi">28</span> <span class="kn">from</span> <span class="nn">..frame</span> <span class="kn">import</span> <span class="n">LazyFeature</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span> <span class="kn">from</span> <span class="nn">..heterograph</span> <span class="kn">import</span> <span class="n">DGLGraph</span>
+
+<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">conda</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">ismb24</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.10</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">dgl</span><span class="o">/</span><span class="n">distributed</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">5</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">.dist_context</span> <span class="kn">import</span> <span class="n">exit_client</span><span class="p">,</span> <span class="n">initialize</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">.dist_dataloader</span> <span class="kn">import</span> <span class="n">DistDataLoader</span>
+<span class="ne">----&gt; </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">.dist_graph</span> <span class="kn">import</span> <span class="n">DistGraph</span><span class="p">,</span> <span class="n">DistGraphServer</span><span class="p">,</span> <span class="n">edge_split</span><span class="p">,</span> <span class="n">node_split</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">.dist_tensor</span> <span class="kn">import</span> <span class="n">DistTensor</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">.graph_partition_book</span> <span class="kn">import</span> <span class="n">GraphPartitionBook</span><span class="p">,</span> <span class="n">PartitionPolicy</span>
+
+<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">conda</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">ismb24</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.10</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">dgl</span><span class="o">/</span><span class="n">distributed</span><span class="o">/</span><span class="n">dist_graph</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">11</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">MutableMapping</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="ne">---&gt; </span><span class="mi">11</span> <span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">F</span><span class="p">,</span> <span class="n">graphbolt</span> <span class="k">as</span> <span class="n">gb</span><span class="p">,</span> <span class="n">heterograph_index</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="kn">from</span> <span class="nn">.._ffi.ndarray</span> <span class="kn">import</span> <span class="n">empty_shared_mem</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="kn">from</span> <span class="nn">..base</span> <span class="kn">import</span> <span class="n">ALL</span><span class="p">,</span> <span class="n">DGLError</span><span class="p">,</span> <span class="n">EID</span><span class="p">,</span> <span class="n">ETYPE</span><span class="p">,</span> <span class="n">is_all</span><span class="p">,</span> <span class="n">NID</span>
+
+<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">conda</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">ismb24</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.10</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">dgl</span><span class="o">/</span><span class="n">graphbolt</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">55</span>
+<span class="g g-Whitespace">     </span><span class="mi">51</span>     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=W0703</span>
+<span class="g g-Whitespace">     </span><span class="mi">52</span>         <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;Cannot load Graphbolt C++ library&quot;</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">55</span> <span class="n">load_graphbolt</span><span class="p">()</span>
+
+<span class="nn">File /opt/conda/envs/ismb24/lib/python3.10/site-packages/dgl/graphbolt/__init__.py:45,</span> in <span class="ni">load_graphbolt</span><span class="nt">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">43</span> <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="s2">&quot;graphbolt&quot;</span><span class="p">,</span> <span class="n">basename</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">44</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">45</span>     <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">46</span>         <span class="sa">f</span><span class="s2">&quot;Cannot find DGL C++ graphbolt library at </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="g g-Whitespace">     </span><span class="mi">47</span>     <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">49</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">50</span>     <span class="n">torch</span><span class="o">.</span><span class="n">classes</span><span class="o">.</span><span class="n">load_library</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+<span class="ne">FileNotFoundError</span>: Cannot find DGL C++ graphbolt library at /opt/conda/envs/ismb24/lib/python3.10/site-packages/dgl/graphbolt/libgraphbolt_pytorch_2.3.1.so
 </pre></div>
 </div>
 </div>
@@ -838,16 +926,16 @@ Smoker : 1
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "bryanismb"
+            mode: "ismb24"
         },
         kernelOptions: {
-            name: "bryanismb",
+            name: "ismb24",
             path: "./Section3"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'bryanismb'</script>
+    <script>kernelName = 'ismb24'</script>
 
                 </article>
               
