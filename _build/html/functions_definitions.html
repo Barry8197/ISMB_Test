@@ -195,9 +195,7 @@
 
 
 
-
-
-
+<li class="toctree-l2"><a class="reference internal" href="Section1/Section1-PSN.html">Patient similarity network</a></li>
 
 </ul>
 </li>
@@ -415,8 +413,10 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions.abs_bicorr"><code class="docutils literal notranslate"><span class="pre">abs_bicorr()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions.draw_network_with_node_attrs"><code class="docutils literal notranslate"><span class="pre">draw_network_with_node_attrs()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions.gen_graph_legend"><code class="docutils literal notranslate"><span class="pre">gen_graph_legend()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions.get_edge_attributes"><code class="docutils literal notranslate"><span class="pre">get_edge_attributes()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions.get_k_neighbours"><code class="docutils literal notranslate"><span class="pre">get_k_neighbours()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions.message_passing"><code class="docutils literal notranslate"><span class="pre">message_passing()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions.message_passing_iteration"><code class="docutils literal notranslate"><span class="pre">message_passing_iteration()</span></code></a></li>
@@ -492,6 +492,35 @@ It inherits from the <cite>nn.Module</cite> class of PyTorch.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="functions.draw_network_with_node_attrs">
+<span class="sig-prename descclassname"><span class="pre">functions.</span></span><span class="sig-name descname"><span class="pre">draw_network_with_node_attrs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_attributes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">communities</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Network</span> <span class="pre">Visualization'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_attr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape_attr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(20,</span> <span class="pre">10)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'spring'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tab20'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savefig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions.html#draw_network_with_node_attrs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.draw_network_with_node_attrs" title="Link to this definition">#</a></dt>
+<dd><p>Draws a network graph with nodes colored and shaped based on their attributes, and optionally colored by community membership.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>G</strong> (<em>networkx.Graph</em>) – The graph to be drawn.</p></li>
+<li><p><strong>node_attributes</strong> (<em>dict</em>) – A dictionary where keys are node names and values are dictionaries of attributes.</p></li>
+<li><p><strong>communities</strong> (<em>List</em><em>[</em><em>List</em><em>[</em><em>Any</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – A list where each sublist contains the nodes belonging to a community. Default is None.</p></li>
+<li><p><strong>title</strong> (<em>str</em><em>, </em><em>optional</em>) – The title of the plot. Default is ‘Network Visualization’.</p></li>
+<li><p><strong>color_attr</strong> (<em>str</em><em>, </em><em>optional</em>) – Node attribute to color nodes by. Default is None.</p></li>
+<li><p><strong>shape_attr</strong> (<em>str</em><em>, </em><em>optional</em>) – Node attribute to shape nodes by. Default is None.</p></li>
+<li><p><strong>figsize</strong> (<em>tuple</em><em>, </em><em>optional</em>) – The size of the figure. Default is (20, 10).</p></li>
+<li><p><strong>layout</strong> (<em>str</em><em>, </em><em>optional</em>) – The layout algorithm for positioning nodes (‘spring’, ‘circular’, etc.). Default is ‘spring’.</p></li>
+<li><p><strong>cmap_name</strong> (<em>str</em><em>, </em><em>optional</em>) – The name of the colormap to use for coloring. Default is ‘tab20’.</p></li>
+<li><p><strong>with_labels</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to draw labels for the nodes. Default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If the graph G is empty or not defined.</p></li>
+<li><p><strong>ValueError</strong> – If node_attributes is empty or not defined.</p></li>
+</ul>
+</dd>
+</dl>
+<p>The function draws the graph with nodes colored and/or shaped based on their attributes. If communities are provided, nodes are colored by their community memberships. A legend is added to indicate the mapping of attributes to colors and shapes.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="functions.evaluate">
 <span class="sig-prename descclassname"><span class="pre">functions.</span></span><span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">split</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions.html#evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.evaluate" title="Link to this definition">#</a></dt>
 <dd><p>Evaluate the performance of a model on a given dataset split.</p>
@@ -542,6 +571,26 @@ It inherits from the <cite>nn.Module</cite> class of PyTorch.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>patches (list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.get_edge_attributes">
+<span class="sig-prename descclassname"><span class="pre">functions.</span></span><span class="sig-name descname"><span class="pre">get_edge_attributes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions.html#get_edge_attributes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.get_edge_attributes" title="Link to this definition">#</a></dt>
+<dd><p>Extracts edge attributes from a graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>G</strong> (<em>networkx.Graph</em>) – The graph from which to extract edge attributes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of edge attributes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the graph G is empty or not defined.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -743,8 +792,10 @@ train/validation splits, device, model, labels, epochs, and learning rate.</p>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions.abs_bicorr"><code class="docutils literal notranslate"><span class="pre">abs_bicorr()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions.draw_network_with_node_attrs"><code class="docutils literal notranslate"><span class="pre">draw_network_with_node_attrs()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions.gen_graph_legend"><code class="docutils literal notranslate"><span class="pre">gen_graph_legend()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions.get_edge_attributes"><code class="docutils literal notranslate"><span class="pre">get_edge_attributes()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions.get_k_neighbours"><code class="docutils literal notranslate"><span class="pre">get_k_neighbours()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions.message_passing"><code class="docutils literal notranslate"><span class="pre">message_passing()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions.message_passing_iteration"><code class="docutils literal notranslate"><span class="pre">message_passing_iteration()</span></code></a></li>
