@@ -50,6 +50,11 @@ Similarly to ORA, GSEA can also be performed on individual communities after clu
 
 In Part 1, we worked with a gene expression network, where each node represents a gene. In Part 2, our focus shifts to Patient Networks. In patient networks, each node represents an individual patient. Unlike gene networks that represent molecular interactions, patient networks encode similarities and differences between patients, based on various modalities of data such as gene expression profiles and DNA methylation patterns.
 
+```{image} ./SNF.png
+:alt: fishy
+:width: 1200px
+:align: center
+```
 ### Clustering on Individual Patient Networks
 
 We can apply clustering methods to patient networks to identify patterns in relation to a phenotypic attribute (e.g., smoking status)
