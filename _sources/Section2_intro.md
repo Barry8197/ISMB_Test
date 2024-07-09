@@ -50,7 +50,7 @@ When working with patient data, we often want to combine information from multip
 
 ![snf_image](./SNF.png)
 
-#### SNF consists of two main steps:
+**SNF consists of two main steps:**
 
 1.  Construction of Patient-Similarity Networks (`Section 1`):
 
