@@ -183,11 +183,6 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 
-
-
-
-
-
 <li class="toctree-l2"><a class="reference internal" href="../Section1/Part2.html">Part 2 - Patient similarity networks</a></li>
 
 </ul>
@@ -402,29 +397,16 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-networks-from-section-1">0. Load networks from Section 1</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-function-draw-network-with-node-attrs-draws-a-network-with-nodes-colored-and-or-shaped-based-on-their-attributes-if-communities-are-provided-nodes-are-colored-by-their-community-memberships-a-legend-is-added-to-indicate-the-mapping-of-attributes-to-colors-and-shapes">Custom function <code class="docutils literal notranslate"><span class="pre">draw_network_with_node_attrs()</span></code> draws a network with nodes colored and/or shaped based on their attributes. If communities are provided, nodes are colored by their community memberships. A legend is added to indicate the mapping of attributes to colors and shapes.</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#we-will-use-cancer-gene-calatogue-cgc-from-the-catalogue-of-somatic-mutations-in-cancer-cosmic-to-annotate-genes-in-our-network">We will use cancer gene calatogue (CGC) from the Catalogue Of Somatic Mutations In Cancer (COSMIC) to annotate genes in our network.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#over-representation-analysis-ora">Over Representation Analysis (ORA)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ora-on-gene-correlation-network">ORA on gene correlation network</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ora-on-gene-clusters">ORA on gene clusters</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gene-network-analysis-with-g-exp">1. Gene Network Analysis with <code class="docutils literal notranslate"><span class="pre">G_exp</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#over-representation-analysis-ora">1.1 Over Representation Analysis (ORA)</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ora-on-gene-correlation-network">1.1.1 ORA on gene correlation network</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ora-on-gene-clusters">1.1.1 ORA on gene clusters</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualising-the-communities">Visualising the Communities</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perform-ora-on-each-community">Perform ORA on Each Community</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gene-set-enrichment-analysis-gsea">1.2 Gene Set Enrichment Analysis (GSEA)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assign-classes-based-on-phenotypic-attributes-in-metadata-e-g-smoking-status">Assign classes based on phenotypic attributes in metadata (e.g., smoking status)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gene-set-enrichment-analysis-gsea">Gene Set Enrichment Analysis (GSEA)</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualising-gsea-results">Visualising GSEA Results</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gsea-on-clusters">GSEA on Clusters</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#barcode-enrichment-plot">Barcode Enrichment Plot</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heatmap-visualisation">Heatmap Visualisation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clustermap-visualisation">Clustermap Visualisation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dot-plot-visualisation">Dot Plot Visualisation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gsea-on-clusters">GSEA on Clusters</a></li>
 </ul>
             </nav>
         </div>
@@ -485,8 +467,7 @@ document.write(`
 </div>
 </div>
 </div>
-<section id="load-networks-from-section-1">
-<h2>0. Load networks from Section 1<a class="headerlink" href="#load-networks-from-section-1" title="Permalink to this heading">#</a></h2>
+<p><strong>Load networks from Section 1</strong></p>
 <ul class="simple">
 <li><p>Gene correlation network</p></li>
 <li><p>Patient network from TCGA gene expression data</p></li>
@@ -539,8 +520,7 @@ document.write(`
 </div>
 </div>
 </div>
-<section id="custom-function-draw-network-with-node-attrs-draws-a-network-with-nodes-colored-and-or-shaped-based-on-their-attributes-if-communities-are-provided-nodes-are-colored-by-their-community-memberships-a-legend-is-added-to-indicate-the-mapping-of-attributes-to-colors-and-shapes">
-<h3>Custom function <code class="docutils literal notranslate"><span class="pre">draw_network_with_node_attrs()</span></code> draws a network with nodes colored and/or shaped based on their attributes. If communities are provided, nodes are colored by their community memberships. A legend is added to indicate the mapping of attributes to colors and shapes.<a class="headerlink" href="#custom-function-draw-network-with-node-attrs-draws-a-network-with-nodes-colored-and-or-shaped-based-on-their-attributes-if-communities-are-provided-nodes-are-colored-by-their-community-memberships-a-legend-is-added-to-indicate-the-mapping-of-attributes-to-colors-and-shapes" title="Permalink to this heading">#</a></h3>
+<p>Custom function <code class="docutils literal notranslate"><span class="pre">draw_network_with_node_attrs()</span></code> draws a network with nodes colored and/or shaped based on their attributes. If communities are provided, nodes are colored by their community memberships. A legend is added to indicate the mapping of attributes to colors and shapes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functions</span> <span class="kn">import</span> <span class="n">draw_network_with_node_attrs</span>
@@ -564,10 +544,12 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Display the shape of the dataframe</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Shape of the dataframe &#39;tcga_gxp_df&#39; (rows, columns):&quot;</span><span class="p">)</span>
+<span class="c1">### YOUR CODE HERE ###</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">tcga_gxp_df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
 <span class="c1"># List the columns in the dataframe</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">List of columns in the dataframe &#39;tcga_gxp_df&#39;:&quot;</span><span class="p">)</span>
+<span class="c1">### YOUR CODE HERE ###</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">tcga_gxp_df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -589,9 +571,8 @@ Index([&#39;TCGA-38-7271&#39;, &#39;TCGA-55-7914&#39;, &#39;TCGA-95-7043&#39;, &
 </div>
 </div>
 </div>
-</section>
-<section id="we-will-use-cancer-gene-calatogue-cgc-from-the-catalogue-of-somatic-mutations-in-cancer-cosmic-to-annotate-genes-in-our-network">
-<h3>We will use <a class="reference external" href="https://cancer.sanger.ac.uk/census">cancer gene calatogue (CGC)</a> from the Catalogue Of Somatic Mutations In Cancer (COSMIC) to annotate genes in our network.<a class="headerlink" href="#we-will-use-cancer-gene-calatogue-cgc-from-the-catalogue-of-somatic-mutations-in-cancer-cosmic-to-annotate-genes-in-our-network" title="Permalink to this heading">#</a></h3>
+<p><strong>Network Annotation</strong></p>
+<p>We will use <a class="reference external" href="https://cancer.sanger.ac.uk/census">cancer gene calatogue (CGC)</a> from the Catalogue Of Somatic Mutations In Cancer (COSMIC) to annotate genes in our network.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">'Tier'</span></code></p>
 <ul>
@@ -721,14 +702,11 @@ Index([&#39;TCGA-38-7271&#39;, &#39;TCGA-55-7914&#39;, &#39;TCGA-95-7043&#39;, &
 <span class="n">cancer_genes</span> <span class="o">=</span> <span class="n">cancer_genes_df</span><span class="p">[</span><span class="s1">&#39;Gene Symbol&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 
 <span class="c1"># Create the dictionary with node labels as keys and boolean as values</span>
-<span class="n">found_in_cancer_genes</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="n">node</span> <span class="ow">in</span> <span class="n">cancer_genes</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">G_gxp</span><span class="o">.</span><span class="n">nodes</span><span class="p">())}</span>
-<span class="c1"># true_nodes = [node for node, is_present in found_in_cancer_genes.items() if is_present]</span>
+<span class="c1"># Complete the dictionary comprehension to check if each node is in the list of cancer genes</span>
 
-<span class="c1"># # Print the resulting dictionary</span>
-<span class="c1"># print(found_in_cancer_genes)</span>
-<span class="c1"># print(true_nodes)</span>
-<span class="c1"># print(len(true_nodes))</span>
-<span class="c1"># print(len(list(G_gxp.nodes())))</span>
+<span class="c1">### YOUR CODE HERE ###</span>
+<span class="n">found_in_cancer_genes</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="n">node</span> <span class="ow">in</span> <span class="n">cancer_genes</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">G_gxp</span><span class="o">.</span><span class="n">nodes</span><span class="p">())}</span>
+
 <span class="n">node_attributes</span><span class="o">=</span><span class="p">{}</span>
 <span class="n">node_attributes</span><span class="p">[</span><span class="s1">&#39;cancer_gene&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">found_in_cancer_genes</span>
 </pre></div>
@@ -1046,10 +1024,6 @@ Index([&#39;TCGA-38-7271&#39;, &#39;TCGA-55-7914&#39;, &#39;TCGA-95-7043&#39;, &
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="gene-network-analysis-with-g-exp">
-<h2>1. Gene Network Analysis with <code class="docutils literal notranslate"><span class="pre">G_exp</span></code><a class="headerlink" href="#gene-network-analysis-with-g-exp" title="Permalink to this heading">#</a></h2>
 <p>We are going to use <code class="docutils literal notranslate"><span class="pre">'KEGG_2021_Human'</span></code> as the gene set. KEGG (Kyoto Encyclopedia of Genes and Genomes) is a knowledge base for systematic analysis of gene functions, linking genomic information with higher order functional information <a class="reference external" href="https://doi.org/10.1093/nar/28.1.27">(Kanehisa et al., 2000)</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1074,16 +1048,23 @@ Index([&#39;TCGA-38-7271&#39;, &#39;TCGA-55-7914&#39;, &#39;TCGA-95-7043&#39;, &
 </div>
 </div>
 <section id="over-representation-analysis-ora">
-<h3>1.1 Over Representation Analysis (ORA)<a class="headerlink" href="#over-representation-analysis-ora" title="Permalink to this heading">#</a></h3>
+<h2>Over Representation Analysis (ORA)<a class="headerlink" href="#over-representation-analysis-ora" title="Permalink to this heading">#</a></h2>
 <p>Over-representation analysis (ORA) is a method used to identify which predefined gene sets are disproportionately represented in a given set of genes compared to what would be expected by random chance <a class="reference external" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2615629/">(Huang et al., 2009)</a>. We recommend using Over-representation analysis (ORA) only when Gene Set Enrichment Analysis (GSEA) is not suitable. Although we are using the <a class="reference external" href="https://doi.org/10.1093/bioinformatics/btac757"><code class="docutils literal notranslate"><span class="pre">gseapy</span></code></a> library for ORA in this the tutorial, it’s important to note that ORA and GSEA are distinct methods.</p>
 <section id="ora-on-gene-correlation-network">
-<h4>1.1.1 ORA on gene correlation network<a class="headerlink" href="#ora-on-gene-correlation-network" title="Permalink to this heading">#</a></h4>
+<h3>ORA on gene correlation network<a class="headerlink" href="#ora-on-gene-correlation-network" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Perform ORA on all nodes in the gene correlation network</span>
-<span class="n">enr_all_nodes</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">enrichr</span><span class="p">(</span><span class="n">gene_list</span><span class="o">=</span><span class="n">G_gxp_nodes_list</span><span class="p">,</span> <span class="n">gene_sets</span><span class="o">=</span><span class="p">[</span><span class="n">gene_sets</span><span class="p">],</span> <span class="n">organism</span><span class="o">=</span><span class="s1">&#39;human&#39;</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
-<span class="c1"># Display the top 10 enrichment results</span>
+<span class="c1">### YOUR CODE HERE ###</span>
+<span class="n">enr_all_nodes</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">enrichr</span><span class="p">(</span><span class="n">gene_list</span><span class="o">=</span><span class="n">G_gxp_nodes_list</span><span class="p">,</span> <span class="n">gene_sets</span><span class="o">=</span><span class="p">[</span><span class="n">gene_sets</span><span class="p">],</span> <span class="n">organism</span><span class="o">=</span><span class="s1">&#39;human&#39;</span><span class="p">)</span> <span class="c1"># , outdir=None)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Display the top 10 enrichment results</span>
 
 <span class="c1">### YOUR CODE HERE ###</span>
 <span class="n">enr_all_nodes</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
@@ -1258,7 +1239,7 @@ Index([&#39;TCGA-38-7271&#39;, &#39;TCGA-55-7914&#39;, &#39;TCGA-95-7043&#39;, &
 </div>
 </section>
 <section id="ora-on-gene-clusters">
-<h4>1.1.1 ORA on gene clusters<a class="headerlink" href="#ora-on-gene-clusters" title="Permalink to this heading">#</a></h4>
+<h3>ORA on gene clusters<a class="headerlink" href="#ora-on-gene-clusters" title="Permalink to this heading">#</a></h3>
 <p>Clustering on Gene Correlation Network</p>
 <ul class="simple">
 <li><p>We use community detection algorithm to identify communities in the network:</p>
@@ -1270,58 +1251,84 @@ Index([&#39;TCGA-38-7271&#39;, &#39;TCGA-55-7914&#39;, &#39;TCGA-95-7043&#39;, &
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cluster the gene correlation network using the greedy modularity communities algorithm</span>
-<span class="c1">### YOUR CODE HERE ###</span>
 <span class="n">communities</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">algorithms</span><span class="o">.</span><span class="n">community</span><span class="o">.</span><span class="n">modularity_max</span><span class="o">.</span><span class="n">greedy_modularity_communities</span><span class="p">(</span><span class="n">G_gxp</span><span class="p">)</span>
 
 <span class="c1"># Print the number of detected communities</span>
+
 <span class="c1">### YOUR CODE HERE ###</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The network has </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">communities</span><span class="p">)</span><span class="si">}</span><span class="s1"> communities.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-
-<span class="c1"># Create subgraphs for each community</span>
-<span class="n">subgraphs</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">community</span> <span class="ow">in</span> <span class="n">communities</span><span class="p">:</span>
-    <span class="c1">### YOUR CODE HERE ###</span>
-    <span class="n">subgraphs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">G_gxp</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">community</span><span class="p">))</span>
-
-<span class="c1"># Print the number of nodes in each community</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">subgraph</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">subgraphs</span><span class="p">):</span>
-    <span class="c1">### YOUR CODE HERE ###</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Community </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1"> has </span><span class="si">{</span><span class="n">subgraph</span><span class="o">.</span><span class="n">number_of_nodes</span><span class="p">()</span><span class="si">}</span><span class="s1"> nodes.&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The network has 6 communities.
-
-Community 1 has 101 nodes.
-Community 2 has 67 nodes.
-Community 3 has 64 nodes.
-Community 4 has 51 nodes.
-Community 5 has 15 nodes.
-Community 6 has 2 nodes.
 </pre></div>
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="visualising-the-communities">
-<h3>Visualising the Communities<a class="headerlink" href="#visualising-the-communities" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualise the gene correlation network with community memberships</span>
-<span class="c1">### YOUR CODE HERE ###</span>
-<span class="n">draw_network_with_node_attrs</span><span class="p">(</span><span class="n">G_gxp</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Gene Network&#39;</span><span class="p">,</span> <span class="n">node_attributes</span><span class="o">=</span><span class="n">node_attributes</span><span class="p">,</span> <span class="n">communities</span><span class="o">=</span><span class="n">communities</span><span class="p">,</span> <span class="n">color_attr</span><span class="o">=</span><span class="s1">&#39;community&#39;</span><span class="p">,</span> <span class="n">shape_attr</span><span class="o">=</span><span class="s1">&#39;cancer_gene&#39;</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># , savefig=True, save_path_prefix=&#39;test_image_net&#39;)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create subgraphs for each community</span>
+<span class="n">subgraphs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">community</span> <span class="ow">in</span> <span class="n">communities</span><span class="p">:</span>
+    
+    <span class="n">subgraphs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">G_gxp</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">community</span><span class="p">))</span>
+
+<span class="c1"># Print the number of nodes in each subgraph</span>
+<span class="c1"># And draw the subgraph</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">subgraph</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">subgraphs</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Community </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1"> has </span><span class="si">{</span><span class="n">subgraph</span><span class="o">.</span><span class="n">number_of_nodes</span><span class="p">()</span><span class="si">}</span><span class="s1"> nodes.&#39;</span><span class="p">)</span>
+    
+    <span class="c1">### YOUR CODE HERE ###</span>
+    <span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">subgraph</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># Forces the plot to be displayed</span>
+    
+    
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/4aa5570b6002e06b29eea03fac380220261f9c97547b6dd7f7d79c8400485907.png" src="../_images/4aa5570b6002e06b29eea03fac380220261f9c97547b6dd7f7d79c8400485907.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Community 1 has 101 nodes.
+</pre></div>
+</div>
+<img alt="../_images/130a1e1136cacc09b425a688b0796c514f145cecaf909970789b399341ad723b.png" src="../_images/130a1e1136cacc09b425a688b0796c514f145cecaf909970789b399341ad723b.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Community 2 has 67 nodes.
+</pre></div>
+</div>
+<img alt="../_images/4c28e796fdcac42a4c59b614a0986041beb8b361738b3804baf25701e73966bd.png" src="../_images/4c28e796fdcac42a4c59b614a0986041beb8b361738b3804baf25701e73966bd.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Community 3 has 64 nodes.
+</pre></div>
+</div>
+<img alt="../_images/773b2e0a3506a3deaf4bf68c98af65830483a92c5cb826fa4c4a66d496b4d390.png" src="../_images/773b2e0a3506a3deaf4bf68c98af65830483a92c5cb826fa4c4a66d496b4d390.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Community 4 has 51 nodes.
+</pre></div>
+</div>
+<img alt="../_images/adc126b0951b23fe24e641a7f2d0868648d8b770b6697df734b899246282209d.png" src="../_images/adc126b0951b23fe24e641a7f2d0868648d8b770b6697df734b899246282209d.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Community 5 has 15 nodes.
+</pre></div>
+</div>
+<img alt="../_images/bfae9dc87c6af5db54346d9cabd6aa12a56b45aac8941faa1f9c7a5058d12b21.png" src="../_images/bfae9dc87c6af5db54346d9cabd6aa12a56b45aac8941faa1f9c7a5058d12b21.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Community 6 has 2 nodes.
+</pre></div>
+</div>
+<img alt="../_images/884f36fd032ab2f04e019f905cab4e2074827232345c5f4087055723ce0fdc0a.png" src="../_images/884f36fd032ab2f04e019f905cab4e2074827232345c5f4087055723ce0fdc0a.png" />
 </div>
 </div>
-</section>
-<section id="perform-ora-on-each-community">
-<h3>Perform ORA on Each Community<a class="headerlink" href="#perform-ora-on-each-community" title="Permalink to this heading">#</a></h3>
+<p><strong>Visualising the Communities</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualise the gene correlation network with community memberships</span>
+
+<span class="c1">### YOUR CODE HERE ###</span>
+<span class="n">draw_network_with_node_attrs</span><span class="p">(</span><span class="n">G_gxp</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Gene Network&#39;</span><span class="p">,</span> <span class="n">node_attributes</span><span class="o">=</span><span class="n">node_attributes</span><span class="p">,</span> <span class="n">communities</span><span class="o">=</span><span class="n">communities</span><span class="p">,</span> <span class="n">color_attr</span><span class="o">=</span><span class="s1">&#39;community&#39;</span><span class="p">,</span> <span class="n">shape_attr</span><span class="o">=</span><span class="s1">&#39;cancer_gene&#39;</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ff4e3064d0cbe15f3b2deec30d558d2786c8a9c8093ae87f141b9356d9c45c89.png" src="../_images/ff4e3064d0cbe15f3b2deec30d558d2786c8a9c8093ae87f141b9356d9c45c89.png" />
+</div>
+</div>
 <p>Performing ORA on individual clusters can help in understanding distinct biological significance of each cluster, revealing how certain pathways or functions are associated with specific subsets of genes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1330,13 +1337,13 @@ Community 6 has 2 nodes.
     <span class="n">enr</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">enrichr</span><span class="p">(</span><span class="n">gene_list</span><span class="o">=</span><span class="n">genes</span><span class="p">,</span> <span class="n">gene_sets</span><span class="o">=</span><span class="p">[</span><span class="n">gene_sets</span><span class="p">],</span> <span class="n">organism</span><span class="o">=</span><span class="s1">&#39;human&#39;</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">enr</span>
 
-<span class="c1"># Convert communities to lists for ORA</span>
+<span class="c1"># 1. Convert communities to lists for ORA 2. Sort the list of communities by their length in descending order</span>
+
 <span class="c1">### YOUR CODE HERE ###</span>
 <span class="n">communities</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">community</span><span class="p">)</span> <span class="k">for</span> <span class="n">community</span> <span class="ow">in</span> <span class="n">communities</span><span class="p">]</span>
 <span class="n">communities</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">communities</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="c1"># Perform ORA for three selected communities</span>
-<span class="c1">### YOUR CODE HERE ###</span>
 <span class="n">community1_enr</span> <span class="o">=</span> <span class="n">communityORA</span><span class="p">(</span><span class="n">communities</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">community2_enr</span> <span class="o">=</span> <span class="n">communityORA</span><span class="p">(</span><span class="n">communities</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 <span class="n">community3_enr</span> <span class="o">=</span> <span class="n">communityORA</span><span class="p">(</span><span class="n">communities</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
@@ -1370,14 +1377,14 @@ Community 6 has 2 nodes.
 </div>
 </div>
 </section>
+</section>
 <section id="gene-set-enrichment-analysis-gsea">
-<h3>1.2 Gene Set Enrichment Analysis (GSEA)<a class="headerlink" href="#gene-set-enrichment-analysis-gsea" title="Permalink to this heading">#</a></h3>
+<h2>Gene Set Enrichment Analysis (GSEA)<a class="headerlink" href="#gene-set-enrichment-analysis-gsea" title="Permalink to this heading">#</a></h2>
 <p>Gene Set Enrichment Analysis (GSEA) is a genome-wide expression analysis method designed to interpret expression profiles focusing on pre-defined gene sets <a class="reference external" href="https://doi.org/10.1073/pnas.0506580102">(Subramanian et al., 2005)</a>. These gene sets are curated based on prior biological knowledge, such as published information about biochemical pathways or patterns of coexpression observed in previous experimental studies. The genes can be ordered in a ranked list, according to their differential expression between the classes. The primary objective of GSEA is to assess whether the genes within a given gene set tend to occur toward the top (or bottom) of the ranked list. This ranking is based on the correlation between gene expression and a particular phenotypic class distinction. By evaluating the distribution of gene set members within the ranked list, GSEA identifies whether the set is correlated with the phenotypic class, thus providing insights into underlying biological mechanisms. This method contrasts with traditional single-gene analysis by focusing on the collective behavior of gene sets, thereby uncovering biologically significant patterns that might be overlooked when examining individual genes in isolation. We use <code class="docutils literal notranslate"><span class="pre">gseapy</span></code> to perform GSEA with the gene set <code class="docutils literal notranslate"><span class="pre">KEGG_2021_Human</span></code>.</p>
 <!-- (https://pnnl-comp-mass-spec.github.io/proteomics-data-analysis-tutorial/gsea.html) for referencing.  -->
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Display the first five rows of the dataframe &quot;tcga_gxp_df&quot;</span>
-<span class="c1">### YOUR CODE HERE ###</span>
 <span class="n">tcga_gxp_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -4996,9 +5003,7 @@ Community 6 has 2 nodes.
 </table>
 </div></div></div>
 </div>
-</section>
-<section id="assign-classes-based-on-phenotypic-attributes-in-metadata-e-g-smoking-status">
-<h3>Assign classes based on phenotypic attributes in metadata (e.g., smoking status)<a class="headerlink" href="#assign-classes-based-on-phenotypic-attributes-in-metadata-e-g-smoking-status" title="Permalink to this heading">#</a></h3>
+<p>Assign classes based on phenotypic attributes in metadata (e.g., smoking status)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a dictionary to store the class assignments for each sample</span>
@@ -5006,10 +5011,14 @@ Community 6 has 2 nodes.
 
 <span class="c1"># Iterate through the columns (samples)</span>
 <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">tcga_gxp_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">G_gxp_nodes_list</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span> <span class="c1"># &quot;.loc[G_gxp_nodes_list]&quot; grabs rows of specified gene symbols</span>
+    
     <span class="c1"># Assign class labels based on the smoking status from the metadata</span>
-    <span class="k">if</span> <span class="n">tcga_gxp_meta</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sample</span><span class="p">,</span> <span class="s1">&#39;Smoked&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Smoker&#39;</span><span class="p">:</span> <span class="c1">### YOUR CODE HERE ###</span>
+    
+    <span class="k">if</span> <span class="n">tcga_gxp_meta</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sample</span><span class="p">,</span> <span class="s1">&#39;Smoked&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Smoker&#39;</span><span class="p">:</span>
+        <span class="c1">### YOUR CODE HERE ###</span>
         <span class="n">classes</span><span class="p">[</span><span class="n">sample</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;smoker&#39;</span> 
     <span class="k">elif</span> <span class="n">tcga_gxp_meta</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sample</span><span class="p">,</span> <span class="s1">&#39;Smoked&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Never&#39;</span><span class="p">:</span>
+        <span class="c1">### YOUR CODE HERE ###</span>
         <span class="n">classes</span><span class="p">[</span><span class="n">sample</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;control&#39;</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">pass</span>
@@ -7565,6 +7574,7 @@ Community 6 has 2 nodes.
 <span class="n">gs_res</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">gsea</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">tcga_gxp_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">G_gxp_nodes_list</span><span class="p">],</span> <span class="n">gene_sets</span><span class="o">=</span><span class="n">gene_sets</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">classes</span><span class="p">,</span> <span class="n">permutation_num</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;signal_to_noise&#39;</span><span class="p">,</span> <span class="n">threads</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
 
 <span class="c1"># Display the top results from the GSEA</span>
+
 <span class="c1">### YOUR CODE HERE ###</span>
 <span class="n">gs_res</span><span class="o">.</span><span class="n">res2d</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -7631,7 +7641,7 @@ Community 6 has 2 nodes.
     <tr>
       <th>2</th>
       <td>gsea</td>
-      <td>Th17 cell differentiation</td>
+      <td>Th1 and Th2 cell differentiation</td>
       <td>0.735164</td>
       <td>1.659187</td>
       <td>0.096154</td>
@@ -7644,7 +7654,7 @@ Community 6 has 2 nodes.
     <tr>
       <th>3</th>
       <td>gsea</td>
-      <td>Th1 and Th2 cell differentiation</td>
+      <td>Th17 cell differentiation</td>
       <td>0.735164</td>
       <td>1.659187</td>
       <td>0.096154</td>
@@ -7671,18 +7681,16 @@ Community 6 has 2 nodes.
 </table>
 </div></div></div>
 </div>
-</section>
 <section id="visualising-gsea-results">
 <h3>Visualising GSEA Results<a class="headerlink" href="#visualising-gsea-results" title="Permalink to this heading">#</a></h3>
 <p>Once you have performed GSEA, the next step is to visualise the results. Visualisation helps in interpreting the biological roles of the enriched gene sets. Here, we visualise GSEA results with Barcode Enrichment Plot, Heatmap, Clustermap, and Dot Plot.</p>
-</section>
-</section>
-<section id="barcode-enrichment-plot">
-<h2>Barcode Enrichment Plot<a class="headerlink" href="#barcode-enrichment-plot" title="Permalink to this heading">#</a></h2>
+<p><strong>Barcode Enrichment Plot</strong></p>
 <p>Barcode Enrichment Plot shows the positions of members of a given gene set in a ranked list of enrichment scores for the top enriched terms. The scores are ranked left to right from smallest to largest. The ranked scores are represented by a shaded bar, forming a pattern like a barcode.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extract the enriched terms from the GSEA results. The terms represent pathways or functional categories that are significantly enriched in the dataset.</span>
+
+<span class="c1">### YOUR CODE HERE ###</span>
 <span class="n">terms</span> <span class="o">=</span> <span class="n">gs_res</span><span class="o">.</span><span class="n">res2d</span><span class="o">.</span><span class="n">Term</span>
 
 <span class="c1"># Plot the top 5 enriched terms</span>
@@ -7692,7 +7700,7 @@ Community 6 has 2 nodes.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/c00feafe91647bda1c6558ca58245ec86b152376fbebab0696a4ff68ed1605d7.png" src="../_images/c00feafe91647bda1c6558ca58245ec86b152376fbebab0696a4ff68ed1605d7.png" />
+<img alt="../_images/68cae591387adc9f09777ffc9132322c6c4e2ba2f0b9b12ea9dae42b888f8162.png" src="../_images/68cae591387adc9f09777ffc9132322c6c4e2ba2f0b9b12ea9dae42b888f8162.png" />
 </div>
 </div>
 <p>You can view and extract leading-edge genes from GSEA results. Leading-edge genes are the subset of genes that contribute most to the enrichment score.</p>
@@ -7739,12 +7747,12 @@ Community 6 has 2 nodes.
     </tr>
     <tr>
       <th>2</th>
-      <td>Th17 cell differentiation</td>
+      <td>Th1 and Th2 cell differentiation</td>
       <td>HLA-DRB1;HLA-DMA;HLA-DPB1;HLA-DRA;HLA-DMB;HLA-DPA1;HLA-DQB1;HLA-DQA1;HLA-DRB5;HLA-DOA</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Th1 and Th2 cell differentiation</td>
+      <td>Th17 cell differentiation</td>
       <td>HLA-DRB1;HLA-DMA;HLA-DPB1;HLA-DRA;HLA-DMB;HLA-DPA1;HLA-DQB1;HLA-DQA1;HLA-DRB5;HLA-DOA</td>
     </tr>
     <tr>
@@ -7781,9 +7789,7 @@ Community 6 has 2 nodes.
 </table>
 </div></div></div>
 </div>
-</section>
-<section id="heatmap-visualisation">
-<h2>Heatmap Visualisation<a class="headerlink" href="#heatmap-visualisation" title="Permalink to this heading">#</a></h2>
+<p><strong>Heatmap Visualisation</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">gseapy</span></code> provides a heatmap function to visualise the expression levels of the leading-edge genes. The heatmap provides a visual representation of how these genes are expressed across different samples in relation to their assigned phenotypic classes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -7794,9 +7800,22 @@ Community 6 has 2 nodes.
 <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
 
 <span class="c1"># Extract the genes contributing to the enrichment of the selected term</span>
-<span class="n">genes</span> <span class="o">=</span> <span class="n">gs_res</span><span class="o">.</span><span class="n">res2d</span><span class="o">.</span><span class="n">Lead_genes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;;&quot;</span><span class="p">)</span>
 
-<span class="c1"># Generate a heatmap of the expression levels of the leading-edge genes</span>
+<span class="c1">### YOUR CODE HERE ###</span>
+<span class="n">genes</span> <span class="o">=</span> <span class="n">gs_res</span><span class="o">.</span><span class="n">res2d</span><span class="o">.</span><span class="n">Lead_genes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">genes</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;HLA-DRB1&#39;, &#39;HLA-DMA&#39;, &#39;HLA-DPB1&#39;, &#39;HLA-DRA&#39;, &#39;HLA-DMB&#39;, &#39;HLA-DPA1&#39;, &#39;HLA-DQB1&#39;, &#39;HLA-DQA1&#39;, &#39;HLA-DRB5&#39;, &#39;ALOX5&#39;, &#39;HLA-DOA&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate a heatmap of the expression levels of the leading-edge genes</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">heatmap</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">gs_res</span><span class="o">.</span><span class="n">heatmat</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">genes</span><span class="p">],</span> <span class="n">z_score</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">terms</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 
 <span class="c1"># Update the x-tick labels with the class labels</span>
@@ -7813,9 +7832,7 @@ Community 6 has 2 nodes.
 <img alt="../_images/2ad9e026ca3f82edcb53159b9c52302e718153da93904ab88871a775c04c4f33.png" src="../_images/2ad9e026ca3f82edcb53159b9c52302e718153da93904ab88871a775c04c4f33.png" />
 </div>
 </div>
-</section>
-<section id="clustermap-visualisation">
-<h2>Clustermap Visualisation<a class="headerlink" href="#clustermap-visualisation" title="Permalink to this heading">#</a></h2>
+<p><strong>Clustermap Visualisation</strong></p>
 <p>The function <code class="docutils literal notranslate"><span class="pre">clustermap</span></code> from <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> is used to create a clustered heatmap. It not only shows the expression levels of the leading-edge genes but also clusters them based on similarity, providing additional insights into gene expression patterns. The cluster map includes dendrograms, which show the hierarchical clustering of both genes and samples, helping to identify groups of co-expressed genes and similar samples.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -7829,6 +7846,8 @@ Community 6 has 2 nodes.
 <span class="n">genes</span> <span class="o">=</span> <span class="n">gs_res</span><span class="o">.</span><span class="n">res2d</span><span class="o">.</span><span class="n">Lead_genes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;;&quot;</span><span class="p">)</span>
 
 <span class="c1"># Extract the relevant subset of the heatmap data</span>
+
+<span class="c1">### YOUR CODE HERE ###</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">gs_res</span><span class="o">.</span><span class="n">heatmat</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">genes</span><span class="p">]</span>
 
 <span class="c1"># Rename the columns based on the class assignments</span>
@@ -7839,7 +7858,7 @@ Community 6 has 2 nodes.
     <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>  <span class="c1"># The data to cluster</span>
     <span class="n">method</span><span class="o">=</span><span class="s1">&#39;average&#39;</span><span class="p">,</span>  <span class="c1"># Clustering method</span>
     <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;euclidean&#39;</span><span class="p">,</span>  <span class="c1"># Distance metric</span>
-    <span class="n">z_score</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>  <span class="c1"># Standardize the data</span>
+    <span class="n">z_score</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>  <span class="c1"># Standardize the data along the rows</span>
     <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>  <span class="c1"># Size of the figure</span>
     <span class="n">dendrogram_ratio</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>  <span class="c1"># Ratio of the dendrogram</span>
     <span class="n">colors_ratio</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span>  <span class="c1"># Ratio of the colors</span>
@@ -7852,9 +7871,7 @@ Community 6 has 2 nodes.
 <img alt="../_images/717aec685b39aca5709559cafb20fd58e7a4f77a77c12e3e09ee9edd07365a85.png" src="../_images/717aec685b39aca5709559cafb20fd58e7a4f77a77c12e3e09ee9edd07365a85.png" />
 </div>
 </div>
-</section>
-<section id="dot-plot-visualisation">
-<h2>Dot Plot Visualisation<a class="headerlink" href="#dot-plot-visualisation" title="Permalink to this heading">#</a></h2>
+<p><strong>Dot Plot Visualisation</strong></p>
 <p>Use the <code class="docutils literal notranslate"><span class="pre">dotplot</span></code> function in <code class="docutils literal notranslate"><span class="pre">gseapy</span></code> to create a visual representation of the GSEA results. Here we use “FDR q-val” to determine the dot sizes, which represents the false discovery rate adjusted p-values. We display normalised enrichment score (NES) value as the x-axis.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -7865,7 +7882,7 @@ Community 6 has 2 nodes.
 <span class="c1"># The dotplot function visualizes the enrichment results, focusing on the FDR q-values</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">dotplot</span><span class="p">(</span><span class="n">gs_res</span><span class="o">.</span><span class="n">res2d</span><span class="p">,</span>
              <span class="n">column</span><span class="o">=</span><span class="s2">&quot;FDR q-val&quot;</span><span class="p">,</span>  <span class="c1"># Column to be used for dot size</span>
-             <span class="n">title</span><span class="o">=</span><span class="s1">&#39;KEGG_2021_Human&#39;</span><span class="p">,</span>  <span class="c1"># Title of the plot</span>
+             <span class="n">title</span><span class="o">=</span><span class="n">gene_sets</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>  <span class="c1"># Title the plot as the chosen gene set name </span>
              <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">,</span>  <span class="c1"># Color map for the dots</span>
              <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>  <span class="c1"># Size of the dots</span>
              <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>  <span class="c1"># Size of the figure</span>
@@ -7874,12 +7891,12 @@ Community 6 has 2 nodes.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/0e4c7c1eba3f5b17adff78c77741e1d321c6db76481ba011da8acf64ea690d4e.png" src="../_images/0e4c7c1eba3f5b17adff78c77741e1d321c6db76481ba011da8acf64ea690d4e.png" />
+<img alt="../_images/cc8a47a57ce494e04acd4e1267bc16bbccd9a4b63e21ac9d868faf4d249af5dd.png" src="../_images/cc8a47a57ce494e04acd4e1267bc16bbccd9a4b63e21ac9d868faf4d249af5dd.png" />
 </div>
 </div>
 </section>
 <section id="gsea-on-clusters">
-<h2>GSEA on Clusters<a class="headerlink" href="#gsea-on-clusters" title="Permalink to this heading">#</a></h2>
+<h3>GSEA on Clusters<a class="headerlink" href="#gsea-on-clusters" title="Permalink to this heading">#</a></h3>
 <p>Similarly to ORA, GSEA can also be performed on individual communities after clustering. This allows for a more granular analysis, revealing pathways and functions that are enriched within particular subgroups of the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -7889,6 +7906,8 @@ Community 6 has 2 nodes.
     <span class="k">return</span> <span class="n">gs_res</span>
 
 <span class="c1"># Perform GSEA for three community</span>
+
+<span class="c1">### YOUR CODE HERE ###</span>
 <span class="n">community1_gsea</span> <span class="o">=</span> <span class="n">communityGSEA</span><span class="p">(</span><span class="n">communities</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">community2_gsea</span> <span class="o">=</span> <span class="n">communityGSEA</span><span class="p">(</span><span class="n">communities</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> 
 <span class="n">community3_gsea</span> <span class="o">=</span> <span class="n">communityGSEA</span><span class="p">(</span><span class="n">communities</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
@@ -7899,6 +7918,8 @@ Community 6 has 2 nodes.
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Display the top results for the first community</span>
+
+<span class="c1">### YOUR CODE HERE ###</span>
 <span class="n">community1_gsea</span><span class="o">.</span><span class="n">res2d</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -8020,6 +8041,7 @@ Community 6 has 2 nodes.
 </div>
 </section>
 </section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -8084,29 +8106,16 @@ Community 6 has 2 nodes.
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-networks-from-section-1">0. Load networks from Section 1</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-function-draw-network-with-node-attrs-draws-a-network-with-nodes-colored-and-or-shaped-based-on-their-attributes-if-communities-are-provided-nodes-are-colored-by-their-community-memberships-a-legend-is-added-to-indicate-the-mapping-of-attributes-to-colors-and-shapes">Custom function <code class="docutils literal notranslate"><span class="pre">draw_network_with_node_attrs()</span></code> draws a network with nodes colored and/or shaped based on their attributes. If communities are provided, nodes are colored by their community memberships. A legend is added to indicate the mapping of attributes to colors and shapes.</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#we-will-use-cancer-gene-calatogue-cgc-from-the-catalogue-of-somatic-mutations-in-cancer-cosmic-to-annotate-genes-in-our-network">We will use cancer gene calatogue (CGC) from the Catalogue Of Somatic Mutations In Cancer (COSMIC) to annotate genes in our network.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#over-representation-analysis-ora">Over Representation Analysis (ORA)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ora-on-gene-correlation-network">ORA on gene correlation network</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ora-on-gene-clusters">ORA on gene clusters</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gene-network-analysis-with-g-exp">1. Gene Network Analysis with <code class="docutils literal notranslate"><span class="pre">G_exp</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#over-representation-analysis-ora">1.1 Over Representation Analysis (ORA)</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ora-on-gene-correlation-network">1.1.1 ORA on gene correlation network</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ora-on-gene-clusters">1.1.1 ORA on gene clusters</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualising-the-communities">Visualising the Communities</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perform-ora-on-each-community">Perform ORA on Each Community</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gene-set-enrichment-analysis-gsea">1.2 Gene Set Enrichment Analysis (GSEA)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assign-classes-based-on-phenotypic-attributes-in-metadata-e-g-smoking-status">Assign classes based on phenotypic attributes in metadata (e.g., smoking status)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gene-set-enrichment-analysis-gsea">Gene Set Enrichment Analysis (GSEA)</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualising-gsea-results">Visualising GSEA Results</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gsea-on-clusters">GSEA on Clusters</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#barcode-enrichment-plot">Barcode Enrichment Plot</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heatmap-visualisation">Heatmap Visualisation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clustermap-visualisation">Clustermap Visualisation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dot-plot-visualisation">Dot Plot Visualisation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gsea-on-clusters">GSEA on Clusters</a></li>
 </ul>
   </nav></div>
 
