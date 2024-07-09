@@ -183,11 +183,6 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 
-
-
-
-
-
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Part 2 - Patient similarity networks</a></li>
 
 </ul>
@@ -421,6 +416,10 @@ document.write(`
                   
   <section id="part-2-patient-similarity-networks">
 <h1>Part 2 - Patient similarity networks<a class="headerlink" href="#part-2-patient-similarity-networks" title="Permalink to this heading">#</a></h1>
+<ol class="arabic simple" start="10">
+<li><p><strong>Patient Similarity Network Construction</strong></p></li>
+<li><p><strong>DNA Methylation Network Analysis</strong></p></li>
+</ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># standard libraries</span>
@@ -438,13 +437,14 @@ document.write(`
 
 <span class="c1"># graph and network libraries</span>
 <span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
-<span class="kn">from</span> <span class="nn">pyvis.network</span> <span class="kn">import</span> <span class="n">Network</span>
 
 <span class="c1"># visualization libraries</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
 <span class="kn">import</span> <span class="nn">plotly.io</span> <span class="k">as</span> <span class="nn">pio</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
 </pre></div>
 </div>
 </div>
@@ -458,17 +458,18 @@ document.write(`
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># main data directory for the project</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># main data directories for the project</span>
 
-<span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;../../ismb_data&#39;</span>
+<span class="n">raw_data_dir</span> <span class="o">=</span> <span class="s1">&#39;/data/raw&#39;</span>
+<span class="n">intermediate_data_dir</span> <span class="o">=</span> <span class="s1">&#39;/data/intermediate&#39;</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># read in os.path.join(data_dir,&quot;expression_data_filtered.csv&quot;)</span>
-<span class="n">df_renamed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="s2">&quot;expression_data_filtered.csv&quot;</span><span class="p">),</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># read in os.path.join(raw_data_dir,&quot;expression_data_filtered.csv&quot;)</span>
+<span class="n">df_renamed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">raw_data_dir</span><span class="p">,</span><span class="s2">&quot;expression_data_filtered.csv&quot;</span><span class="p">),</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -908,9 +909,6 @@ document.write(`
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average clustering coefficient: </span><span class="si">{</span><span class="n">avg_clustering</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 
-
-
-
 <span class="k">def</span> <span class="nf">knn_sparsification</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Sparsifies the graph by keeping only the top-k edges with the highest weights for each node.</span>
@@ -996,7 +994,7 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nx</span><span class="o">.</span><span class="n">write_gml</span><span class="p">(</span><span class="n">patient_pearson_graph_pruned_knn</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="s1">&#39;patient_coexpression_network_knn.gml&#39;</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nx</span><span class="o">.</span><span class="n">write_gml</span><span class="p">(</span><span class="n">patient_pearson_graph_pruned_knn</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">intermediate_data_dir</span><span class="p">,</span><span class="s1">&#39;patient_coexpression_network_knn.gml&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1333,7 +1331,7 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load the data from the pickle file</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="s2">&quot;ISMB_TCGA_GE.pkl&quot;</span><span class="p">),</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">raw_data_dir</span><span class="p">,</span><span class="s2">&quot;ISMB_TCGA_GE.pkl&quot;</span><span class="p">),</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
     <span class="n">GE_data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1849,7 +1847,7 @@ document.write(`
 </div>
 </div>
 <ol class="arabic simple">
-<li><p>Load the smoking-related DNA methylation data from a tab-separated values (TSV) file. (os.path.join(data_dir,”smoking.tsv”))</p></li>
+<li><p>Load the smoking-related DNA methylation data from a tab-separated values (TSV) file. (os.path.join(raw_data_dir,”smoking.tsv”))</p></li>
 <li><p>Identify CpG sites that are commonly annotated in the smoking dataset</p></li>
 <li><p>Filter the DNA methylation data to include only the common CpG sites identified in the previous step</p></li>
 <li><p>Identify patients that are present in both the gene expression dataset and the methylation dataset.</p></li>
@@ -1858,7 +1856,7 @@ document.write(`
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">smoking_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="s2">&quot;smoking.tsv&quot;</span><span class="p">)</span> <span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span> <span class="c1">#Tab seperated document from EWAS</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">smoking_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">raw_data_dir</span><span class="p">,</span><span class="s2">&quot;smoking.tsv&quot;</span><span class="p">)</span> <span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span> <span class="c1">#Tab seperated document from EWAS</span>
 <span class="n">common_annotated_cpgs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">smoking_df</span><span class="p">[</span><span class="s1">&#39;cpg&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[</span><span class="n">smoking_df</span><span class="p">[</span><span class="s1">&#39;cpg&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">)</span> 
 <span class="n">cpgs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">common_annotated_cpgs</span><span class="p">)</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">meth_data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
 
